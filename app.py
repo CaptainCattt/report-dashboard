@@ -236,7 +236,7 @@ def process_shopee_data(df_shopee, ngay_bat_dau, ngay_ket_thuc):
     so_luong_tong_don_shopee = len(tong_don_shopee_unique)
 
     don_hoan_thanh_shopee = df_shopee[
-        (df_shopee["Acctually type"].isin(["Hoàn thành", "Đơn hàng đã đến User"]))
+        (df_shopee["Acctually type"].isin(["Hoàn thành"]))
         & (df_shopee["Thời gian giao hàng"] >= ngay_bat_dau)
         & (df_shopee["Thời gian giao hàng"] <= ngay_ket_thuc)
     ]
@@ -244,6 +244,15 @@ def process_shopee_data(df_shopee, ngay_bat_dau, ngay_ket_thuc):
         "Mã đơn hàng"
     ].drop_duplicates()
     so_don_hoan_thanh_shopee = len(don_hoan_thanh_shopee_unique)
+
+    don_da_giao_shopee = df_shopee[
+        (df_shopee["Thời gian giao hàng"] >= ngay_bat_dau)
+        & (df_shopee["Thời gian giao hàng"] <= ngay_ket_thuc)
+        & (df_shopee["Acctually type"].isin(["Đã giao", "Đơn hàng đã đến User"]))
+    ]
+
+    don_da_giao_shopee_unique = don_da_giao_shopee["Mã đơn hàng"].drop_duplicates()
+    so_don_da_giao_shopee = len(don_da_giao_shopee_unique)
 
     don_dang_giao_shopee = df_shopee[
         (df_shopee["Acctually type"] == "Đang giao")
@@ -477,6 +486,7 @@ if process_btn:
                 so_don_hoan_thanh_shopee,
                 so_don_hoan_tra_shopee,
                 tong_san_pham_sp_hoan_tra,
+                so_don_da_giao_shopee,
             ) = process_shopee_data(df_shopee, ngay_bat_dau, ngay_ket_thuc)
 
             bang_thong_ke_don_hang_tiktok = pd.DataFrame(
@@ -537,7 +547,7 @@ if process_btn:
                     "SCx1": [so_luong_SCx1_sp_hoanh_thanh + so_luong_SCx1_sp_da_giao],
                     "SCx2": [so_luong_SCx2_sp_hoanh_thanh + so_luong_SCx2_sp_da_giao],
                     "TỔNG": [tong_san_pham_sp_hoanh_thanh + tong_san_pham_sp_da_giao],
-                    "ĐƠN ĐÃ GIAO": [so_don_dang_giao_shopee],
+                    "ĐƠN ĐÃ GIAO": [so_don_da_giao_shopee],
                     "ĐƠN HOÀN THÀNH": [so_don_hoan_thanh_shopee],
                 },
                 index=["Shopee"],
