@@ -404,6 +404,7 @@ def process_shopee_data(df_shopee, ngay_bat_dau, ngay_ket_thuc):
         so_don_hoan_thanh_shopee,
         so_don_hoan_tra_shopee,
         tong_san_pham_sp_hoan_tra,
+        so_don_da_giao_shopee,
     )
 
 
