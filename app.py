@@ -52,7 +52,6 @@ def process_tiktok_data(df_new, ngay_bat_dau, ngay_ket_thuc):
         & (df_new["Cancelled Time"] >= ngay_bat_dau)
         & (df_new["Cancelled Time"] <= ngay_ket_thuc)
     ]
-
     don_da_huy_unique = don_da_huy["Order ID"].drop_duplicates()
     so_don_da_huy = len(don_da_huy_unique)
 
@@ -65,8 +64,7 @@ def process_tiktok_data(df_new, ngay_bat_dau, ngay_ket_thuc):
     so_don_hoan_tra_tiktok = len(don_hoan_tra_tiktok_unique)
 
     don_hoan_tra_thuc_su_tiktok = df_new[
-        (df_new["Cancelation/Return Type"] == "Return/Refund")
-        & (df_new["Delivered Time"] >= ngay_bat_dau)
+        (df_new["Delivered Time"] >= ngay_bat_dau)
         & (df_new["Delivered Time"] <= ngay_ket_thuc)
         & (df_new["Sku Quantity of return"] != 0)
     ]
