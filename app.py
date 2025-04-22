@@ -146,7 +146,6 @@ def process_tiktok_data(df_new, ngay_bat_dau, ngay_ket_thuc):
         (df_new["SKU Category"] == "SC-450g")
         & (df_new["Delivered Time"] >= ngay_bat_dau)
         & (df_new["Delivered Time"] <= ngay_ket_thuc)
-        & (df_new["Cancelation/Return Type"] == "Return/Refund")
         & (df_new["Sku Quantity of return"] != 0)
     ]
 
@@ -154,7 +153,6 @@ def process_tiktok_data(df_new, ngay_bat_dau, ngay_ket_thuc):
         (df_new["SKU Category"] == "SC-x2-450g")
         & (df_new["Delivered Time"] >= ngay_bat_dau)
         & (df_new["Delivered Time"] <= ngay_ket_thuc)
-        & (df_new["Cancelation/Return Type"] == "Return/Refund")
         & (df_new["Sku Quantity of return"] != 0)
     ]
 
@@ -162,7 +160,6 @@ def process_tiktok_data(df_new, ngay_bat_dau, ngay_ket_thuc):
         (df_new["SKU Category"] == "COMBO-SC")
         & (df_new["Delivered Time"] >= ngay_bat_dau)
         & (df_new["Delivered Time"] <= ngay_ket_thuc)
-        & (df_new["Cancelation/Return Type"] == "Return/Refund")
         & (df_new["Sku Quantity of return"] != 0)
     ]
 
