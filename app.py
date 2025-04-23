@@ -11,7 +11,7 @@ def process_tiktok_data(df_new, ngay_bat_dau, ngay_ket_thuc):
 
     df_new["SKU Category"] = df_new["Seller SKU"]
     df_new["SKU Category"] = df_new["SKU Category"].str.replace(
-        r"^(COMBO-SC-ANHDUC|COMBO-SC-NGOCTRINH)", "COMBO-SC", regex=True
+        r"^(COMBO-SC-ANHDUC|COMBO-SC-NGOCTRINH|COMBO-SC-MIX)", "COMBO-SC", regex=True
     )
     date_columns = [
         "Created Time",
