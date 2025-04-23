@@ -102,12 +102,36 @@ def process_tiktok_data(df_new, ngay_bat_dau, ngay_ket_thuc):
         & (df_new["Order Substatus"] == "Completed")
     ]
 
+    Combo_Scx1_tiktok_hoan_thanh = df_new[
+        (df_new["SKU Category"] == "COMBO-CAYVUA-X1")
+        & (df_new["Delivered Time"] >= ngay_bat_dau)
+        & (df_new["Delivered Time"] <= ngay_ket_thuc)
+        & (df_new["Order Substatus"] == "Completed")
+    ]
+
+    Combo_Scx2_tiktok_hoan_thanh = df_new[
+        (df_new["SKU Category"] == "COMBO-SIEUCAY-X2")
+        & (df_new["Delivered Time"] >= ngay_bat_dau)
+        & (df_new["Delivered Time"] <= ngay_ket_thuc)
+        & (df_new["Order Substatus"] == "Completed")
+    ]
+
     so_luong_SCx1_tiktok_hoan_thanh = SCx1_tiktok_hoan_thanh["Quantity"].sum()
     so_luong_SCx2_tiktok_hoan_thanh = SCx2_tiktok_hoan_thanh["Quantity"].sum()
     so_luong_SC_Combo_tiktok_hoan_thanh = SC_Combo_tiktok_hoan_thanh["Quantity"].sum()
+
+    so_luong_Combo_Scx1_tiktok_hoan_thanh = Combo_Scx1_tiktok_hoan_thanh[
+        "Quantity"
+    ].sum()
+    so_luong_Combo_Scx2_tiktok_hoan_thanh = Combo_Scx2_tiktok_hoan_thanh[
+        "Quantity"
+    ].sum()
+
     tong_san_pham_tiktok_hoan_thanh = (
         so_luong_SCx1_tiktok_hoan_thanh
+        + so_luong_Combo_Scx1_tiktok_hoan_thanh * 2
         + so_luong_SCx2_tiktok_hoan_thanh
+        + so_luong_Combo_Scx2_tiktok_hoan_thanh * 2
         + so_luong_SC_Combo_tiktok_hoan_thanh * 2
     )
 
@@ -132,13 +156,32 @@ def process_tiktok_data(df_new, ngay_bat_dau, ngay_ket_thuc):
         & (df_new["Order Substatus"] == "Delivered")
     ]
 
+    Combo_Scx1_tiktok_da_giao = df_new[
+        (df_new["SKU Category"] == "COMBO-CAYVUA-X1")
+        & (df_new["Delivered Time"] >= ngay_bat_dau)
+        & (df_new["Delivered Time"] <= ngay_ket_thuc)
+        & (df_new["Order Substatus"] == "Delivered")
+    ]
+
+    Combo_Scx2_tiktok_da_giao = df_new[
+        (df_new["SKU Category"] == "COMBO-SIEUCAY-X2")
+        & (df_new["Delivered Time"] >= ngay_bat_dau)
+        & (df_new["Delivered Time"] <= ngay_ket_thuc)
+        & (df_new["Order Substatus"] == "Delivered")
+    ]
+
     so_luong_SCx1_tiktok_da_giao = SCx1_tiktok_da_giao["Quantity"].sum()
     so_luong_SCx2_tiktok_da_giao = SCx2_tiktok_da_giao["Quantity"].sum()
     so_luong_SC_Combo_tiktok_da_giao = SC_Combo_tiktok_da_giao["Quantity"].sum()
 
+    so_luong_Combo_Scx1_tiktok_da_giao = Combo_Scx1_tiktok_da_giao["Quantity"].sum()
+    so_luong_Combo_Scx2_tiktok_da_giao = Combo_Scx2_tiktok_da_giao["Quantity"].sum()
+
     tong_san_pham_tiktok_da_giao = (
         so_luong_SCx1_tiktok_da_giao
+        + so_luong_Combo_Scx1_tiktok_da_giao * 2
         + so_luong_SCx2_tiktok_da_giao
+        + so_luong_Combo_Scx2_tiktok_da_giao * 2
         + so_luong_SC_Combo_tiktok_da_giao * 2
     )
 
@@ -190,6 +233,10 @@ def process_tiktok_data(df_new, ngay_bat_dau, ngay_ket_thuc):
         tong_san_pham_tiktok_hoan_tra,
         so_don_hoan_tra_tiktok,
         so_don_hoan_tra_thuc_su_tiktok,
+        so_luong_Combo_Scx1_tiktok_hoan_thanh,
+        so_luong_Combo_Scx2_tiktok_hoan_thanh,
+        so_luong_Combo_Scx1_tiktok_da_giao,
+        so_luong_Combo_Scx2_tiktok_da_giao,
     )
 
 
@@ -280,7 +327,11 @@ def process_shopee_data(df_shopee, ngay_bat_dau, ngay_ket_thuc):
     ]
 
     SC_Combo_sp_hoanh_thanh = df_shopee[
-        (df_shopee["SKU phân loại hàng"] == "COMBO-SC")
+        (
+            df_shopee["SKU phân loại hàng"].isin(
+                ["COMBO-SC", "COMBO-SC-ANHDUC", "COMBO-SC-NGOCTRINH", "COMBO-SC-MIX"]
+            )
+        )
         & (df_shopee["Thời gian giao hàng"] >= ngay_bat_dau)
         & (df_shopee["Thời gian giao hàng"] <= ngay_ket_thuc)
         & (df_shopee["Acctually type"] == "Hoàn thành")
@@ -300,21 +351,37 @@ def process_shopee_data(df_shopee, ngay_bat_dau, ngay_ket_thuc):
         (df_shopee["SKU phân loại hàng"] == "SC-450g")
         & (df_shopee["Thời gian giao hàng"] >= ngay_bat_dau)
         & (df_shopee["Thời gian giao hàng"] <= ngay_ket_thuc)
-        & (df_shopee["Acctually type"].isin(["Đã giao", "Đơn hàng đã đến User"]))
+        & (
+            df_shopee["Acctually type"].isin(
+                ["Đã giao", "Đơn hàng đã đến User", "Đã nhận được hàng"]
+            )
+        )
     ]
 
     SCx2_sp_da_giao = df_shopee[
         (df_shopee["SKU phân loại hàng"] == "SC-x2-450g")
         & (df_shopee["Thời gian giao hàng"] >= ngay_bat_dau)
         & (df_shopee["Thời gian giao hàng"] <= ngay_ket_thuc)
-        & (df_shopee["Acctually type"].isin(["Đã giao", "Đơn hàng đã đến User"]))
+        & (
+            df_shopee["Acctually type"].isin(
+                ["Đã giao", "Đơn hàng đã đến User", "Đã nhận được hàng"]
+            )
+        )
     ]
 
     SC_Combo_sp_da_giao = df_shopee[
-        (df_shopee["SKU phân loại hàng"] == "COMBO-SC")
+        (
+            df_shopee["SKU phân loại hàng"].isin(
+                ["COMBO-SC", "COMBO-SC-ANHDUC", "COMBO-SC-NGOCTRINH", "COMBO-SC-MIX"]
+            )
+        )
         & (df_shopee["Thời gian giao hàng"] >= ngay_bat_dau)
         & (df_shopee["Thời gian giao hàng"] <= ngay_ket_thuc)
-        & (df_shopee["Acctually type"].isin(["Đã giao", "Đơn hàng đã đến User"]))
+        & (
+            df_shopee["Acctually type"].isin(
+                ["Đã giao", "Đơn hàng đã đến User", "Đã nhận được hàng"]
+            )
+        )
     ]
 
     so_luong_SCx1_sp_da_giao = SCx1_sp_da_giao["Số lượng"].sum()
@@ -405,8 +472,13 @@ def process_shopee_data(df_shopee, ngay_bat_dau, ngay_ket_thuc):
 
 # --- Giao diện Streamlit ---
 st.set_page_config(page_title="Báo Cáo Đơn Hàng", layout="wide")
+
 st.markdown(
-    "<h1 style='text-align: center;'>📦 Báo Cáo Số Lượng Đơn Hàng Và Sản Phẩm TikTok & Shopee</h1>",
+    """
+    <div style='top: 60px; left: 40px; z-index: 1000;'>
+        <img src='https://raw.githubusercontent.com/CaptainCattt/Report_of_shopee/main/logo-lamvlog.png' width='150'/>
+    </div>
+    <h1 style='text-align: center;'>📦 Báo Cáo Số Lượng Đơn Hàng Và Sản Phẩm TikTok & Shopee</h1>""",
     unsafe_allow_html=True,
 )
 
@@ -467,6 +539,10 @@ if process_btn:
                 tong_san_pham_tiktok_hoan_tra,
                 so_don_hoan_tra_tiktok,
                 so_don_hoan_tra_thuc_su_tiktok,
+                so_luong_Combo_Scx1_tiktok_hoan_thanh,
+                so_luong_Combo_Scx2_tiktok_hoan_thanh,
+                so_luong_Combo_Scx1_tiktok_da_giao,
+                so_luong_Combo_Scx2_tiktok_da_giao,
             ) = process_tiktok_data(df_tiktok, ngay_bat_dau, ngay_ket_thuc)
 
             (
@@ -506,10 +582,16 @@ if process_btn:
                         * 2
                     ],
                     "SCx1": [
-                        so_luong_SCx1_tiktok_hoan_thanh + so_luong_SCx1_tiktok_da_giao
+                        so_luong_SCx1_tiktok_hoan_thanh
+                        + so_luong_SCx1_tiktok_da_giao
+                        + so_luong_Combo_Scx1_tiktok_da_giao * 2
+                        + so_luong_Combo_Scx1_tiktok_hoan_thanh * 2
                     ],
                     "SCx2": [
-                        so_luong_SCx2_tiktok_hoan_thanh + so_luong_SCx2_tiktok_da_giao
+                        so_luong_SCx2_tiktok_hoan_thanh
+                        + so_luong_SCx2_tiktok_da_giao
+                        + so_luong_Combo_Scx2_tiktok_da_giao * 2
+                        + so_luong_Combo_Scx2_tiktok_hoan_thanh * 2
                     ],
                     "TỔNG": [
                         tong_san_pham_tiktok_hoan_thanh + tong_san_pham_tiktok_da_giao
