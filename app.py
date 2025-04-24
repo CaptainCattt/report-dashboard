@@ -290,7 +290,11 @@ def process_shopee_data(df_shopee, ngay_bat_dau, ngay_ket_thuc):
     don_da_giao_shopee = df_shopee[
         (df_shopee["Thời gian giao hàng"] >= ngay_bat_dau)
         & (df_shopee["Thời gian giao hàng"] <= ngay_ket_thuc)
-        & (df_shopee["Acctually type"].isin(["Đã giao", "Đơn hàng đã đến User"]))
+        & (
+            df_shopee["Acctually type"].isin(
+                ["Đã giao", "Đơn hàng đã đến User", "Đã nhận được hàng"]
+            )
+        )
     ]
 
     don_da_giao_shopee_unique = don_da_giao_shopee["Mã đơn hàng"].drop_duplicates()
