@@ -14,18 +14,18 @@ def process_tiktok_data(df_new, ngay_bat_dau, ngay_ket_thuc):
 
     # Danh sách các mẫu thay thế
     replacements = {
-        r"^(COMBO-SC-ANHDUC|COMBO-SC-NGOCTRINH|COMBO-SC-MIX|SC_COMBO_MIX|SC_COMBO_MIX_LIVESTREAM|COMBO-SC_LIVESTREAM)": "COMBO-SC",
-        r"^(SC_X1)": "SC-450g",
-        r"^(SC_X2)": "SC-x2-450g",
-        r"^(SC_COMBO_X1|COMBO-CAYVUA-X1|SC_COMBO_X1_LIVESTREAM|COMBO-SCX1_LIVESTREAM)": "COMBO-SCX1",
-        r"^(SC_COMBO_X2|COMBO-SIEUCAY-X2|SC_COMBO_X2_LIVESTREAM|COMBO-SCX2_LIVESTREAM)": "COMBO-SCX2",
-        r"^(BTHP-Cay-200gr|BTHP_Cay)": "BTHP-CAY",
-        r"^(BTHP-200gr|BTHP_KhongCay)": "BTHP-0CAY",
-        r"^(BTHP_COMBO_MIX|BTHP003_combo_mix)": "BTHP-COMBO",
-        r"^(BTHP_COMBO_KhongCay|BTHP003_combo_kocay)": "BTHP-COMBO-0CAY",
-        r"^(BTHP_COMBO_Cay|BTHP003_combo_cay)": "BTHP-COMBO-CAY",
-        r"^(BTHP-COMBO\+SC_X1)": "COMBO_BTHP_SCx1",
-        r"^(BTHP-COMBO\+SC_X2)": "COMBO_BTHP_SCx2",
+        r"^(COMBO-SC-ANHDUC|COMBO-SC-NGOCTRINH|COMBO-SC-MIX|SC_COMBO_MIX|SC_COMBO_MIX_LIVESTREAM|COMBO-SC_LIVESTREAM)$": "COMBO-SC",
+        r"^SC_X1$": "SC-450g",
+        r"^SC_X2$": "SC-x2-450g",
+        r"^(SC_COMBO_X1|COMBO-CAYVUA-X1|SC_COMBO_X1_LIVESTREAM|COMBO-SCX1|COMBO-SCX1_LIVESTREAM)$": "COMBO-SCX1",
+        r"^(SC_COMBO_X2|COMBO-SIEUCAY-X2|SC_COMBO_X2_LIVESTREAM|COMBO-SCX2|COMBO-SCX2_LIVESTREAM)$": "COMBO-SCX2",
+        r"^(BTHP-Cay-200gr|BTHP_Cay)$": "BTHP-CAY",
+        r"^(BTHP-200gr|BTHP_KhongCay)$": "BTHP-0CAY",
+        r"^(BTHP_COMBO_MIX|BTHP003_combo_mix)$": "BTHP-COMBO",
+        r"^(BTHP_COMBO_KhongCay|BTHP003_combo_kocay)$": "BTHP-COMBO-0CAY",
+        r"^(BTHP_COMBO_Cay|BTHP003_combo_cay)$": "BTHP-COMBO-CAY",
+        r"^BTHP-COMBO\+SC_X1$": "COMBO_BTHP_SCx1",
+        r"^BTHP-COMBO\+SC_X2$": "COMBO_BTHP_SCx2",
         r"^(BTHP-2Cay-2KhongCay)": "COMBO_4BTHP",
     }
 
