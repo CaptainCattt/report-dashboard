@@ -1339,9 +1339,7 @@ if process_btn:
                         + so_luong_Combo_Scx2_tiktok_da_giao * 2
                     ],
                     "TỔNG SỐ LƯỢNG SP": [
-                        tong_san_pham_tiktok_hoan_thanh
-                        + tong_san_pham_tiktok_da_giao
-                        + tong_so_luong_BTHP_hoan_thanh
+                        tong_san_pham_tiktok_hoan_thanh + tong_san_pham_tiktok_da_giao
                     ],
                 },
                 index=["Tiktok"],
