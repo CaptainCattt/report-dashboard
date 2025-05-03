@@ -26,6 +26,8 @@ def process_tiktok_data(df_new, ngay_bat_dau, ngay_ket_thuc):
         r"^(BTHP_COMBO_Cay|BTHP003_combo_cay)$": "BTHP-COMBO-CAY",
         r"^BTHP-COMBO\+SC_X1$": "COMBO_BTHP_SCx1",
         r"^BTHP-COMBO\+SC_X2$": "COMBO_BTHP_SCx2",
+        r"^BTHP_COMBO_MIX\+SC_X1$": "COMBO_BTHP_SCx1",
+        r"^BTHP_COMBO_MIX\+SC_X2$": "COMBO_BTHP_SCx2",
         r"^(BTHP-2Cay-2KhongCay)": "COMBO_4BTHP",
     }
 
@@ -474,6 +476,8 @@ def process_shopee_data(df_shopee, ngay_bat_dau, ngay_ket_thuc):
         r"^(BTHP_COMBO_Cay|BTHP003_combo_cay)$": "BTHP-COMBO-CAY",
         r"^BTHP-COMBO\+SC_X1$": "COMBO_BTHP_SCx1",
         r"^BTHP-COMBO\+SC_X2$": "COMBO_BTHP_SCx2",
+        r"^BTHP_COMBO_MIX\+SC_X1$": "COMBO_BTHP_SCx1",
+        r"^BTHP_COMBO_MIX\+SC_X2$": "COMBO_BTHP_SCx2",
         r"^(BTHP-2Cay-2KhongCay)": "COMBO_4BTHP",
     }
 
