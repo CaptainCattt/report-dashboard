@@ -29,6 +29,8 @@ def process_tiktok_data(df_new, ngay_bat_dau, ngay_ket_thuc):
         r"^BTHP_COMBO_MIX\+SC_X1$": "COMBO_BTHP_SCx1",
         r"^BTHP_COMBO_MIX\+SC_X2$": "COMBO_BTHP_SCx2",
         r"^(BTHP-2Cay-2KhongCay)": "COMBO_4BTHP",
+        r"^(BTHP-4Hu-KhongCay)$": "4BTHP_0CAY",
+        r"^(BTHP-4Hu-Cay)$": "4BTHP_CAY",
     }
 
     for pattern, replacement in replacements.items():
@@ -289,14 +291,6 @@ def process_tiktok_data(df_new, ngay_bat_dau, ngay_ket_thuc):
     so_luong_BTHP_Combo_0CAY_hoan_thanh = BTHP_Combo_0CAY_hoan_thanh["Quantity"].sum()
     so_luong_BTHP_Combo_CAY_hoan_thanh = BTHP_Combo_CAY_hoan_thanh["Quantity"].sum()
 
-    tong_so_luong_BTHP_hoan_thanh = (
-        so_luong_BTHP_0CAY_hoan_thanh
-        + so_luong_BTHP_CAY_hoan_thanh
-        + so_luong_BTHP_Combo_hoan_thanh * 2
-        + so_luong_BTHP_Combo_0CAY_hoan_thanh * 2
-        + so_luong_BTHP_Combo_CAY_hoan_thanh * 2
-    )
-
     # Đã giao
     BTHP_0CAY_da_giao = df_new[
         (df_new["SKU Category"] == "BTHP-0CAY")
@@ -393,15 +387,139 @@ def process_tiktok_data(df_new, ngay_bat_dau, ngay_ket_thuc):
     so_luong_BTHP_SCx1_da_giao = BTHP_SCx1_da_giao["Quantity"].sum()
     so_luong_BTHP_SCx2_da_giao = BTHP_SCx2_da_giao["Quantity"].sum()
 
+    COMBO_4_BTHP_0CAY_hoan_thanh_tiktok = df_new[
+        (df_new["SKU Category"] == "4BTHP_0CAY")
+        & (df_new["Delivered Time"] >= ngay_bat_dau)
+        & (df_new["Delivered Time"] <= ngay_ket_thuc)
+        & (df_new["Order Substatus"] == "Completed")
+    ]
+
+    COMBO_4_BTHP_CAY_hoan_thanh_tiktok = df_new[
+        (df_new["SKU Category"] == "4BTHP_CAY")
+        & (df_new["Delivered Time"] >= ngay_bat_dau)
+        & (df_new["Delivered Time"] <= ngay_ket_thuc)
+        & (df_new["Order Substatus"] == "Completed")
+    ]
+
+    COMBO_4_BTHP_0CAY_da_giao_tiktok = df_new[
+        (df_new["SKU Category"] == "4BTHP_0CAY")
+        & (df_new["Delivered Time"] >= ngay_bat_dau)
+        & (df_new["Delivered Time"] <= ngay_ket_thuc)
+        & (df_new["Order Substatus"] == "Delivered")
+    ]
+
+    COMBO_4_BTHP_CAY_da_giao_tiktok = df_new[
+        (df_new["SKU Category"] == "4BTHP_CAY")
+        & (df_new["Delivered Time"] >= ngay_bat_dau)
+        & (df_new["Delivered Time"] <= ngay_ket_thuc)
+        & (df_new["Order Substatus"] == "Delivered")
+    ]
+
+    soluong_COMBO_4_BTHP_0CAY_hoan_thanh_tiktok = COMBO_4_BTHP_0CAY_hoan_thanh_tiktok[
+        "Quantity"
+    ].sum()
+    soluong_COMBO_4_BTHP_CAY_hoan_thanh_tiktok = COMBO_4_BTHP_CAY_hoan_thanh_tiktok[
+        "Quantity"
+    ].sum()
+
+    soluong_COMBO_4_BTHP_0CAY_da_giao_tiktok = COMBO_4_BTHP_0CAY_da_giao_tiktok[
+        "Quantity"
+    ].sum()
+    soluong_COMBO_4_BTHP_CAY_da_giao_tiktok = COMBO_4_BTHP_CAY_da_giao_tiktok[
+        "Quantity"
+    ].sum()
+
+    tong_so_luong_BTHP_hoan_thanh = (
+        so_luong_BTHP_0CAY_hoan_thanh
+        + so_luong_BTHP_CAY_hoan_thanh
+        + so_luong_BTHP_Combo_hoan_thanh * 2
+        + so_luong_BTHP_Combo_0CAY_hoan_thanh * 2
+        + so_luong_BTHP_Combo_CAY_hoan_thanh * 2
+        + so_luong_BTHP_SCx1_hoan_thanh * 2
+        + so_luong_BTHP_SCx2_hoan_thanh * 2
+        + so_luong_BTHP_COMBO4_hoan_thanh_tiktok * 4
+        + soluong_COMBO_4_BTHP_0CAY_hoan_thanh_tiktok * 4
+        + soluong_COMBO_4_BTHP_CAY_hoan_thanh_tiktok * 4
+    )
+
     tong_so_luong_BTHP_da_giao = (
         so_luong_BTHP_0CAY_da_giao
         + so_luong_BTHP_CAY_da_giao
         + so_luong_BTHP_Combo_da_giao * 2
         + so_luong_BTHP_Combo_0CAY_da_giao * 2
         + so_luong_BTHP_Combo_CAY_da_giao * 2
+        + so_luong_BTHP_SCx1_da_giao * 2
+        + so_luong_BTHP_SCx2_da_giao * 2
+        + so_luong_BTHP_COMBO4_da_giao_tiktok * 4
+        + soluong_COMBO_4_BTHP_0CAY_da_giao_tiktok * 4
+        + soluong_COMBO_4_BTHP_CAY_da_giao_tiktok * 4
+    )
+
+    Tong_soluong_SCx1_tiktok = (
+        so_luong_SCx1_tiktok_hoan_thanh
+        + so_luong_SCx1_tiktok_da_giao
+        + so_luong_Combo_Scx1_tiktok_da_giao * 2
+        + so_luong_Combo_Scx1_tiktok_hoan_thanh * 2
+        + so_luong_BTHP_SCx1_hoan_thanh
+        + so_luong_BTHP_SCx1_da_giao
+    )
+
+    Tong_soluong_SCx2_tiktok = (
+        so_luong_SCx2_tiktok_hoan_thanh
+        + so_luong_SCx2_tiktok_da_giao
+        + so_luong_Combo_Scx2_tiktok_da_giao * 2
+        + so_luong_Combo_Scx2_tiktok_hoan_thanh * 2
+        + so_luong_BTHP_SCx2_hoan_thanh
+        + so_luong_BTHP_SCx2_da_giao
+    )
+
+    Tong_soluong_SCxCombo_tiktok = (
+        so_luong_SC_Combo_tiktok_hoan_thanh + so_luong_SC_Combo_tiktok_da_giao
+    ) * 2
+
+    Tong_soluong_BTHP_0CAY_tiktok = (
+        so_luong_BTHP_0CAY_hoan_thanh
+        + so_luong_BTHP_0CAY_da_giao
+        #
+        + so_luong_BTHP_Combo_0CAY_hoan_thanh * 2
+        + so_luong_BTHP_Combo_0CAY_da_giao * 2
+        #
+        + soluong_COMBO_4_BTHP_0CAY_hoan_thanh_tiktok * 4
+        + soluong_COMBO_4_BTHP_0CAY_da_giao_tiktok * 4
+    )
+
+    Tong_soluong_BTHP_CAY_tiktok = (
+        so_luong_BTHP_CAY_hoan_thanh
+        + so_luong_BTHP_CAY_da_giao
+        #
+        + so_luong_BTHP_Combo_CAY_hoan_thanh * 2
+        + so_luong_BTHP_Combo_CAY_da_giao * 2
+        #
+        + soluong_COMBO_4_BTHP_CAY_hoan_thanh_tiktok * 4
+        + soluong_COMBO_4_BTHP_CAY_da_giao_tiktok * 4
+    )
+
+    Tong_soluong_BTHP_COMBO_tiktok = (
+        (so_luong_BTHP_Combo_hoan_thanh + so_luong_BTHP_Combo_da_giao) * 2
+        + (so_luong_BTHP_SCx1_hoan_thanh + so_luong_BTHP_SCx1_da_giao) * 2
+        + (so_luong_BTHP_SCx2_hoan_thanh + so_luong_BTHP_SCx2_da_giao) * 2
+        + (so_luong_BTHP_COMBO4_hoan_thanh_tiktok + so_luong_BTHP_COMBO4_da_giao_tiktok)
+        * 4
     )
 
     return (
+        Tong_soluong_SCx1_tiktok,
+        Tong_soluong_SCx2_tiktok,
+        Tong_soluong_SCxCombo_tiktok,
+        Tong_soluong_BTHP_0CAY_tiktok,
+        Tong_soluong_BTHP_CAY_tiktok,
+        Tong_soluong_BTHP_COMBO_tiktok,
+        ####
+        soluong_COMBO_4_BTHP_0CAY_hoan_thanh_tiktok,
+        soluong_COMBO_4_BTHP_CAY_hoan_thanh_tiktok,
+        soluong_COMBO_4_BTHP_0CAY_da_giao_tiktok,
+        soluong_COMBO_4_BTHP_CAY_da_giao_tiktok,
+        ###
         so_luong_BTHP_COMBO4_hoan_thanh_tiktok,
         so_luong_BTHP_COMBO4_da_giao_tiktok,
         ###
@@ -479,6 +597,8 @@ def process_shopee_data(df_shopee, ngay_bat_dau, ngay_ket_thuc):
         r"^BTHP_COMBO_MIX\+SC_X1$": "COMBO_BTHP_SCx1",
         r"^BTHP_COMBO_MIX\+SC_X2$": "COMBO_BTHP_SCx2",
         r"^(BTHP-2Cay-2KhongCay)": "COMBO_4BTHP",
+        r"^(BTHP-4Hu-KhongCay)$": "4BTHP_0CAY",
+        r"^(BTHP-4Hu-Cay)$": "4BTHP_CAY",
     }
 
     for pattern, replacement in replacements.items():
@@ -768,27 +888,7 @@ def process_shopee_data(df_shopee, ngay_bat_dau, ngay_ket_thuc):
         "Số lượng"
     ].sum()
 
-    BTHP_COMBO4_hoan_thanh_sp = df_shopee[
-        (df_shopee["SKU Category"] == "COMBO_4BTHP")
-        & (df_shopee["Thời gian giao hàng"] >= ngay_bat_dau)
-        & (df_shopee["Thời gian giao hàng"] <= ngay_ket_thuc)
-        & (df_shopee["Acctually type"] == "Hoàn thành")
-    ]
-
-    so_luong_BTHP_COMBO4_hoan_thanh_sp = BTHP_COMBO4_hoan_thanh_sp["Số lượng"].sum()
-
-    BTHP_COMBO4_da_giao_sp = df_shopee[
-        (df_shopee["SKU Category"] == "COMBO_4BTHP")
-        & (df_shopee["Thời gian giao hàng"] >= ngay_bat_dau)
-        & (df_shopee["Thời gian giao hàng"] <= ngay_ket_thuc)
-        & (
-            df_shopee["Acctually type"].isin(
-                ["Đã giao", "Đơn hàng đã đến User", "Đã nhận được hàng"]
-            )
-        )
-    ]
-
-    so_luong_BTHP_COMBO4_da_giao_sp = BTHP_COMBO4_da_giao_sp["Số lượng"].sum()
+    ### BTHP
 
     BTHP_0CAY_da_giao_sp = df_shopee[
         (df_shopee["SKU Category"] == "BTHP-0CAY")
@@ -891,6 +991,75 @@ def process_shopee_data(df_shopee, ngay_bat_dau, ngay_ket_thuc):
     so_luong_BTHP_SCx1_shopee_da_giao = BTHP_SCx1_shopee_da_giao["Số lượng"].sum()
     so_luong_BTHP_SCx2_shopee_da_giao = BTHP_SCx2_shopee_da_giao["Số lượng"].sum()
 
+    ###COMBO4
+
+    BTHP_COMBO4_hoan_thanh_sp = df_shopee[
+        (df_shopee["SKU Category"] == "COMBO_4BTHP")
+        & (df_shopee["Thời gian giao hàng"] >= ngay_bat_dau)
+        & (df_shopee["Thời gian giao hàng"] <= ngay_ket_thuc)
+        & (df_shopee["Acctually type"] == "Hoàn thành")
+    ]
+
+    BTHP_COMBO4_da_giao_sp = df_shopee[
+        (df_shopee["SKU Category"] == "COMBO_4BTHP")
+        & (df_shopee["Thời gian giao hàng"] >= ngay_bat_dau)
+        & (df_shopee["Thời gian giao hàng"] <= ngay_ket_thuc)
+        & (
+            df_shopee["Acctually type"].isin(
+                ["Đã giao", "Đơn hàng đã đến User", "Đã nhận được hàng"]
+            )
+        )
+    ]
+
+    so_luong_BTHP_COMBO4_hoan_thanh_sp = BTHP_COMBO4_hoan_thanh_sp["Số lượng"].sum()
+    so_luong_BTHP_COMBO4_da_giao_sp = BTHP_COMBO4_da_giao_sp["Số lượng"].sum()
+
+    BTHP_COMBO4_0CAY_hoan_thanh_sp = df_shopee[
+        (df_shopee["SKU Category"] == "4BTHP_0CAY")
+        & (df_shopee["Thời gian giao hàng"] >= ngay_bat_dau)
+        & (df_shopee["Thời gian giao hàng"] <= ngay_ket_thuc)
+        & (df_shopee["Acctually type"] == "Hoàn thành")
+    ]
+
+    BTHP_COMBO4_0CAY_da_giao_sp = df_shopee[
+        (df_shopee["SKU Category"] == "4BTHP_0CAY")
+        & (df_shopee["Thời gian giao hàng"] >= ngay_bat_dau)
+        & (df_shopee["Thời gian giao hàng"] <= ngay_ket_thuc)
+        & (
+            df_shopee["Acctually type"].isin(
+                ["Đã giao", "Đơn hàng đã đến User", "Đã nhận được hàng"]
+            )
+        )
+    ]
+
+    soluong_BTHP_COMBO4_0CAY_hoan_thanh_sp = BTHP_COMBO4_0CAY_hoan_thanh_sp[
+        "Số lượng"
+    ].sum()
+    soluong_BTHP_COMBO4_0CAY_da_giao_sp = BTHP_COMBO4_0CAY_da_giao_sp["Số lượng"].sum()
+
+    BTHP_COMBO4_CAY_hoan_thanh_sp = df_shopee[
+        (df_shopee["SKU Category"] == "4BTHP_CAY")
+        & (df_shopee["Thời gian giao hàng"] >= ngay_bat_dau)
+        & (df_shopee["Thời gian giao hàng"] <= ngay_ket_thuc)
+        & (df_shopee["Acctually type"] == "Hoàn thành")
+    ]
+
+    BTHP_COMBO4_CAY_da_giao_sp = df_shopee[
+        (df_shopee["SKU Category"] == "4BTHP_CAY")
+        & (df_shopee["Thời gian giao hàng"] >= ngay_bat_dau)
+        & (df_shopee["Thời gian giao hàng"] <= ngay_ket_thuc)
+        & (
+            df_shopee["Acctually type"].isin(
+                ["Đã giao", "Đơn hàng đã đến User", "Đã nhận được hàng"]
+            )
+        )
+    ]
+
+    soluong_BTHP_COMBO4_CAY_hoan_thanh_sp = BTHP_COMBO4_CAY_hoan_thanh_sp[
+        "Số lượng"
+    ].sum()
+    soluong_BTHP_COMBO4_CAY_da_giao_sp = BTHP_COMBO4_CAY_da_giao_sp["Số lượng"].sum()
+
     tong_san_pham_shopee_hoanh_thanh = (
         so_luong_SCx1_shopee_hoanh_thanh
         + so_luong_SCx2_shopee_hoanh_thanh
@@ -907,7 +1076,71 @@ def process_shopee_data(df_shopee, ngay_bat_dau, ngay_ket_thuc):
         + so_luong_COMBO_SCx2_shopee_da_giao * 2
     )
 
+    Tong_soluong_SCx1_sp = (
+        so_luong_SCx1_shopee_hoanh_thanh
+        + so_luong_SCx1_shopee_da_giao
+        #
+        + so_luong_COMBO_SCx1_shopee_hoan_thanh * 2
+        + so_luong_COMBO_SCx1_shopee_da_giao * 2
+        + so_luong_BTHP_SCx1_shopee_hoan_thanh
+    )
+
+    Tong_soluong_SCx2_sp = (
+        so_luong_SCx2_shopee_hoanh_thanh
+        + so_luong_SCx2_shopee_da_giao
+        #
+        + so_luong_COMBO_SCx2_shopee_hoan_thanh * 2
+        + so_luong_COMBO_SCx2_shopee_da_giao * 2
+        + so_luong_BTHP_SCx2_shopee_hoan_thanh
+    )
+
+    Tong_soluong_SCxCombo_sp = (
+        so_luong_SC_Combo_shopee_hoanh_thanh + so_luong_SC_Combo_shopee_da_giao
+    ) * 2
+
+    Tong_soluong_BTHP_0CAY_sp = (
+        so_luong_BTHP_0CAY_hoan_thanh_sp
+        + so_luong_BTHP_0CAY_da_giao_sp
+        #
+        + so_luong_BTHP_COMBO_0CAY_hoan_thanh_sp * 2
+        + so_luong_BTHP_COMBO_0CAY_da_giao_sp * 2
+        #
+        + soluong_BTHP_COMBO4_0CAY_da_giao_sp * 4
+        + soluong_BTHP_COMBO4_0CAY_hoan_thanh_sp * 4
+    )
+
+    Tong_soluong_BTHP_CAY_sp = (
+        so_luong_BTHP_CAY_hoan_thanh_sp
+        + so_luong_BTHP_CAY_da_giao_sp
+        #
+        + so_luong_BTHP_COMBO_CAY_hoan_thanh_sp * 2
+        + so_luong_BTHP_COMBO_CAY_da_giao_sp * 2
+        #
+        + soluong_BTHP_COMBO4_CAY_da_giao_sp * 4
+        + soluong_BTHP_COMBO4_CAY_hoan_thanh_sp * 4
+    )
+
+    Tong_soluong_BTHP_COMBO_sp = (
+        so_luong_BTHP_COMBO_hoan_thanh_sp * 2
+        + so_luong_BTHP_COMBO_da_giao_sp * 2
+        + (so_luong_BTHP_SCx1_shopee_hoan_thanh + so_luong_BTHP_SCx1_shopee_da_giao) * 2
+        + (so_luong_BTHP_SCx2_shopee_hoan_thanh + so_luong_BTHP_SCx2_shopee_da_giao) * 2
+        + (so_luong_BTHP_COMBO4_hoan_thanh_sp + so_luong_BTHP_COMBO4_da_giao_sp) * 4
+    )
+
     return (
+        Tong_soluong_SCx1_sp,
+        Tong_soluong_SCx2_sp,
+        Tong_soluong_SCxCombo_sp,
+        Tong_soluong_BTHP_0CAY_sp,
+        Tong_soluong_BTHP_CAY_sp,
+        Tong_soluong_BTHP_COMBO_sp,
+        #
+        soluong_BTHP_COMBO4_0CAY_hoan_thanh_sp,
+        soluong_BTHP_COMBO4_0CAY_da_giao_sp,
+        soluong_BTHP_COMBO4_CAY_hoan_thanh_sp,
+        soluong_BTHP_COMBO4_CAY_da_giao_sp,
+        ###
         so_luong_BTHP_COMBO4_hoan_thanh_sp,
         so_luong_BTHP_COMBO4_da_giao_sp,
         ###
@@ -1000,6 +1233,18 @@ if process_btn:
             df_shopee = pd.read_excel(file_shopee)
 
             (
+                Tong_soluong_SCx1_tiktok,
+                Tong_soluong_SCx2_tiktok,
+                Tong_soluong_SCxCombo_tiktok,
+                Tong_soluong_BTHP_0CAY_tiktok,
+                Tong_soluong_BTHP_CAY_tiktok,
+                Tong_soluong_BTHP_COMBO_tiktok,
+                ###
+                soluong_COMBO_4_BTHP_0CAY_hoan_thanh_tiktok,
+                soluong_COMBO_4_BTHP_CAY_hoan_thanh_tiktok,
+                soluong_COMBO_4_BTHP_0CAY_da_giao_tiktok,
+                soluong_COMBO_4_BTHP_CAY_da_giao_tiktok,
+                ###
                 so_luong_BTHP_COMBO4_hoan_thanh_tiktok,
                 so_luong_BTHP_COMBO4_da_giao_tiktok,
                 ###
@@ -1044,6 +1289,18 @@ if process_btn:
             ) = process_tiktok_data(df_tiktok, ngay_bat_dau, ngay_ket_thuc)
 
             (
+                Tong_soluong_SCx1_sp,
+                Tong_soluong_SCx2_sp,
+                Tong_soluong_SCxCombo_sp,
+                Tong_soluong_BTHP_0CAY_sp,
+                Tong_soluong_BTHP_CAY_sp,
+                Tong_soluong_BTHP_COMBO_sp,
+                #
+                soluong_BTHP_COMBO4_0CAY_hoan_thanh_sp,
+                soluong_BTHP_COMBO4_0CAY_da_giao_sp,
+                soluong_BTHP_COMBO4_CAY_hoan_thanh_sp,
+                soluong_BTHP_COMBO4_CAY_da_giao_sp,
+                ###
                 so_luong_BTHP_COMBO4_hoan_thanh_sp,
                 so_luong_BTHP_COMBO4_da_giao_sp,
                 so_luong_BTHP_SCx1_shopee_hoan_thanh,
@@ -1098,7 +1355,7 @@ if process_btn:
 
             bang_thong_ke_so_luong_tiktok = pd.DataFrame(
                 {
-                    "SC_Combo": [
+                    "SC_Combo (x2)": [
                         (
                             so_luong_SC_Combo_tiktok_hoan_thanh
                             + so_luong_SC_Combo_tiktok_da_giao
@@ -1106,31 +1363,35 @@ if process_btn:
                         * 2
                     ],
                     "SCx1": [
-                        so_luong_SCx1_tiktok_hoan_thanh
-                        + so_luong_SCx1_tiktok_da_giao
-                        + so_luong_Combo_Scx1_tiktok_da_giao * 2
+                        so_luong_SCx1_tiktok_hoan_thanh + so_luong_SCx1_tiktok_da_giao
+                    ],
+                    "Combo_SCx1 (x2)": [
+                        +so_luong_Combo_Scx1_tiktok_da_giao * 2
                         + so_luong_Combo_Scx1_tiktok_hoan_thanh * 2
                     ],
                     "SCx2": [
-                        so_luong_SCx2_tiktok_hoan_thanh
-                        + so_luong_SCx2_tiktok_da_giao
-                        + so_luong_Combo_Scx2_tiktok_da_giao * 2
+                        so_luong_SCx2_tiktok_hoan_thanh + so_luong_SCx2_tiktok_da_giao
+                    ],
+                    "Combo_SCx2 (x2)": [
+                        +so_luong_Combo_Scx2_tiktok_da_giao * 2
                         + so_luong_Combo_Scx2_tiktok_hoan_thanh * 2
                     ],
-                    "BTHP_Combo": [
+                    "BTHP_Combo (x2)": [
                         (so_luong_BTHP_Combo_hoan_thanh + so_luong_BTHP_Combo_da_giao)
                         * 2
                     ],
-                    "BTHP Không Cay": [
-                        so_luong_BTHP_0CAY_hoan_thanh
-                        + so_luong_BTHP_0CAY_da_giao
-                        + so_luong_BTHP_Combo_0CAY_hoan_thanh * 2
+                    "BTHP 0Cay": [
+                        so_luong_BTHP_0CAY_hoan_thanh + so_luong_BTHP_0CAY_da_giao
+                    ],
+                    "Combo BTHP 0Cay (x2)": [
+                        +so_luong_BTHP_Combo_0CAY_hoan_thanh * 2
                         + so_luong_BTHP_Combo_0CAY_da_giao * 2
                     ],
                     "BTHP Cay": [
-                        so_luong_BTHP_CAY_hoan_thanh
-                        + so_luong_BTHP_CAY_da_giao
-                        + so_luong_BTHP_Combo_CAY_hoan_thanh * 2
+                        so_luong_BTHP_CAY_hoan_thanh + so_luong_BTHP_CAY_da_giao
+                    ],
+                    "Combo_BTHP Cay (x2)": [
+                        +so_luong_BTHP_Combo_CAY_hoan_thanh * 2
                         + so_luong_BTHP_Combo_CAY_da_giao * 2
                     ],
                     "COMBO BTHP + SCx1": [
@@ -1143,20 +1404,21 @@ if process_btn:
                         so_luong_BTHP_COMBO4_hoan_thanh_tiktok
                         + so_luong_BTHP_COMBO4_da_giao_tiktok
                     ],
+                    "COMBO 4BTHP 0CAY": [
+                        soluong_COMBO_4_BTHP_0CAY_hoan_thanh_tiktok
+                        + soluong_COMBO_4_BTHP_0CAY_da_giao_tiktok
+                    ],
+                    "COMBO 4BTHP CAY": [
+                        soluong_COMBO_4_BTHP_CAY_hoan_thanh_tiktok
+                        + soluong_COMBO_4_BTHP_CAY_da_giao_tiktok
+                    ],
                     "TỔNG SẢN PHẨM": [
                         tong_san_pham_tiktok_hoan_thanh
                         + tong_san_pham_tiktok_da_giao
                         + tong_so_luong_BTHP_hoan_thanh
                         + tong_so_luong_BTHP_da_giao
                         + (so_luong_BTHP_SCx1_hoan_thanh + so_luong_BTHP_SCx1_da_giao)
-                        * 3
                         + (so_luong_BTHP_SCx2_hoan_thanh + so_luong_BTHP_SCx2_da_giao)
-                        * 3
-                        + (
-                            so_luong_BTHP_COMBO4_hoan_thanh_tiktok
-                            + so_luong_BTHP_COMBO4_da_giao_tiktok
-                        )
-                        * 4
                     ],
                 },
                 index=["Tiktok"],
@@ -1164,7 +1426,7 @@ if process_btn:
 
             bang_thong_ke_so_luong_shopee = pd.DataFrame(
                 {
-                    "SC_Combo": [
+                    "SC_Combo (x2)": [
                         (
                             so_luong_SC_Combo_shopee_hoanh_thanh
                             + so_luong_SC_Combo_shopee_da_giao
@@ -1177,29 +1439,39 @@ if process_btn:
                         + so_luong_COMBO_SCx1_shopee_hoan_thanh * 2
                         + so_luong_COMBO_SCx1_shopee_da_giao * 2
                     ],
+                    "Combo_SCx1 (x2)": [
+                        +so_luong_COMBO_SCx1_shopee_hoan_thanh * 2
+                        + so_luong_COMBO_SCx1_shopee_da_giao * 2
+                    ],
                     "SCx2": [
                         so_luong_SCx2_shopee_hoanh_thanh
                         + so_luong_SCx2_shopee_da_giao
                         + so_luong_COMBO_SCx2_shopee_hoan_thanh * 2
                         + so_luong_COMBO_SCx2_shopee_da_giao * 2
                     ],
-                    "BTHP_Combo": [
+                    "Combo_SCx2 (x2)": [
+                        +so_luong_COMBO_SCx2_shopee_hoan_thanh * 2
+                        + so_luong_COMBO_SCx2_shopee_da_giao * 2
+                    ],
+                    "BTHP_Combo (x2)": [
                         (
                             so_luong_BTHP_COMBO_hoan_thanh_sp
                             + so_luong_BTHP_COMBO_da_giao_sp
                         )
                         * 2
                     ],
-                    "BTHP Không Cay": [
-                        so_luong_BTHP_0CAY_hoan_thanh_sp
-                        + so_luong_BTHP_0CAY_da_giao_sp
-                        + so_luong_BTHP_COMBO_0CAY_hoan_thanh_sp * 2
+                    "BTHP 0Cay": [
+                        so_luong_BTHP_0CAY_hoan_thanh_sp + so_luong_BTHP_0CAY_da_giao_sp
+                    ],
+                    "Combo BTHP 0Cay (x2)": [
+                        +so_luong_BTHP_COMBO_0CAY_hoan_thanh_sp * 2
                         + so_luong_BTHP_COMBO_0CAY_da_giao_sp * 2
                     ],
                     "BTHP Cay": [
-                        so_luong_BTHP_CAY_hoan_thanh_sp
-                        + so_luong_BTHP_CAY_da_giao_sp
-                        + so_luong_BTHP_COMBO_CAY_hoan_thanh_sp * 2
+                        so_luong_BTHP_CAY_hoan_thanh_sp + so_luong_BTHP_CAY_da_giao_sp
+                    ],
+                    "Combo_BTHP Cay (x2)": [
+                        +so_luong_BTHP_COMBO_CAY_hoan_thanh_sp * 2
                         + so_luong_BTHP_COMBO_CAY_da_giao_sp * 2
                     ],
                     "COMBO BTHP + SCx1": [
@@ -1213,6 +1485,14 @@ if process_btn:
                     "COMBO 4BTHP": [
                         so_luong_BTHP_COMBO4_hoan_thanh_sp
                         + so_luong_BTHP_COMBO4_da_giao_sp
+                    ],
+                    "COMBO 4BTHP 0CAY": [
+                        soluong_BTHP_COMBO4_0CAY_hoan_thanh_sp
+                        + soluong_BTHP_COMBO4_0CAY_da_giao_sp
+                    ],
+                    "COMBO 4BTHP CAY": [
+                        soluong_BTHP_COMBO4_CAY_hoan_thanh_sp
+                        + soluong_BTHP_COMBO4_CAY_da_giao_sp
                     ],
                     "TỔNG SẢN PHẨM": [
                         tong_san_pham_shopee_hoanh_thanh
@@ -1242,6 +1522,16 @@ if process_btn:
                             + so_luong_BTHP_COMBO4_da_giao_sp
                         )
                         * 4
+                        + (
+                            soluong_BTHP_COMBO4_0CAY_hoan_thanh_sp
+                            + soluong_BTHP_COMBO4_0CAY_da_giao_sp
+                        )
+                        * 4
+                        + (
+                            soluong_BTHP_COMBO4_CAY_hoan_thanh_sp
+                            + soluong_BTHP_COMBO4_CAY_da_giao_sp
+                        )
+                        * 4
                     ],
                 },
                 index=["Shopee"],
@@ -1262,70 +1552,6 @@ if process_btn:
                 index=["Tiktok"],
             )
 
-            # BÁNH TRÁNGGGGGGGG
-
-            bang_thong_ke_so_luong_BTHP_tiktok = pd.DataFrame(
-                {
-                    "BTHP_Combo": [
-                        (so_luong_BTHP_Combo_hoan_thanh + so_luong_BTHP_Combo_da_giao)
-                        * 2
-                    ],
-                    "BTHP Không Cay": [
-                        so_luong_BTHP_0CAY_hoan_thanh
-                        + so_luong_BTHP_0CAY_da_giao
-                        + so_luong_BTHP_Combo_0CAY_hoan_thanh * 2
-                        + so_luong_BTHP_Combo_0CAY_da_giao * 2
-                    ],
-                    "BTHP Cay": [
-                        so_luong_BTHP_CAY_hoan_thanh
-                        + so_luong_BTHP_CAY_da_giao
-                        + so_luong_BTHP_Combo_CAY_hoan_thanh * 2
-                        + so_luong_BTHP_Combo_CAY_da_giao * 2
-                    ],
-                    "TỔNG SẢN PHẨM BTHP": [
-                        tong_so_luong_BTHP_hoan_thanh + tong_so_luong_BTHP_da_giao
-                    ],
-                },
-                index=["TIKTOK"],
-            )
-
-            bang_thong_ke_so_luong_BTHP_shopee = pd.DataFrame(
-                {
-                    "BTHP_Combo": [
-                        (
-                            so_luong_BTHP_COMBO_hoan_thanh_sp
-                            + so_luong_BTHP_COMBO_da_giao_sp
-                        )
-                        * 2
-                    ],
-                    "BTHP Không Cay": [
-                        so_luong_BTHP_0CAY_hoan_thanh_sp
-                        + so_luong_BTHP_0CAY_da_giao_sp
-                        + so_luong_BTHP_COMBO_0CAY_hoan_thanh_sp * 2
-                        + so_luong_BTHP_COMBO_0CAY_da_giao_sp * 2
-                    ],
-                    "BTHP Cay": [
-                        so_luong_BTHP_CAY_hoan_thanh_sp
-                        + so_luong_BTHP_CAY_da_giao_sp
-                        + so_luong_BTHP_COMBO_CAY_hoan_thanh_sp * 2
-                        + so_luong_BTHP_COMBO_CAY_da_giao_sp * 2
-                    ],
-                    "TỔNG SẢN PHẨM BTHP": [
-                        so_luong_BTHP_0CAY_hoan_thanh_sp
-                        + so_luong_BTHP_CAY_hoan_thanh_sp
-                        + so_luong_BTHP_COMBO_hoan_thanh_sp * 2
-                        + so_luong_BTHP_COMBO_0CAY_hoan_thanh_sp * 2
-                        + so_luong_BTHP_COMBO_CAY_hoan_thanh_sp * 2
-                        + so_luong_BTHP_CAY_da_giao_sp
-                        + so_luong_BTHP_0CAY_da_giao_sp
-                        + so_luong_BTHP_COMBO_da_giao_sp * 2
-                        + so_luong_BTHP_COMBO_0CAY_da_giao_sp * 2
-                        + so_luong_BTHP_COMBO_CAY_da_giao_sp * 2
-                    ],
-                },
-                index=["SHOPEE"],
-            )
-
             bang_thong_ke_san_pham_tiktok = pd.DataFrame(
                 {
                     "SL SP HOÀN THÀNH": [
@@ -1334,6 +1560,8 @@ if process_btn:
                         + so_luong_SCx2_tiktok_hoan_thanh
                         + so_luong_Combo_Scx1_tiktok_hoan_thanh * 2
                         + so_luong_Combo_Scx2_tiktok_hoan_thanh * 2
+                        + so_luong_BTHP_SCx1_hoan_thanh
+                        + so_luong_BTHP_SCx2_hoan_thanh
                     ],
                     "SL SP ĐÃ GIAO": [
                         so_luong_SC_Combo_tiktok_da_giao * 2
@@ -1341,9 +1569,13 @@ if process_btn:
                         + so_luong_Combo_Scx1_tiktok_da_giao * 2
                         + +so_luong_SCx2_tiktok_da_giao
                         + so_luong_Combo_Scx2_tiktok_da_giao * 2
+                        + so_luong_BTHP_SCx1_da_giao
+                        + so_luong_BTHP_SCx2_da_giao
                     ],
                     "TỔNG SỐ LƯỢNG SP": [
-                        tong_san_pham_tiktok_hoan_thanh + tong_san_pham_tiktok_da_giao
+                        Tong_soluong_SCx1_tiktok
+                        + Tong_soluong_SCx2_tiktok
+                        + Tong_soluong_SCxCombo_tiktok
                     ],
                 },
                 index=["Tiktok"],
@@ -1356,6 +1588,8 @@ if process_btn:
                         + so_luong_COMBO_SCx1_shopee_hoan_thanh * 2
                         + so_luong_SCx2_shopee_hoanh_thanh
                         + so_luong_COMBO_SCx2_shopee_hoan_thanh * 2
+                        + so_luong_BTHP_SCx1_shopee_hoan_thanh
+                        + so_luong_BTHP_SCx2_shopee_hoan_thanh
                     ],
                     "SL SP ĐÃ GIAO": [
                         so_luong_SC_Combo_shopee_da_giao * 2
@@ -1363,9 +1597,13 @@ if process_btn:
                         + so_luong_COMBO_SCx1_shopee_da_giao * 2
                         + so_luong_SCx2_shopee_da_giao
                         + so_luong_COMBO_SCx2_shopee_da_giao * 2
+                        + so_luong_BTHP_SCx1_shopee_da_giao
+                        + so_luong_BTHP_SCx2_shopee_da_giao
                     ],
                     "TỔNG SỐ LƯỢNG SP": [
-                        tong_san_pham_shopee_hoanh_thanh + tong_san_pham_shopee_da_giao
+                        Tong_soluong_SCx1_sp
+                        + Tong_soluong_SCx2_sp
+                        + Tong_soluong_SCxCombo_sp
                     ],
                 },
                 index=["Shopee"],
@@ -1379,7 +1617,12 @@ if process_btn:
                         + so_luong_BTHP_CAY_hoan_thanh_sp
                         + so_luong_BTHP_COMBO_hoan_thanh_sp * 2
                         + so_luong_BTHP_COMBO_0CAY_hoan_thanh_sp * 2
-                        + so_luong_BTHP_COMBO_CAY_hoan_thanh_sp * 2,
+                        + so_luong_BTHP_COMBO_CAY_hoan_thanh_sp * 2
+                        + so_luong_BTHP_SCx1_shopee_hoan_thanh * 2
+                        + so_luong_BTHP_SCx2_shopee_hoan_thanh * 2
+                        + so_luong_BTHP_COMBO4_hoan_thanh_sp * 4
+                        + soluong_BTHP_COMBO4_0CAY_hoan_thanh_sp * 4
+                        + soluong_BTHP_COMBO4_CAY_hoan_thanh_sp * 4,
                     ],
                     "SL SP ĐÃ GIAO": [
                         tong_so_luong_BTHP_da_giao,
@@ -1387,23 +1630,61 @@ if process_btn:
                         + so_luong_BTHP_0CAY_da_giao_sp
                         + so_luong_BTHP_COMBO_da_giao_sp * 2
                         + so_luong_BTHP_COMBO_0CAY_da_giao_sp * 2
-                        + so_luong_BTHP_COMBO_CAY_da_giao_sp * 2,
+                        + so_luong_BTHP_COMBO_CAY_da_giao_sp * 2
+                        + so_luong_BTHP_SCx1_shopee_da_giao * 2
+                        + so_luong_BTHP_SCx2_shopee_da_giao * 2
+                        + so_luong_BTHP_COMBO4_da_giao_sp * 4
+                        + soluong_BTHP_COMBO4_0CAY_da_giao_sp * 4
+                        + soluong_BTHP_COMBO4_CAY_da_giao_sp * 4,
                     ],
                     "TỔNG SỐ LƯỢNG SP": [
-                        tong_so_luong_BTHP_hoan_thanh + tong_so_luong_BTHP_da_giao,
-                        so_luong_BTHP_0CAY_hoan_thanh_sp
-                        + so_luong_BTHP_CAY_hoan_thanh_sp
-                        + so_luong_BTHP_COMBO_hoan_thanh_sp * 2
-                        + so_luong_BTHP_COMBO_0CAY_hoan_thanh_sp * 2
-                        + so_luong_BTHP_COMBO_CAY_hoan_thanh_sp * 2
-                        + so_luong_BTHP_CAY_da_giao_sp
-                        + so_luong_BTHP_0CAY_da_giao_sp
-                        + so_luong_BTHP_COMBO_da_giao_sp * 2
-                        + so_luong_BTHP_COMBO_0CAY_da_giao_sp * 2
-                        + so_luong_BTHP_COMBO_CAY_da_giao_sp * 2,
+                        Tong_soluong_BTHP_0CAY_tiktok
+                        + Tong_soluong_BTHP_CAY_tiktok
+                        + Tong_soluong_BTHP_COMBO_tiktok,
+                        Tong_soluong_BTHP_0CAY_sp
+                        + Tong_soluong_BTHP_CAY_sp
+                        + Tong_soluong_BTHP_COMBO_sp,
                     ],
                 },
                 index=["Tiktok", "SHOPEE"],
+            )
+
+            bang_tong_so_luong_san_pham = pd.DataFrame(
+                {
+                    "SCx1": [Tong_soluong_SCx1_tiktok, Tong_soluong_SCx1_sp],
+                    "SCx2": [Tong_soluong_SCx2_tiktok, Tong_soluong_SCx2_sp],
+                    "SCxCombo": [
+                        Tong_soluong_SCxCombo_tiktok,
+                        Tong_soluong_SCxCombo_sp,
+                    ],
+                    "BTHP KHONG CAY": [
+                        Tong_soluong_BTHP_0CAY_tiktok,
+                        Tong_soluong_BTHP_0CAY_sp,
+                    ],
+                    "BTHP CAY": [
+                        Tong_soluong_BTHP_CAY_tiktok,
+                        Tong_soluong_BTHP_CAY_sp,
+                    ],
+                    "BTHP COMBO": [
+                        Tong_soluong_BTHP_COMBO_tiktok,
+                        Tong_soluong_BTHP_COMBO_sp,
+                    ],
+                    "TỔNG": [
+                        Tong_soluong_SCx1_tiktok
+                        + Tong_soluong_SCx2_tiktok
+                        + Tong_soluong_SCxCombo_tiktok
+                        + Tong_soluong_BTHP_0CAY_tiktok
+                        + Tong_soluong_BTHP_CAY_tiktok
+                        + Tong_soluong_BTHP_COMBO_tiktok,
+                        Tong_soluong_SCx1_sp
+                        + Tong_soluong_SCx2_sp
+                        + Tong_soluong_SCxCombo_sp
+                        + Tong_soluong_BTHP_0CAY_sp
+                        + Tong_soluong_BTHP_CAY_sp
+                        + Tong_soluong_BTHP_COMBO_sp,
+                    ],
+                },
+                index=["Tiktok", "Shopee"],
             )
 
             bang_thong_ke_so_luong = pd.concat(
@@ -1414,90 +1695,32 @@ if process_btn:
                 [bang_thong_ke_san_pham_tiktok, bang_thong_ke_san_pham_shopee]
             )
 
-            bang_thong_ke_hoan_tra = pd.concat(
-                [bang_thong_ke_hoan_tra_tiktok, bang_thong_ke_hoan_tra_shopee]
-            )
-
-            bang_thong_ke_BTHP = pd.concat(
-                [bang_thong_ke_so_luong_BTHP_tiktok, bang_thong_ke_so_luong_BTHP_shopee]
-            )
-
-            labels = ["SC_Combo", "SCx1", "SCx2"]
-
-            # TikTok Pie Chart
-            tiktok_values = bang_thong_ke_so_luong.loc["Tiktok", labels].values
-            fig_pie_tiktok = px.pie(
-                names=labels,
-                values=tiktok_values,
-                title="Tỉ lệ loại sản phẩm TikTok",
-                hole=0.4,
-            )
-
-            # Shopee Pie Chart
-            shopee_values = bang_thong_ke_so_luong.loc["Shopee", labels].values
-            fig_pie_shopee = px.pie(
-                names=labels,
-                values=shopee_values,
-                title="Tỉ lệ loại sản phẩm Shopee",
-                hole=0.4,
-            )
-
-            df_don_hang = bang_thong_ke_san_pham.reset_index().rename(
-                columns={"index": "Nền tảng"}
-            )
-
-            # Vẽ biểu đồ cột
-            # Vẽ biểu đồ cột Tổng Quan Đơn Hàng TikTok & Shopee
-            fig_bar_don_hang = px.bar(
-                df_don_hang,
-                x="Nền tảng",
-                y=["SL SP HOÀN THÀNH", "SL SP ĐÃ GIAO"],
-                barmode="group",
-                title="📊 Tổng Quan Đơn Hàng Theo Nền Tảng",
-                text_auto=True,
-                color_discrete_sequence=px.colors.qualitative.Pastel,
-            )
-            fig_bar_don_hang.update_yaxes(tickformat=",.0f")
-
-            df_hoan_tra = bang_thong_ke_hoan_tra.reset_index().rename(
-                columns={"index": "Nền tảng"}
-            )
-
-            fig_bar_hoan_tra = px.bar(
-                df_hoan_tra,
-                x="Nền tảng",
-                y=["SỐ ĐƠN HOÀN TRẢ", "SỐ LƯỢNG SẢN PHẨM"],
-                barmode="group",
-                title="📊 Thống Kê Đơn Hoàn Trả Theo Nền Tảng",
-                text_auto=True,
-                color_discrete_sequence=px.colors.qualitative.Set2,
-            )
-
             # Hiển thị bảng thống kê đơn hàng
-            st.markdown("### 📊 Tổng Quan Đơn Hàng Tiktok & Shopee")
+            st.markdown("### 📊 Tổng Đơn Hàng Tiktok & Shopee")
             with st.container():
                 st.markdown("#### 📋 Bảng Thống Kê")
                 st.dataframe(bang_thong_ke_don_hang_tiktok)
 
-            st.markdown("### 📊 Tổng Quan Sản Phẩm Tiktok & Shopee")
+            st.markdown("### 📊 Tổng SỐ LƯỢNG Sản Phẩm Tiktok & Shopee")
             with st.container():
                 st.markdown("#### 📋 Bảng Thống Kê")
-                st.markdown("#### 📦 Thống Kê Theo Loại Sản Phẩm")
+                st.dataframe(bang_tong_so_luong_san_pham)
+
+            st.markdown("### 📊 Chi Tiết Số Lượng Sản Phẩm Tiktok & Shopee")
+            with st.container():
+                st.markdown("#### 📋 Bảng Thống Kê")
+                st.markdown("#### 📦 Chi Tiết Số Lượng Sản Phẩm")
                 st.dataframe(bang_thong_ke_so_luong)
 
-            st.markdown("### 📊 Sản Phẩm Sốt Chấm Tiktok & Shopee")
+            st.markdown("### 📊 Sản Phẩm Sốt Chấm & BTHP Tiktok & Shopee")
             col6, col7 = st.columns(2)
 
             with col6:
-                st.markdown("#### 📋 Bảng Thống Kê")
+                st.markdown("#### 📋 Bảng Thống Kê Sốt Chấm")
                 st.dataframe(bang_thong_ke_san_pham)
 
             with col7:
-                st.markdown("#### 📈 Biểu Đồ")
-                st.plotly_chart(fig_bar_don_hang, use_container_width=True)
-
-            with st.container():
-                st.markdown("#### 📋 Sản Phẩm Bánh Tráng Hành Phi TIKTOK & SHOPEE")
+                st.markdown("#### 📈 Bảng Thống Kê BTHP")
                 st.dataframe(bang_thong_ke_san_pham_BTHP)
 
             # col1, col2 = st.columns(2)
