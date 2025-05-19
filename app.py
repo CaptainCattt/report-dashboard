@@ -1434,20 +1434,14 @@ if process_btn:
                         * 2
                     ],
                     "SCx1": [
-                        so_luong_SCx1_shopee_hoanh_thanh
-                        + so_luong_SCx1_shopee_da_giao
-                        + so_luong_COMBO_SCx1_shopee_hoan_thanh * 2
-                        + so_luong_COMBO_SCx1_shopee_da_giao * 2
+                        so_luong_SCx1_shopee_hoanh_thanh + so_luong_SCx1_shopee_da_giao
                     ],
                     "Combo_SCx1 (x2)": [
                         +so_luong_COMBO_SCx1_shopee_hoan_thanh * 2
                         + so_luong_COMBO_SCx1_shopee_da_giao * 2
                     ],
                     "SCx2": [
-                        so_luong_SCx2_shopee_hoanh_thanh
-                        + so_luong_SCx2_shopee_da_giao
-                        + so_luong_COMBO_SCx2_shopee_hoan_thanh * 2
-                        + so_luong_COMBO_SCx2_shopee_da_giao * 2
+                        so_luong_SCx2_shopee_hoanh_thanh + so_luong_SCx2_shopee_da_giao
                     ],
                     "Combo_SCx2 (x2)": [
                         +so_luong_COMBO_SCx2_shopee_hoan_thanh * 2
