@@ -828,7 +828,7 @@ def process_shopee_data(df_shopee, ngay_bat_dau, ngay_ket_thuc):
     ]
 
     COMBO_SCx2_shopee_da_giao = df_shopee[
-        (df_shopee["SKU Category"] == "COMBO-SCX1")
+        (df_shopee["SKU Category"] == "COMBO-SCX2")
         & (df_shopee["Thời gian giao hàng"] >= ngay_bat_dau)
         & (df_shopee["Thời gian giao hàng"] <= ngay_ket_thuc)
         & (
