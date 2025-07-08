@@ -78,6 +78,18 @@ def process_tiktok_data(df_new, ngay_bat_dau, ngay_ket_thuc):
     don_da_giao_tiktok_unique = don_da_giao_tiktok["Order ID"].drop_duplicates()
     so_don_da_giao_tiktok = len(don_da_giao_tiktok_unique)
 
+    don_cloud_tiktok = df_new[
+        (
+            (df_new["Order Substatus"] != "Canceled")
+            & (
+                (df_new["Delivered Time"] > ngay_ket_thuc)
+                | (df_new["Delivered Time"].isna())
+            )
+        )
+    ]
+    don_cloud_tiktok_unique = don_cloud_tiktok["Order ID"].drop_duplicates()
+    so_don_cloud_tiktok = len(don_cloud_tiktok_unique)
+
     SCx1_tiktok_hoan_thanh = df_new[
         (df_new["SKU Category"] == "SC-450g")
         & (df_new["Delivered Time"] >= ngay_bat_dau)
@@ -501,6 +513,62 @@ def process_tiktok_data(df_new, ngay_bat_dau, ngay_ket_thuc):
         "Quantity"
     ].sum()
 
+    # CLOUD
+    SCx1_tiktok_cloud = don_cloud_tiktok[don_cloud_tiktok["SKU Category"] == "SC-450g"]
+    SCx2_tiktok_cloud = don_cloud_tiktok[
+        don_cloud_tiktok["SKU Category"] == "SC-x2-450g"
+    ]
+    SC_Combo_tiktok_cloud = don_cloud_tiktok[
+        don_cloud_tiktok["SKU Category"] == "COMBO-SC"
+    ]
+    Combo_Scx1_tiktok_cloud = don_cloud_tiktok[
+        don_cloud_tiktok["SKU Category"] == "COMBO-SCX1"
+    ]
+    Combo_Scx2_tiktok_cloud = don_cloud_tiktok[
+        don_cloud_tiktok["SKU Category"] == "COMBO-SCX2"
+    ]
+    BTHP_0CAY_cloud = don_cloud_tiktok[don_cloud_tiktok["SKU Category"] == "BTHP-0CAY"]
+    BTHP_CAY_cloud = don_cloud_tiktok[don_cloud_tiktok["SKU Category"] == "BTHP-CAY"]
+    BTHP_Combo_cloud = don_cloud_tiktok[
+        don_cloud_tiktok["SKU Category"] == "BTHP-COMBO"
+    ]
+    BTHP_Combo_0CAY_cloud = don_cloud_tiktok[
+        don_cloud_tiktok["SKU Category"] == "BTHP-COMBO-0CAY"
+    ]
+    BTHP_Combo_CAY_cloud = don_cloud_tiktok[
+        don_cloud_tiktok["SKU Category"] == "BTHP-COMBO-CAY"
+    ]
+    BTHP_SCx1_cloud = don_cloud_tiktok[
+        don_cloud_tiktok["SKU Category"] == "COMBO_BTHP_SCx1"
+    ]
+    BTHP_SCx2_cloud = don_cloud_tiktok[
+        don_cloud_tiktok["SKU Category"] == "COMBO_BTHP_SCx2"
+    ]
+    BTHP_COMBO4_cloud = don_cloud_tiktok[
+        don_cloud_tiktok["SKU Category"] == "COMBO_4BTHP"
+    ]
+    COMBO_4_BTHP_0CAY_cloud = don_cloud_tiktok[
+        don_cloud_tiktok["SKU Category"] == "4BTHP_0CAY"
+    ]
+    COMBO_4_BTHP_CAY_cloud = don_cloud_tiktok[
+        don_cloud_tiktok["SKU Category"] == "4BTHP_CAY"
+    ]
+    so_luong_SCx1_tiktok_cloud = SCx1_tiktok_cloud["Quantity"].sum()
+    so_luong_SCx2_tiktok_cloud = SCx2_tiktok_cloud["Quantity"].sum()
+    so_luong_SC_Combo_tiktok_cloud = SC_Combo_tiktok_cloud["Quantity"].sum()
+    so_luong_Combo_Scx1_tiktok_cloud = Combo_Scx1_tiktok_cloud["Quantity"].sum()
+    so_luong_Combo_Scx2_tiktok_cloud = Combo_Scx2_tiktok_cloud["Quantity"].sum()
+    so_luong_BTHP_0CAY_tiktok_cloud = BTHP_0CAY_cloud["Quantity"].sum()
+    so_luong_BTHP_CAY_tiktok_cloud = BTHP_CAY_cloud["Quantity"].sum()
+    so_luong_BTHP_Combo_tiktok_cloud = BTHP_Combo_cloud["Quantity"].sum()
+    so_luong_BTHP_Combo_0CAY_tiktok_cloud = BTHP_Combo_0CAY_cloud["Quantity"].sum()
+    so_luong_BTHP_Combo_CAY_tiktok_cloud = BTHP_Combo_CAY_cloud["Quantity"].sum()
+    so_luong_BTHP_SCx1_tiktok_cloud = BTHP_SCx1_cloud["Quantity"].sum()
+    so_luong_BTHP_SCx2_tiktok_cloud = BTHP_SCx2_cloud["Quantity"].sum()
+    so_luong_BTHP_COMBO4_tiktok_cloud = BTHP_COMBO4_cloud["Quantity"].sum()
+    soluong_COMBO_4_BTHP_0CAY_tiktok_cloud = COMBO_4_BTHP_0CAY_cloud["Quantity"].sum()
+    soluong_COMBO_4_BTHP_CAY_tiktok_cloud = COMBO_4_BTHP_CAY_cloud["Quantity"].sum()
+
     tong_so_luong_BTHP_hoan_thanh = (
         so_luong_BTHP_0CAY_hoan_thanh
         + so_luong_BTHP_CAY_hoan_thanh
@@ -580,6 +648,23 @@ def process_tiktok_data(df_new, ngay_bat_dau, ngay_ket_thuc):
     )
 
     return (
+        # cloud
+        so_don_cloud_tiktok,
+        so_luong_SCx1_tiktok_cloud,
+        so_luong_SCx2_tiktok_cloud,
+        so_luong_SC_Combo_tiktok_cloud,
+        so_luong_Combo_Scx1_tiktok_cloud,
+        so_luong_Combo_Scx2_tiktok_cloud,
+        so_luong_BTHP_0CAY_tiktok_cloud,
+        so_luong_BTHP_CAY_tiktok_cloud,
+        so_luong_BTHP_Combo_tiktok_cloud,
+        so_luong_BTHP_Combo_0CAY_tiktok_cloud,
+        so_luong_BTHP_Combo_CAY_tiktok_cloud,
+        so_luong_BTHP_SCx1_tiktok_cloud,
+        so_luong_BTHP_SCx2_tiktok_cloud,
+        so_luong_BTHP_COMBO4_tiktok_cloud,
+        soluong_COMBO_4_BTHP_0CAY_tiktok_cloud,
+        soluong_COMBO_4_BTHP_CAY_tiktok_cloud,
         ###Hoan tra
         so_luong_SCx1_tiktok_hoan_tra,
         so_luong_SCx2_tiktok_hoan_tra,
@@ -745,6 +830,16 @@ def process_shopee_data(df_shopee, ngay_bat_dau, ngay_ket_thuc):
     ]
     don_hoan_tra_shopee_unique = don_hoan_tra_shopee["Mã đơn hàng"].drop_duplicates()
     so_don_hoan_tra_shopee = len(don_hoan_tra_shopee_unique)
+
+    don_cloud_shopee = df_shopee[
+        (df_shopee["Acctually type"] != "Đã hủy")
+        & (
+            (df_shopee["Thời gian giao hàng"] > ngay_ket_thuc)
+            | (df_shopee["Thời gian giao hàng"].isna())
+        )
+    ]
+    don_cloud_shopee_unique = don_cloud_shopee["Mã đơn hàng"].drop_duplicates()
+    so_don_cloud_shopee = len(don_cloud_shopee_unique)
 
     # HOÀN THÀNH
     SCx1_shopee_hoanh_thanh = df_shopee[
@@ -1213,6 +1308,63 @@ def process_shopee_data(df_shopee, ngay_bat_dau, ngay_ket_thuc):
         "Số lượng"
     ].sum()
 
+    # CLOUD
+    SCx1_shopee_cloud = don_cloud_shopee[don_cloud_shopee["SKU Category"] == "SC-450g"]
+    SCx2_shopee_cloud = don_cloud_shopee[
+        don_cloud_shopee["SKU Category"] == "SC-x2-450g"
+    ]
+    SC_Combo_shopee_cloud = don_cloud_shopee[
+        don_cloud_shopee["SKU Category"] == "COMBO-SC"
+    ]
+    COMBO_SCx1_shopee_cloud = don_cloud_shopee[
+        don_cloud_shopee["SKU Category"] == "COMBO-SCX1"
+    ]
+    COMBO_SCx2_shopee_cloud = don_cloud_shopee[
+        don_cloud_shopee["SKU Category"] == "COMBO-SCX2"
+    ]
+    BTHP_SCx1_shopee_cloud = don_cloud_shopee[
+        don_cloud_shopee["SKU Category"] == "COMBO_BTHP_SCx1"
+    ]
+    BTHP_SCx2_shopee_cloud = don_cloud_shopee[
+        don_cloud_shopee["SKU Category"] == "COMBO_BTHP_SCx2"
+    ]
+    BTHP_0CAY_cloud = don_cloud_shopee[don_cloud_shopee["SKU Category"] == "BTHP-0CAY"]
+    BTHP_CAY_cloud = don_cloud_shopee[don_cloud_shopee["SKU Category"] == "BTHP-CAY"]
+    BTHP_COMBO_cloud = don_cloud_shopee[
+        don_cloud_shopee["SKU Category"] == "BTHP-COMBO"
+    ]
+    BTHP_COMBO_0CAY_cloud = don_cloud_shopee[
+        don_cloud_shopee["SKU Category"] == "BTHP-COMBO-0CAY"
+    ]
+    BTHP_COMBO_CAY_cloud = don_cloud_shopee[
+        don_cloud_shopee["SKU Category"] == "BTHP-COMBO-CAY"
+    ]
+    BTHP_COMBO4_cloud = don_cloud_shopee[
+        don_cloud_shopee["SKU Category"] == "COMBO_4BTHP"
+    ]
+    BTHP_COMBO4_0CAY_cloud = don_cloud_shopee[
+        don_cloud_shopee["SKU Category"] == "4BTHP_0CAY"
+    ]
+    BTHP_COMBO4_CAY_cloud = don_cloud_shopee[
+        don_cloud_shopee["SKU Category"] == "4BTHP_CAY"
+    ]
+
+    so_luong_SCx1_shopee_cloud = SCx1_shopee_cloud["Số lượng"].sum()
+    so_luong_SCx2_shopee_cloud = SCx2_shopee_cloud["Số lượng"].sum()
+    so_luong_SC_Combo_shopee_cloud = SC_Combo_shopee_cloud["Số lượng"].sum()
+    so_luong_COMBO_SCx1_shopee_cloud = COMBO_SCx1_shopee_cloud["Số lượng"].sum()
+    so_luong_COMBO_SCx2_shopee_cloud = COMBO_SCx2_shopee_cloud["Số lượng"].sum()
+    so_luong_BTHP_SCx1_shopee_cloud = BTHP_SCx1_shopee_cloud["Số lượng"].sum()
+    so_luong_BTHP_SCx2_shopee_cloud = BTHP_SCx2_shopee_cloud["Số lượng"].sum()
+    so_luong_BTHP_0CAY_shopee_cloud = BTHP_0CAY_cloud["Số lượng"].sum()
+    so_luong_BTHP_CAY_shopee_cloud = BTHP_CAY_cloud["Số lượng"].sum()
+    so_luong_BTHP_COMBO_shopee_cloud = BTHP_COMBO_cloud["Số lượng"].sum()
+    so_luong_BTHP_COMBO_0CAY_shopee_cloud = BTHP_COMBO_0CAY_cloud["Số lượng"].sum()
+    so_luong_BTHP_COMBO_CAY_shopee_cloud = BTHP_COMBO_CAY_cloud["Số lượng"].sum()
+    so_luong_BTHP_COMBO4_shopee_cloud = BTHP_COMBO4_cloud["Số lượng"].sum()
+    so_luong_BTHP_COMBO4_0CAY_shopee_cloud = BTHP_COMBO4_0CAY_cloud["Số lượng"].sum()
+    so_luong_BTHP_COMBO4_CAY_shopee_cloud = BTHP_COMBO4_CAY_cloud["Số lượng"].sum()
+
     tong_san_pham_shopee_hoanh_thanh = (
         so_luong_SCx1_shopee_hoanh_thanh
         + so_luong_SCx2_shopee_hoanh_thanh
@@ -1282,6 +1434,23 @@ def process_shopee_data(df_shopee, ngay_bat_dau, ngay_ket_thuc):
     )
 
     return (
+        # Cloud
+        so_don_cloud_shopee,
+        so_luong_SCx1_shopee_cloud,
+        so_luong_SCx2_shopee_cloud,
+        so_luong_SC_Combo_shopee_cloud,
+        so_luong_COMBO_SCx1_shopee_cloud,
+        so_luong_COMBO_SCx2_shopee_cloud,
+        so_luong_BTHP_SCx1_shopee_cloud,
+        so_luong_BTHP_SCx2_shopee_cloud,
+        so_luong_BTHP_0CAY_shopee_cloud,
+        so_luong_BTHP_CAY_shopee_cloud,
+        so_luong_BTHP_COMBO_shopee_cloud,
+        so_luong_BTHP_COMBO_0CAY_shopee_cloud,
+        so_luong_BTHP_COMBO_CAY_shopee_cloud,
+        so_luong_BTHP_COMBO4_shopee_cloud,
+        so_luong_BTHP_COMBO4_0CAY_shopee_cloud,
+        so_luong_BTHP_COMBO4_CAY_shopee_cloud,
         # Hoan tra
         so_luong_SCx1_shopee_hoan_tra,
         so_luong_SCx2_shopee_hoan_tra,
@@ -1403,6 +1572,23 @@ if process_btn:
             df_shopee = pd.read_excel(file_shopee)
 
             (
+                # cloud
+                so_don_cloud_tiktok,
+                so_luong_SCx1_tiktok_cloud,
+                so_luong_SCx2_tiktok_cloud,
+                so_luong_SC_Combo_tiktok_cloud,
+                so_luong_Combo_Scx1_tiktok_cloud,
+                so_luong_Combo_Scx2_tiktok_cloud,
+                so_luong_BTHP_0CAY_tiktok_cloud,
+                so_luong_BTHP_CAY_tiktok_cloud,
+                so_luong_BTHP_Combo_tiktok_cloud,
+                so_luong_BTHP_Combo_0CAY_tiktok_cloud,
+                so_luong_BTHP_Combo_CAY_tiktok_cloud,
+                so_luong_BTHP_SCx1_tiktok_cloud,
+                so_luong_BTHP_SCx2_tiktok_cloud,
+                so_luong_BTHP_COMBO4_tiktok_cloud,
+                soluong_COMBO_4_BTHP_0CAY_tiktok_cloud,
+                soluong_COMBO_4_BTHP_CAY_tiktok_cloud,
                 ###Hoan tra
                 so_luong_SCx1_tiktok_hoan_tra,
                 so_luong_SCx2_tiktok_hoan_tra,
@@ -1471,6 +1657,23 @@ if process_btn:
             ) = process_tiktok_data(df_tiktok, ngay_bat_dau, ngay_ket_thuc)
 
             (
+                # Cloud
+                so_don_cloud_shopee,
+                so_luong_SCx1_shopee_cloud,
+                so_luong_SCx2_shopee_cloud,
+                so_luong_SC_Combo_shopee_cloud,
+                so_luong_COMBO_SCx1_shopee_cloud,
+                so_luong_COMBO_SCx2_shopee_cloud,
+                so_luong_BTHP_SCx1_shopee_cloud,
+                so_luong_BTHP_SCx2_shopee_cloud,
+                so_luong_BTHP_0CAY_shopee_cloud,
+                so_luong_BTHP_CAY_shopee_cloud,
+                so_luong_BTHP_COMBO_shopee_cloud,
+                so_luong_BTHP_COMBO_0CAY_shopee_cloud,
+                so_luong_BTHP_COMBO_CAY_shopee_cloud,
+                so_luong_BTHP_COMBO4_shopee_cloud,
+                so_luong_BTHP_COMBO4_0CAY_shopee_cloud,
+                so_luong_BTHP_COMBO4_CAY_shopee_cloud,
                 # Hoan tra
                 so_luong_SCx1_shopee_hoan_tra,
                 so_luong_SCx2_shopee_hoan_tra,
@@ -1537,7 +1740,7 @@ if process_btn:
                 so_don_da_giao_shopee,
             ) = process_shopee_data(df_shopee, ngay_bat_dau, ngay_ket_thuc)
 
-            bang_thong_ke_don_hang_tiktok = pd.DataFrame(
+            bang_thong_ke_don_hang = pd.DataFrame(
                 {
                     "ĐƠN ĐÃ GIAO": [so_don_da_giao_tiktok, so_don_da_giao_shopee],
                     "ĐƠN HOÀN THÀNH": [
@@ -1865,7 +2068,7 @@ if process_btn:
                 index=["Tiktok", "Shopee"],
             )
 
-            bang_so_luong_san_pham_hoan_tra_tiktok_shopee = pd.DataFrame(
+            bang_so_luong_san_pham_hoan_tra = pd.DataFrame(
                 {
                     "SCx1": [
                         so_luong_SCx1_tiktok_hoan_tra,
@@ -1931,6 +2134,74 @@ if process_btn:
                 index=["Tiktok", "Shopee"],
             )
 
+            bang_thong_ke_don_cloud = pd.DataFrame(
+                {
+                    "TỔNG": [so_don_cloud_tiktok, so_don_cloud_shopee],
+                },
+                index=["Tiktok", "Shopee"],
+            )
+
+            bang_so_luong_san_pham_cua_don_cloud = pd.DataFrame(
+                {
+                    "TỔNG ĐƠN": [so_don_cloud_tiktok, so_don_cloud_shopee],
+                    "SCx1": [so_luong_SCx1_tiktok_cloud, so_luong_SCx1_shopee_cloud],
+                    "SCx2": [so_luong_SCx2_tiktok_cloud, so_luong_SCx2_shopee_cloud],
+                    "SC_Combo": [
+                        so_luong_SC_Combo_tiktok_cloud,
+                        so_luong_SC_Combo_shopee_cloud,
+                    ],
+                    "Combo_SCx1": [
+                        so_luong_Combo_Scx1_tiktok_cloud,
+                        so_luong_COMBO_SCx1_shopee_cloud,
+                    ],
+                    "Combo_SCx2": [
+                        so_luong_Combo_Scx2_tiktok_cloud,
+                        so_luong_COMBO_SCx2_shopee_cloud,
+                    ],
+                    "BTHP 0Cay": [
+                        so_luong_BTHP_0CAY_tiktok_cloud,
+                        so_luong_BTHP_0CAY_shopee_cloud,
+                    ],
+                    "BTHP Cay": [
+                        so_luong_BTHP_CAY_tiktok_cloud,
+                        so_luong_BTHP_CAY_shopee_cloud,
+                    ],
+                    "BTHP_Combo": [
+                        so_luong_BTHP_Combo_tiktok_cloud,
+                        so_luong_BTHP_COMBO_shopee_cloud,
+                    ],
+                    "Combo BTHP 0Cay": [
+                        so_luong_BTHP_Combo_0CAY_tiktok_cloud,
+                        so_luong_BTHP_COMBO_0CAY_shopee_cloud,
+                    ],
+                    "Combo_BTHP Cay": [
+                        so_luong_BTHP_Combo_CAY_tiktok_cloud,
+                        so_luong_BTHP_COMBO_CAY_shopee_cloud,
+                    ],
+                    "COMBO BTHP + SCx1": [
+                        so_luong_BTHP_SCx1_tiktok_cloud,
+                        so_luong_BTHP_SCx1_shopee_cloud,
+                    ],
+                    "COMBO BTHP + SCx2": [
+                        so_luong_BTHP_SCx2_tiktok_cloud,
+                        so_luong_BTHP_SCx2_shopee_cloud,
+                    ],
+                    "COMBO 4BTHP": [
+                        so_luong_BTHP_COMBO4_tiktok_cloud,
+                        so_luong_BTHP_COMBO4_shopee_cloud,
+                    ],
+                    "COMBO 4BTHP 0CAY": [
+                        soluong_COMBO_4_BTHP_0CAY_tiktok_cloud,
+                        so_luong_BTHP_COMBO4_0CAY_shopee_cloud,
+                    ],
+                    "COMBO 4BTHP CAY": [
+                        soluong_COMBO_4_BTHP_CAY_tiktok_cloud,
+                        so_luong_BTHP_COMBO4_CAY_shopee_cloud,
+                    ],
+                },
+                index=["Tiktok", "Shopee"],
+            )
+
             bang_thong_ke_so_luong = pd.concat(
                 [bang_thong_ke_so_luong_tiktok, bang_thong_ke_so_luong_shopee]
             )
@@ -1943,7 +2214,7 @@ if process_btn:
             st.markdown("### 📊 Tổng Đơn Hàng Tiktok & Shopee")
             with st.container():
                 st.markdown("#### 📋 Bảng Thống Kê")
-                st.dataframe(bang_thong_ke_don_hang_tiktok)
+                st.dataframe(bang_thong_ke_don_hang)
 
             st.markdown("### 📊 Tổng SỐ LƯỢNG Sản Phẩm Tiktok & Shopee")
             with st.container():
@@ -1970,7 +2241,12 @@ if process_btn:
             st.markdown("### 📊 Số lượng hàng hoàn ")
             with st.container():
                 st.markdown("#### 📋 Bảng Thống Kê")
-                st.dataframe(bang_so_luong_san_pham_hoan_tra_tiktok_shopee)
+                st.dataframe(bang_so_luong_san_pham_hoan_tra)
+
+            st.markdown("### 📊 Số lượng chi tiết đơn Cloud ")
+            with st.container():
+                st.markdown("#### 📋 Bảng Thống Kê")
+                st.dataframe(bang_so_luong_san_pham_cua_don_cloud)
 
             # col1, col2 = st.columns(2)
 
