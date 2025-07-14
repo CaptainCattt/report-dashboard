@@ -2087,7 +2087,7 @@ if process_btn:
                         so_luong_CB_SCx1_shopee_hoan_tra,
                     ],
                     "Combo_SCx2": [
-                        so_luong_CB_SCx1_tiktok_hoan_tra,
+                        so_luong_CB_SCx2_tiktok_hoan_tra,
                         so_luong_CB_SCx2_shopee_hoan_tra,
                     ],
                     "BTHP 0Cay": [
