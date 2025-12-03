@@ -105,6 +105,7 @@ def process_tiktok_data(df_new, ngay_bat_dau, ngay_ket_thuc):
     don_da_giao_tiktok_unique = don_da_giao_tiktok["Order ID"].drop_duplicates(
     )
     so_don_da_giao_tiktok = len(don_da_giao_tiktok_unique)
+    #
 
     don_cloud_tiktok = df_new[
         (
