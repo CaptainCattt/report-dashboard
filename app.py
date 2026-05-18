@@ -15,31 +15,31 @@ def process_tiktok_data(df_new, ngay_bat_dau, ngay_ket_thuc):
     # Danh sách các mẫu thay thế
     replacements = {
         r"^(COMBO-SC-ANHDUC|COMBO-SC-NGOCTRINH|COMBO-SC-MIX|SC_COMBO_MIX|SC_COMBO_MIX_LIVESTREAM|COMBO-SC_LIVESTREAM|SC_COMBO_MIX_01|MIX_X1\+X2|MIX_X1\+X2_LIVESTREAM)$": "COMBO-SC",
-        r"^(SC_X1|X1)$": "SC-450g",
-        r"^(SC_X2|X2)$": "SC-x2-450g",
+        r"^(SC_X1|X1|X1_LIVESTREAM)$": "SC-450g",
+        r"^(SC_X2|X2|X2_LIVESTREAM)$": "SC-x2-450g",
         r"^(SC_COMBO_X1|COMBO-CAYVUA-X1|SC_COMBO_X1_LIVESTREAM|COMBO-SCX1|COMBO-SCX1_LIVESTREAM|COMBO_X1_LIVESTREAM|COMBO_X1)$": "COMBO-SCX1",
         r"^(SC_COMBO_X2|COMBO-SIEUCAY-X2|SC_COMBO_X2_LIVESTREAM|COMBO-SCX2|COMBO-SCX2_LIVESTREAM|COMBO_X2_LIVESTREAM|COMBO_X2)$": "COMBO-SCX2",
-        r"^(BTHP-Cay-200gr|BTHP_Cay)$": "BTHP-CAY",
-        r"^(BTHP-200gr|BTHP_KhongCay)$": "BTHP-0CAY",
-        r"^(BTHP_COMBO_MIX|BTHP003_combo_mix|MIX_Cay\+KhongCay)$": "BTHP-COMBO",
-        r"^(BTHP_COMBO_KhongCay|BTHP003_combo_kocay|COMBO_BTHP_KhongCay)$": "BTHP-COMBO-0CAY",
-        r"^(BTHP_COMBO_Cay|BTHP003_combo_cay|COMBO_BTHP_Cay)$": "BTHP-COMBO-CAY",
-        r"^(BTHP-COMBO\+SC_X1|BTHP_COMBO_MIX\+SC_X1|MIX_BTHP\+X1)$": "MIX_BTHP+X1",
-        r"^(BTHP-COMBO\+SC_X2|BTHP_COMBO_MIX\+SC_X2|MIX_BTHP\+X2)$": "MIX_BTHP+X2",
+        r"^(BTHP-Cay-200gr|BTHP_Cay|BTHP_Cay_LIVESTREAM)$": "BTHP-CAY",
+        r"^(BTHP-200gr|BTHP_KhongCay|BTHP_KhongCay_LIVESTREAM)$": "BTHP-0CAY",
+        r"^(BTHP_COMBO_MIX|BTHP003_combo_mix|MIX_Cay\+KhongCay|MIX_Cay\+KhongCay_LIVESTREAM)$": "BTHP-COMBO",
+        r"^(BTHP_COMBO_KhongCay|BTHP003_combo_kocay|COMBO_BTHP_KhongCay|COMBO_BTHP_KhongCay_LIVESTREAM)$": "BTHP-COMBO-0CAY",
+        r"^(BTHP_COMBO_Cay|BTHP003_combo_cay|COMBO_BTHP_Cay|COMBO_BTHP_Cay_LIVESTREAM)$": "BTHP-COMBO-CAY",
+        r"^(BTHP-COMBO\+SC_X1|BTHP_COMBO_MIX\+SC_X1|MIX_BTHP\+X1|MIX_BTHP\+X1_LIVESTREAM)$": "MIX_BTHP+X1",
+        r"^(BTHP-COMBO\+SC_X2|BTHP_COMBO_MIX\+SC_X2|MIX_BTHP\+X2|MIX_BTHP\+X2_LIVESTREAM)$": "MIX_BTHP+X2",
 
-        r"^(BTHP-2Cay-2KhongCay|MIX_2Cay\+2KhongCay)": "COMBO_4BTHP",
-        r"^(BTHP-4Hu-KhongCay|4HU_BTHP_KhongCay|4Hu_BTHP_KhongCay)$": "4BTHP_0CAY",
-        r"^(BTHP-4Hu-Cay|4HU_BTHP_Cay|4Hu_BTHP_Cay)$": "4BTHP_CAY",
-        r"^(ST-SATETOM-X1|SC-SATE-TOM-X1|ST_STT|STT)$": "SATETOM_X1",
-        r"^(SC-TIEUCHAY-X1|SC_TCLC|TCLC)$": "TIEUCHAY_X1",
-        r"^(MIX_STT\+TCLC)$": "MIX_STT_TCLC",
-        r"^(COMBO_STT)$": "COMBO_STT",
-        r"^(COMBO_TCLC)$": "COMBO_TCLC",
+        r"^(BTHP-2Cay-2KhongCay|MIX_2Cay\+2KhongCay|MIX_2Cay\+2KhongCay_LIVESTREAM)": "COMBO_4BTHP",
+        r"^(BTHP-4Hu-KhongCay|4HU_BTHP_KhongCay|4Hu_BTHP_KhongCay|4Hu_BTHP_KhongCay_LIVESTREAM)$": "4BTHP_0CAY",
+        r"^(BTHP-4Hu-Cay|4HU_BTHP_Cay|4Hu_BTHP_Cay|4Hu_BTHP_Cay_LIVESTREAM)$": "4BTHP_CAY",
+        r"^(ST-SATETOM-X1|SC-SATE-TOM-X1|ST_STT|STT|STT_LIVESTREAM)$": "SATETOM_X1",
+        r"^(SC-TIEUCHAY-X1|SC_TCLC|TCLC|TCLC_LIVESTREAM)$": "TIEUCHAY_X1",
+        r"^(MIX_STT\+TCLC|MIX_STT\+TCLC_LIVESTREAM)$": "MIX_STT_TCLC",
+        r"^(COMBO_STT|COMBO_STT_LIVESTREAM)$": "COMBO_STT",
+        r"^(COMBO_TCLC|COMBO_TCLC_LIVESTREAM)$": "COMBO_TCLC",
         # Newadd
-        r"^(MIX_X1\+STT)$": "MIX_X1_STT",
-        r"^(MIX_X2\+STT)$": "MIX_X2_STT",
-        r"^(MIX_X1\+TCLC)$": "MIX_X1_TCLC",
-        r"^(MIX_X2\+TCLC)$": "MIX_X2_TCLC",
+        r"^(MIX_X1\+STT|MIX_X1\+STT_LIVESTREAM)$": "MIX_X1_STT",
+        r"^(MIX_X2\+STT|MIX_X2\+STT_LIVESTREAM)$": "MIX_X2_STT",
+        r"^(MIX_X1\+TCLC|MIX_X1\+TCLC_LIVESTREAM)$": "MIX_X1_TCLC",
+        r"^(MIX_X2\+TCLC|MIX_X2\+TCLC_LIVESTREAM)$": "MIX_X2_TCLC",
 
         # Ao caytedai
         r"^(ClothSet_X1_M)$": "ClothSet_X1_M",
@@ -56,12 +56,18 @@ def process_tiktok_data(df_new, ngay_bat_dau, ngay_ket_thuc):
         r"^(TShirt_Black_M)$": "TShirt_Black_M",
         r"^(TShirt_Black_L)$": "TShirt_Black_L",
         r"^(TShirt_Black_XL)$": "TShirt_Black_XL",
-    }
 
-    for pattern, replacement in replacements.items():
-        df_new["SKU Category"] = df_new["SKU Category"].str.replace(
-            pattern, replacement, regex=True
-        )
+        # San pham moi & combo mới
+        r"^(COMBO_X1_200g|COMBO_X1_200g_LIVESTREAM)$": "COMBO_X1_200",
+        r"^(COMBO_X2_200g|COMBO_X2_200g_LIVESTREAM)$": "COMBO_X2_200",
+        r"^(COMBO_TCLC_200g|COMBO_TCLC_200g_LIVESTREAM)$": "COMBO_TCLC_200",
+        r"^(MIX_200g_X1\+X2\+TCLC|MIX_200g_X1\+X2\+TCLC_LIVESTREAM)$": "MIX_X1_X2_TCLC_200",
+        r"^(MIX_200g_X1\+X2\+TCLC\+STT|MIX_200g_X1\+X2\+TCLC\+STT_LIVESTREAM)$": "MIX_ALL_200",
+        r"^(MIX_200g_X1\+X2|MIX_200g_X1\+X2_LIVESTREAM)$": "MIX_X1_X2_200",
+        r"^(MIX_200g_X1\+TCLC|MIX_200g_X1\+TCLC_LIVESTREAM)$": "MIX_X1_TCLC_200",
+        r"^(MIX_200g_X2\+TCLC|MIX_200g_X2\+TCLC_LIVESTREAM)$": "MIX_X2_TCLC_200",
+
+    }
 
     for pattern, replacement in replacements.items():
         df_new["SKU Category"] = df_new["SKU Category"].str.replace(
@@ -283,7 +289,6 @@ def process_tiktok_data(df_new, ngay_bat_dau, ngay_ket_thuc):
     )
 
     # BÁNH TRÁNG
-
     # Hoàn thành
     BTHP_0CAY_hoan_thanh = df_new[
         (df_new["SKU Category"] == "BTHP-0CAY")
@@ -849,9 +854,270 @@ def process_tiktok_data(df_new, ngay_bat_dau, ngay_ket_thuc):
     so_luong_MIX_X2_TCLC_tiktok_hoan_tra = MIX_X2_TCLC_tiktok_hoan_tra["Sku Quantity of return"].sum(
     )
 
+    # =========================================================================================
+    # Sản phẩm mới và combo mới
+    COMBO_X1_200_tiktok_hoan_thanh = df_new[
+        (df_new["SKU Category"] == "COMBO_X1_200")
+        & (df_new["Delivered Time"] >= ngay_bat_dau)
+        & (df_new["Delivered Time"] <= ngay_ket_thuc)
+        & (df_new["Order Substatus"] == "Completed")
+    ]
+    # Đã giao
+    COMBO_X1_200_tiktok_da_giao = df_new[
+        (df_new["SKU Category"] == "COMBO_X1_200")
+        & (df_new["Delivered Time"] >= ngay_bat_dau)
+        & (df_new["Delivered Time"] <= ngay_ket_thuc)
+        & (df_new["Order Substatus"] == "Delivered")
+    ]
+    # Hoàn trả
+    COMBO_X1_200_tiktok_hoan_tra = df_new[
+        (df_new["SKU Category"] == "COMBO_X1_200")
+        & (df_new["Delivered Time"] >= ngay_bat_dau)
+        & (df_new["Delivered Time"] <= ngay_ket_thuc)
+        & (df_new["Sku Quantity of return"] != 0)
+    ]
+
+    so_luong_COMBO_X1_200_tiktok_hoan_thanh = COMBO_X1_200_tiktok_hoan_thanh["Quantity"].sum(
+    )
+    so_luong_COMBO_X1_200_tiktok_da_giao = COMBO_X1_200_tiktok_da_giao["Quantity"].sum(
+    )
+    so_luong_COMBO_X1_200_tiktok_hoan_tra = COMBO_X1_200_tiktok_hoan_tra["Sku Quantity of return"].sum(
+    )
+
+    COMBO_X2_200_tiktok_hoan_thanh = df_new[
+        (df_new["SKU Category"] == "COMBO_X2_200")
+        & (df_new["Delivered Time"] >= ngay_bat_dau)
+        & (df_new["Delivered Time"] <= ngay_ket_thuc)
+        & (df_new["Order Substatus"] == "Completed")
+    ]
+    # Đã giao
+    COMBO_X2_200_tiktok_da_giao = df_new[
+        (df_new["SKU Category"] == "COMBO_X2_200")
+        & (df_new["Delivered Time"] >= ngay_bat_dau)
+        & (df_new["Delivered Time"] <= ngay_ket_thuc)
+        & (df_new["Order Substatus"] == "Delivered")
+    ]
+    # Hoàn trả
+    COMBO_X2_200_tiktok_hoan_tra = df_new[
+        (df_new["SKU Category"] == "COMBO_X2_200")
+        & (df_new["Delivered Time"] >= ngay_bat_dau)
+        & (df_new["Delivered Time"] <= ngay_ket_thuc)
+        & (df_new["Sku Quantity of return"] != 0)
+    ]
+
+    so_luong_COMBO_X2_200_tiktok_hoan_thanh = COMBO_X2_200_tiktok_hoan_thanh["Quantity"].sum(
+    )
+    so_luong_COMBO_X2_200_tiktok_da_giao = COMBO_X2_200_tiktok_da_giao["Quantity"].sum(
+    )
+    so_luong_COMBO_X2_200_tiktok_hoan_tra = COMBO_X2_200_tiktok_hoan_tra["Sku Quantity of return"].sum(
+    )
+
+    COMBO_TCLC_200_tiktok_hoan_thanh = df_new[
+        (df_new["SKU Category"] == "COMBO_TCLC_200")
+        & (df_new["Delivered Time"] >= ngay_bat_dau)
+        & (df_new["Delivered Time"] <= ngay_ket_thuc)
+        & (df_new["Order Substatus"] == "Completed")
+    ]
+    # Đã giao
+    COMBO_TCLC_200_tiktok_da_giao = df_new[
+        (df_new["SKU Category"] == "COMBO_TCLC_200")
+        & (df_new["Delivered Time"] >= ngay_bat_dau)
+        & (df_new["Delivered Time"] <= ngay_ket_thuc)
+        & (df_new["Order Substatus"] == "Delivered")
+    ]
+    # Hoàn trả
+    COMBO_TCLC_200_tiktok_hoan_tra = df_new[
+        (df_new["SKU Category"] == "COMBO_TCLC_200")
+        & (df_new["Delivered Time"] >= ngay_bat_dau)
+        & (df_new["Delivered Time"] <= ngay_ket_thuc)
+        & (df_new["Sku Quantity of return"] != 0)
+    ]
+
+    so_luong_COMBO_TCLC_200_tiktok_hoan_thanh = COMBO_TCLC_200_tiktok_hoan_thanh["Quantity"].sum(
+    )
+    so_luong_COMBO_TCLC_200_tiktok_da_giao = COMBO_TCLC_200_tiktok_da_giao["Quantity"].sum(
+    )
+    so_luong_COMBO_TCLC_200_tiktok_hoan_tra = COMBO_TCLC_200_tiktok_hoan_tra["Sku Quantity of return"].sum(
+    )
+
+    MIX_X1_X2_TCLC_200_tiktok_hoan_thanh = df_new[
+        (df_new["SKU Category"] == "MIX_X1_X2_TCLC_200")
+        & (df_new["Delivered Time"] >= ngay_bat_dau)
+        & (df_new["Delivered Time"] <= ngay_ket_thuc)
+        & (df_new["Order Substatus"] == "Completed")
+    ]
+    # Đã giao
+    MIX_X1_X2_TCLC_200_tiktok_da_giao = df_new[
+        (df_new["SKU Category"] == "MIX_X1_X2_TCLC_200")
+        & (df_new["Delivered Time"] >= ngay_bat_dau)
+        & (df_new["Delivered Time"] <= ngay_ket_thuc)
+        & (df_new["Order Substatus"] == "Delivered")
+    ]
+    # Hoàn trả
+    MIX_X1_X2_TCLC_200_tiktok_hoan_tra = df_new[
+        (df_new["SKU Category"] == "MIX_X1_X2_TCLC_200")
+        & (df_new["Delivered Time"] >= ngay_bat_dau)
+        & (df_new["Delivered Time"] <= ngay_ket_thuc)
+        & (df_new["Sku Quantity of return"] != 0)
+    ]
+
+    so_luong_MIX_X1_X2_TCLC_200_tiktok_hoan_thanh = MIX_X1_X2_TCLC_200_tiktok_hoan_thanh["Quantity"].sum(
+    )
+    so_luong_MIX_X1_X2_TCLC_200_tiktok_da_giao = MIX_X1_X2_TCLC_200_tiktok_da_giao["Quantity"].sum(
+    )
+    so_luong_MIX_X1_X2_TCLC_200_tiktok_hoan_tra = MIX_X1_X2_TCLC_200_tiktok_hoan_tra["Sku Quantity of return"].sum(
+    )
+
+    # MIX_X1_X2_TCLC_200_tiktok_hoan_thanh = df_new[
+    #     (df_new["SKU Category"] == "MIX_X1_X2_TCLC_200")
+    #     & (df_new["Delivered Time"] >= ngay_bat_dau)
+    #     & (df_new["Delivered Time"] <= ngay_ket_thuc)
+    #     & (df_new["Order Substatus"] == "Completed")
+    # ]
+
+    # # Đã giao
+    # MIX_X1_X2_TCLC_200_tiktok_da_giao = df_new[
+    #     (df_new["SKU Category"] == "MIX_X1_X2_TCLC_200")
+    #     & (df_new["Delivered Time"] >= ngay_bat_dau)
+    #     & (df_new["Delivered Time"] <= ngay_ket_thuc)
+    #     & (df_new["Order Substatus"] == "Delivered")
+    # ]
+    # # Hoàn trả
+    # MIX_X1_X2_TCLC_200_tiktok_hoan_tra = df_new[
+    #     (df_new["SKU Category"] == "MIX_X1_X2_TCLC_200")
+    #     & (df_new["Delivered Time"] >= ngay_bat_dau)
+    #     & (df_new["Delivered Time"] <= ngay_ket_thuc)
+    #     & (df_new["Sku Quantity of return"] != 0)
+    # ]
+
+    # so_luong_MIX_X1_X2_TCLC_200_tiktok_hoan_thanh = MIX_X1_X2_TCLC_200_tiktok_hoan_thanh["Quantity"].sum(
+    # )
+    # so_luong_MIX_X1_X2_TCLC_200_tiktok_da_giao = MIX_X1_X2_TCLC_200_tiktok_da_giao["Quantity"].sum(
+    # )
+    # so_luong_MIX_X1_X2_TCLC_200_tiktok_hoan_tra = MIX_X1_X2_TCLC_200_tiktok_hoan_tra["Sku Quantity of return"].sum(
+    # )
+
+    MIX_ALL_200_tiktok_hoan_thanh = df_new[
+        (df_new["SKU Category"] == "MIX_ALL_200")
+        & (df_new["Delivered Time"] >= ngay_bat_dau)
+        & (df_new["Delivered Time"] <= ngay_ket_thuc)
+        & (df_new["Order Substatus"] == "Completed")
+    ]
+
+    # Đã giao
+    MIX_ALL_200_tiktok_da_giao = df_new[
+        (df_new["SKU Category"] == "MIX_ALL_200")
+        & (df_new["Delivered Time"] >= ngay_bat_dau)
+        & (df_new["Delivered Time"] <= ngay_ket_thuc)
+        & (df_new["Order Substatus"] == "Delivered")
+    ]
+    # Hoàn trả
+    MIX_ALL_200_tiktok_hoan_tra = df_new[
+        (df_new["SKU Category"] == "MIX_ALL_200")
+        & (df_new["Delivered Time"] >= ngay_bat_dau)
+        & (df_new["Delivered Time"] <= ngay_ket_thuc)
+        & (df_new["Sku Quantity of return"] != 0)
+    ]
+
+    so_luong_MIX_ALL_200_tiktok_hoan_thanh = MIX_ALL_200_tiktok_hoan_thanh["Quantity"].sum(
+    )
+    so_luong_MIX_ALL_200_tiktok_da_giao = MIX_ALL_200_tiktok_da_giao["Quantity"].sum(
+    )
+    so_luong_MIX_ALL_200_tiktok_hoan_tra = MIX_ALL_200_tiktok_hoan_tra["Sku Quantity of return"].sum(
+    )
+
+    MIX_X1_X2_200_tiktok_hoan_thanh = df_new[
+        (df_new["SKU Category"] == "MIX_X1_X2_200")
+        & (df_new["Delivered Time"] >= ngay_bat_dau)
+        & (df_new["Delivered Time"] <= ngay_ket_thuc)
+        & (df_new["Order Substatus"] == "Completed")
+    ]
+
+    # Đã giao
+    MIX_X1_X2_200_tiktok_da_giao = df_new[
+        (df_new["SKU Category"] == "MIX_X1_X2_200")
+        & (df_new["Delivered Time"] >= ngay_bat_dau)
+        & (df_new["Delivered Time"] <= ngay_ket_thuc)
+        & (df_new["Order Substatus"] == "Delivered")
+    ]
+    # Hoàn trả
+    MIX_X1_X2_200_tiktok_hoan_tra = df_new[
+        (df_new["SKU Category"] == "MIX_X1_X2_200")
+        & (df_new["Delivered Time"] >= ngay_bat_dau)
+        & (df_new["Delivered Time"] <= ngay_ket_thuc)
+        & (df_new["Sku Quantity of return"] != 0)
+    ]
+
+    so_luong_MIX_X1_X2_200_tiktok_hoan_thanh = MIX_X1_X2_200_tiktok_hoan_thanh["Quantity"].sum(
+    )
+    so_luong_MIX_X1_X2_200_tiktok_da_giao = MIX_X1_X2_200_tiktok_da_giao["Quantity"].sum(
+    )
+    so_luong_MIX_X1_X2_200_tiktok_hoan_tra = MIX_X1_X2_200_tiktok_hoan_tra["Sku Quantity of return"].sum(
+    )
+
+    MIX_X1_TCLC_200_tiktok_hoan_thanh = df_new[
+        (df_new["SKU Category"] == "MIX_X1_TCLC_200")
+        & (df_new["Delivered Time"] >= ngay_bat_dau)
+        & (df_new["Delivered Time"] <= ngay_ket_thuc)
+        & (df_new["Order Substatus"] == "Completed")
+    ]
+
+    # Đã giao
+    MIX_X1_TCLC_200_tiktok_da_giao = df_new[
+        (df_new["SKU Category"] == "MIX_X1_TCLC_200")
+        & (df_new["Delivered Time"] >= ngay_bat_dau)
+        & (df_new["Delivered Time"] <= ngay_ket_thuc)
+        & (df_new["Order Substatus"] == "Delivered")
+    ]
+    # Hoàn trả
+    MIX_X1_TCLC_200_tiktok_hoan_tra = df_new[
+        (df_new["SKU Category"] == "MIX_X1_TCLC_200")
+        & (df_new["Delivered Time"] >= ngay_bat_dau)
+        & (df_new["Delivered Time"] <= ngay_ket_thuc)
+        & (df_new["Sku Quantity of return"] != 0)
+    ]
+
+    so_luong_MIX_X1_TCLC_200_tiktok_hoan_thanh = MIX_X1_TCLC_200_tiktok_hoan_thanh["Quantity"].sum(
+    )
+    so_luong_MIX_X1_TCLC_200_tiktok_da_giao = MIX_X1_TCLC_200_tiktok_da_giao["Quantity"].sum(
+    )
+    so_luong_MIX_X1_TCLC_200_tiktok_hoan_tra = MIX_X1_TCLC_200_tiktok_hoan_tra["Sku Quantity of return"].sum(
+    )
+
+    MIX_X2_TCLC_200_tiktok_hoan_thanh = df_new[
+        (df_new["SKU Category"] == "MIX_X2_TCLC_200")
+        & (df_new["Delivered Time"] >= ngay_bat_dau)
+        & (df_new["Delivered Time"] <= ngay_ket_thuc)
+        & (df_new["Order Substatus"] == "Completed")
+    ]
+
+    # Đã giao
+    MIX_X2_TCLC_200_tiktok_da_giao = df_new[
+        (df_new["SKU Category"] == "MIX_X2_TCLC_200")
+        & (df_new["Delivered Time"] >= ngay_bat_dau)
+        & (df_new["Delivered Time"] <= ngay_ket_thuc)
+        & (df_new["Order Substatus"] == "Delivered")
+    ]
+    # Hoàn trả
+    MIX_X2_TCLC_200_tiktok_hoan_tra = df_new[
+        (df_new["SKU Category"] == "MIX_X2_TCLC_200")
+        & (df_new["Delivered Time"] >= ngay_bat_dau)
+        & (df_new["Delivered Time"] <= ngay_ket_thuc)
+        & (df_new["Sku Quantity of return"] != 0)
+    ]
+
+    so_luong_MIX_X2_TCLC_200_tiktok_hoan_thanh = MIX_X2_TCLC_200_tiktok_hoan_thanh["Quantity"].sum(
+    )
+    so_luong_MIX_X2_TCLC_200_tiktok_da_giao = MIX_X2_TCLC_200_tiktok_da_giao["Quantity"].sum(
+    )
+    so_luong_MIX_X2_TCLC_200_tiktok_hoan_tra = MIX_X2_TCLC_200_tiktok_hoan_tra["Sku Quantity of return"].sum(
+    )
+
     #############
     # CLOUD
-    SCx1_tiktok_cloud = don_cloud_tiktok[don_cloud_tiktok["SKU Category"] == "SC-450g"]
+    SCx1_tiktok_cloud = don_cloud_tiktok[
+        don_cloud_tiktok["SKU Category"] == "SC-450g"
+    ]
     SCx2_tiktok_cloud = don_cloud_tiktok[
         don_cloud_tiktok["SKU Category"] == "SC-x2-450g"
     ]
@@ -864,8 +1130,12 @@ def process_tiktok_data(df_new, ngay_bat_dau, ngay_ket_thuc):
     Combo_Scx2_tiktok_cloud = don_cloud_tiktok[
         don_cloud_tiktok["SKU Category"] == "COMBO-SCX2"
     ]
-    BTHP_0CAY_cloud = don_cloud_tiktok[don_cloud_tiktok["SKU Category"] == "BTHP-0CAY"]
-    BTHP_CAY_cloud = don_cloud_tiktok[don_cloud_tiktok["SKU Category"] == "BTHP-CAY"]
+    BTHP_0CAY_cloud = don_cloud_tiktok[
+        don_cloud_tiktok["SKU Category"] == "BTHP-0CAY"
+    ]
+    BTHP_CAY_cloud = don_cloud_tiktok[
+        don_cloud_tiktok["SKU Category"] == "BTHP-CAY"
+    ]
     BTHP_Combo_cloud = don_cloud_tiktok[
         don_cloud_tiktok["SKU Category"] == "BTHP-COMBO"
     ]
@@ -905,38 +1175,69 @@ def process_tiktok_data(df_new, ngay_bat_dau, ngay_ket_thuc):
     CB_TCLC_tiktok_cloud = don_cloud_tiktok[
         don_cloud_tiktok["SKU Category"] == "COMBO_TCLC"
     ]
-
     MIX_X1_STT_tiktok_cloud = don_cloud_tiktok[
         don_cloud_tiktok["SKU Category"] == "MIX_X1_STT"
     ]
     MIX_X1_TCLC_tiktok_cloud = don_cloud_tiktok[
         don_cloud_tiktok["SKU Category"] == "MIX_X1_TCLC"
     ]
-
     MIX_X2_STT_tiktok_cloud = don_cloud_tiktok[
         don_cloud_tiktok["SKU Category"] == "MIX_X2_STT"
     ]
     MIX_X2_TCLC_tiktok_cloud = don_cloud_tiktok[
         don_cloud_tiktok["SKU Category"] == "MIX_X2_TCLC"
     ]
+    COMBO_X1_200_tiktok_cloud = don_cloud_tiktok[
+        don_cloud_tiktok["SKU Category"] == "COMBO_X1_200"
+    ]
+    COMBO_X2_200_tiktok_cloud = don_cloud_tiktok[
+        don_cloud_tiktok["SKU Category"] == "COMBO_X2_200"
+    ]
+    COMBO_TCLC_200_tiktok_cloud = don_cloud_tiktok[
+        don_cloud_tiktok["SKU Category"] == "COMBO_TCLC_200"
+    ]
+    MIX_X1_X2_TCLC_200_tiktok_cloud = don_cloud_tiktok[
+        don_cloud_tiktok["SKU Category"] == "MIX_X1_X2_TCLC_200"
+    ]
+    MIX_ALL_200_tiktok_cloud = don_cloud_tiktok[
+        don_cloud_tiktok["SKU Category"] == "MIX_ALL_200"
+    ]
+    MIX_X1_X2_200_tiktok_cloud = don_cloud_tiktok[
+        don_cloud_tiktok["SKU Category"] == "MIX_X1_X2_200"
+    ]
+    MIX_X1_TCLC_200_tiktok_cloud = don_cloud_tiktok[
+        don_cloud_tiktok["SKU Category"] == "MIX_X1_TCLC_200"
+    ]
+    MIX_X2_TCLC_200_tiktok_cloud = don_cloud_tiktok[
+        don_cloud_tiktok["SKU Category"] == "MIX_X2_TCLC_200"
+    ]
 
-    so_luong_SCx1_tiktok_cloud = SCx1_tiktok_cloud["Quantity"].sum()
-    so_luong_SCx2_tiktok_cloud = SCx2_tiktok_cloud["Quantity"].sum()
-    so_luong_SC_Combo_tiktok_cloud = SC_Combo_tiktok_cloud["Quantity"].sum()
+    so_luong_SCx1_tiktok_cloud = SCx1_tiktok_cloud["Quantity"].sum(
+    )
+    so_luong_SCx2_tiktok_cloud = SCx2_tiktok_cloud["Quantity"].sum(
+    )
+    so_luong_SC_Combo_tiktok_cloud = SC_Combo_tiktok_cloud["Quantity"].sum(
+    )
     so_luong_Combo_Scx1_tiktok_cloud = Combo_Scx1_tiktok_cloud["Quantity"].sum(
     )
     so_luong_Combo_Scx2_tiktok_cloud = Combo_Scx2_tiktok_cloud["Quantity"].sum(
     )
-    so_luong_BTHP_0CAY_tiktok_cloud = BTHP_0CAY_cloud["Quantity"].sum()
-    so_luong_BTHP_CAY_tiktok_cloud = BTHP_CAY_cloud["Quantity"].sum()
-    so_luong_BTHP_Combo_tiktok_cloud = BTHP_Combo_cloud["Quantity"].sum()
+    so_luong_BTHP_0CAY_tiktok_cloud = BTHP_0CAY_cloud["Quantity"].sum(
+    )
+    so_luong_BTHP_CAY_tiktok_cloud = BTHP_CAY_cloud["Quantity"].sum(
+    )
+    so_luong_BTHP_Combo_tiktok_cloud = BTHP_Combo_cloud["Quantity"].sum(
+    )
     so_luong_BTHP_Combo_0CAY_tiktok_cloud = BTHP_Combo_0CAY_cloud["Quantity"].sum(
     )
     so_luong_BTHP_Combo_CAY_tiktok_cloud = BTHP_Combo_CAY_cloud["Quantity"].sum(
     )
-    so_luong_BTHP_SCx1_tiktok_cloud = BTHP_SCx1_cloud["Quantity"].sum()
-    so_luong_BTHP_SCx2_tiktok_cloud = BTHP_SCx2_cloud["Quantity"].sum()
-    so_luong_BTHP_COMBO4_tiktok_cloud = BTHP_COMBO4_cloud["Quantity"].sum()
+    so_luong_BTHP_SCx1_tiktok_cloud = BTHP_SCx1_cloud["Quantity"].sum(
+    )
+    so_luong_BTHP_SCx2_tiktok_cloud = BTHP_SCx2_cloud["Quantity"].sum(
+    )
+    so_luong_BTHP_COMBO4_tiktok_cloud = BTHP_COMBO4_cloud["Quantity"].sum(
+    )
     soluong_COMBO_4_BTHP_0CAY_tiktok_cloud = COMBO_4_BTHP_0CAY_cloud["Quantity"].sum(
     )
     soluong_COMBO_4_BTHP_CAY_tiktok_cloud = COMBO_4_BTHP_CAY_cloud["Quantity"].sum(
@@ -945,13 +1246,12 @@ def process_tiktok_data(df_new, ngay_bat_dau, ngay_ket_thuc):
     )
     so_luong_TIEUCHAY_X1_tiktok_cloud = TIEUCHAY_X1_tiktok_cloud["Quantity"].sum(
     )
-
     so_luong_MIX_STT_TCLC_tiktok_cloud = MIX_STT_TCLC_tiktok_cloud["Quantity"].sum(
     )
-    so_luong_CB_STT_tiktok_cloud = CB_STT_tiktok_cloud["Quantity"].sum()
+    so_luong_CB_STT_tiktok_cloud = CB_STT_tiktok_cloud["Quantity"].sum(
+    )
     so_luong_CB_TCLC_tiktok_cloud = CB_TCLC_tiktok_cloud["Quantity"].sum(
     )
-
     so_luong_MIX_X1_STT_tiktok_cloud = MIX_X1_STT_tiktok_cloud["Quantity"].sum(
     )
     so_luong_MIX_X2_STT_tiktok_cloud = MIX_X2_STT_tiktok_cloud["Quantity"].sum(
@@ -959,6 +1259,22 @@ def process_tiktok_data(df_new, ngay_bat_dau, ngay_ket_thuc):
     so_luong_MIX_X1_TCLC_tiktok_cloud = MIX_X1_TCLC_tiktok_cloud["Quantity"].sum(
     )
     so_luong_MIX_X2_TCLC_tiktok_cloud = MIX_X2_TCLC_tiktok_cloud["Quantity"].sum(
+    )
+    so_luong_COMBO_X1_200_tiktok_cloud = COMBO_X1_200_tiktok_cloud["Quantity"].sum(
+    )
+    so_luong_COMBO_X2_200_tiktok_cloud = COMBO_X2_200_tiktok_cloud["Quantity"].sum(
+    )
+    so_luong_COMBO_TCLC_200_tiktok_cloud = COMBO_TCLC_200_tiktok_cloud["Quantity"].sum(
+    )
+    so_luong_MIX_X1_X2_TCLC_200_tiktok_cloud = MIX_X1_X2_TCLC_200_tiktok_cloud["Quantity"].sum(
+    )
+    so_luong_MIX_ALL_200_tiktok_cloud = MIX_ALL_200_tiktok_cloud["Quantity"].sum(
+    )
+    so_luong_MIX_X1_X2_200_tiktok_cloud = MIX_X1_X2_200_tiktok_cloud["Quantity"].sum(
+    )
+    so_luong_MIX_X1_TCLC_200_tiktok_cloud = MIX_X1_TCLC_200_tiktok_cloud["Quantity"].sum(
+    )
+    so_luong_MIX_X2_TCLC_200_tiktok_cloud = MIX_X2_TCLC_200_tiktok_cloud["Quantity"].sum(
     )
 
     tong_so_luong_BTHP_hoan_thanh = (
@@ -1061,6 +1377,10 @@ def process_tiktok_data(df_new, ngay_bat_dau, ngay_ket_thuc):
         + so_luong_MIX_X1_STT_tiktok_da_giao
         + so_luong_MIX_X2_STT_tiktok_hoan_thanh
         + so_luong_MIX_X2_STT_tiktok_da_giao
+
+        # Them phần của combo ALL
+        + so_luong_MIX_ALL_200_tiktok_hoan_thanh
+        + so_luong_MIX_ALL_200_tiktok_da_giao
     )
 
     so_luong_TIEUCHAY_X1_tiktok = (
@@ -1079,7 +1399,108 @@ def process_tiktok_data(df_new, ngay_bat_dau, ngay_ket_thuc):
     so_luong_CB_STT_TCLC_tiktok = (
         so_luong_MIX_STT_TCLC_tiktok_hoan_thanh * 2 + so_luong_MIX_STT_TCLC_tiktok_da_giao * 2)
 
+    so_luong_X1_200_tiktok = (
+        so_luong_COMBO_X1_200_tiktok_hoan_thanh * 2
+        + so_luong_COMBO_X1_200_tiktok_da_giao * 2
+
+        + so_luong_MIX_X1_X2_TCLC_200_tiktok_hoan_thanh
+        + so_luong_MIX_X1_X2_TCLC_200_tiktok_da_giao
+
+        + so_luong_MIX_X1_X2_200_tiktok_hoan_thanh
+        + so_luong_MIX_X1_X2_200_tiktok_da_giao
+
+        + so_luong_MIX_ALL_200_tiktok_hoan_thanh
+        + so_luong_MIX_ALL_200_tiktok_da_giao
+
+        + so_luong_MIX_X1_TCLC_200_tiktok_hoan_thanh
+        + so_luong_MIX_X1_TCLC_200_tiktok_da_giao
+    )
+
+    so_luong_X2_200_tiktok = (
+        so_luong_COMBO_X2_200_tiktok_hoan_thanh * 2
+        + so_luong_COMBO_X2_200_tiktok_da_giao * 2
+
+        + so_luong_MIX_X1_X2_TCLC_200_tiktok_hoan_thanh
+        + so_luong_MIX_X1_X2_TCLC_200_tiktok_da_giao
+
+        + so_luong_MIX_X1_X2_200_tiktok_hoan_thanh
+        + so_luong_MIX_X1_X2_200_tiktok_da_giao
+
+        + so_luong_MIX_ALL_200_tiktok_hoan_thanh
+        + so_luong_MIX_ALL_200_tiktok_da_giao
+
+        + so_luong_MIX_X2_TCLC_200_tiktok_hoan_thanh
+        + so_luong_MIX_X2_TCLC_200_tiktok_da_giao
+    )
+
+    so_luong_TCLC_200_tiktok = (
+        so_luong_COMBO_TCLC_200_tiktok_hoan_thanh * 2
+        + so_luong_COMBO_TCLC_200_tiktok_da_giao * 2
+
+        + so_luong_MIX_X1_X2_TCLC_200_tiktok_hoan_thanh
+        + so_luong_MIX_X1_X2_TCLC_200_tiktok_da_giao
+
+        + so_luong_MIX_ALL_200_tiktok_hoan_thanh
+        + so_luong_MIX_ALL_200_tiktok_da_giao
+
+        + so_luong_MIX_X1_TCLC_200_tiktok_hoan_thanh
+        + so_luong_MIX_X1_TCLC_200_tiktok_da_giao
+
+        + so_luong_MIX_X2_TCLC_200_tiktok_hoan_thanh
+        + so_luong_MIX_X2_TCLC_200_tiktok_da_giao
+    )
+
     return (
+        so_luong_COMBO_X1_200_tiktok_hoan_thanh,
+        so_luong_COMBO_X1_200_tiktok_da_giao,
+        so_luong_COMBO_X1_200_tiktok_hoan_tra,
+        so_luong_COMBO_X1_200_tiktok_cloud,
+
+        so_luong_COMBO_X2_200_tiktok_hoan_thanh,
+        so_luong_COMBO_X2_200_tiktok_da_giao,
+        so_luong_COMBO_X2_200_tiktok_hoan_tra,
+        so_luong_COMBO_X2_200_tiktok_cloud,
+
+        so_luong_COMBO_TCLC_200_tiktok_hoan_thanh,
+        so_luong_COMBO_TCLC_200_tiktok_da_giao,
+        so_luong_COMBO_TCLC_200_tiktok_hoan_tra,
+        so_luong_COMBO_TCLC_200_tiktok_cloud,
+
+        so_luong_MIX_X1_X2_TCLC_200_tiktok_hoan_thanh,
+        so_luong_MIX_X1_X2_TCLC_200_tiktok_da_giao,
+        so_luong_MIX_X1_X2_TCLC_200_tiktok_hoan_tra,
+        so_luong_MIX_X1_X2_TCLC_200_tiktok_cloud,
+
+        so_luong_MIX_X1_X2_TCLC_200_tiktok_hoan_thanh,
+        so_luong_MIX_X1_X2_TCLC_200_tiktok_da_giao,
+        so_luong_MIX_X1_X2_TCLC_200_tiktok_hoan_tra,
+        so_luong_MIX_X1_X2_TCLC_200_tiktok_cloud,
+
+        so_luong_MIX_ALL_200_tiktok_hoan_thanh,
+        so_luong_MIX_ALL_200_tiktok_da_giao,
+        so_luong_MIX_ALL_200_tiktok_hoan_tra,
+        so_luong_MIX_ALL_200_tiktok_cloud,
+
+        so_luong_MIX_X1_X2_200_tiktok_hoan_thanh,
+        so_luong_MIX_X1_X2_200_tiktok_da_giao,
+        so_luong_MIX_X1_X2_200_tiktok_hoan_tra,
+        so_luong_MIX_X1_X2_200_tiktok_cloud,
+
+        so_luong_MIX_X1_TCLC_200_tiktok_hoan_thanh,
+        so_luong_MIX_X1_TCLC_200_tiktok_da_giao,
+        so_luong_MIX_X1_TCLC_200_tiktok_hoan_tra,
+        so_luong_MIX_X1_TCLC_200_tiktok_cloud,
+
+        so_luong_MIX_X2_TCLC_200_tiktok_hoan_thanh,
+        so_luong_MIX_X2_TCLC_200_tiktok_da_giao,
+        so_luong_MIX_X2_TCLC_200_tiktok_hoan_tra,
+        so_luong_MIX_X2_TCLC_200_tiktok_cloud,
+
+        so_luong_X1_200_tiktok,
+        so_luong_X2_200_tiktok,
+        so_luong_TCLC_200_tiktok,
+
+        # =======================
         # SP moi
         so_luong_CB_STT_TCLC_tiktok,
         so_luong_SATETOM_X1_tiktok,
@@ -1240,30 +1661,31 @@ def process_shopee_data(df_shopee, ngay_bat_dau, ngay_ket_thuc):
     # Danh sách các mẫu thay thế
     replacements = {
         r"^(COMBO-SC-ANHDUC|COMBO-SC-NGOCTRINH|COMBO-SC-MIX|SC_COMBO_MIX|SC_COMBO_MIX_LIVESTREAM|COMBO-SC_LIVESTREAM|SC_COMBO_MIX_01|MIX_X1\+X2|MIX_X1\+X2_LIVESTREAM)$": "COMBO-SC",
-        r"^(SC_X1|X1)$": "SC-450g",
-        r"^(SC_X2|X2)$": "SC-x2-450g",
+        r"^(SC_X1|X1|X1_LIVESTREAM)$": "SC-450g",
+        r"^(SC_X2|X2|X2_LIVESTREAM)$": "SC-x2-450g",
         r"^(SC_COMBO_X1|COMBO-CAYVUA-X1|SC_COMBO_X1_LIVESTREAM|COMBO-SCX1|COMBO-SCX1_LIVESTREAM|COMBO_X1_LIVESTREAM|COMBO_X1)$": "COMBO-SCX1",
         r"^(SC_COMBO_X2|COMBO-SIEUCAY-X2|SC_COMBO_X2_LIVESTREAM|COMBO-SCX2|COMBO-SCX2_LIVESTREAM|COMBO_X2_LIVESTREAM|COMBO_X2)$": "COMBO-SCX2",
-        r"^(BTHP-Cay-200gr|BTHP_Cay)$": "BTHP-CAY",
-        r"^(BTHP-200gr|BTHP_KhongCay)$": "BTHP-0CAY",
-        r"^(BTHP_COMBO_MIX|BTHP003_combo_mix|MIX_Cay\+KhongCay)$": "BTHP-COMBO",
-        r"^(BTHP_COMBO_KhongCay|BTHP003_combo_kocay|COMBO_BTHP_KhongCay)$": "BTHP-COMBO-0CAY",
-        r"^(BTHP_COMBO_Cay|BTHP003_combo_cay|COMBO_BTHP_Cay)$": "BTHP-COMBO-CAY",
-        r"^(BTHP-COMBO\+SC_X1|BTHP_COMBO_MIX\+SC_X1|MIX_BTHP\+X1)$": "MIX_BTHP+X1",
-        r"^(BTHP-COMBO\+SC_X2|BTHP_COMBO_MIX\+SC_X2|MIX_BTHP\+X2)$": "MIX_BTHP+X2",
-        r"^(BTHP-2Cay-2KhongCay|MIX_2Cay\+2KhongCay)": "COMBO_4BTHP",
-        r"^(BTHP-4Hu-KhongCay|4HU_BTHP_KhongCay|4Hu_BTHP_KhongCay)$": "4BTHP_0CAY",
-        r"^(BTHP-4Hu-Cay|4HU_BTHP_Cay|4Hu_BTHP_Cay)$": "4BTHP_CAY",
-        r"^(ST-SATETOM-X1|SC-SATE-TOM-X1|ST_STT|STT)$": "SATETOM_X1",
-        r"^(SC-TIEUCHAY-X1|SC_TCLC|TCLC)$": "TIEUCHAY_X1",
-        r"^(MIX_STT\+TCLC)$": "MIX_STT_TCLC",
-        r"^(COMBO_STT)$": "COMBO_STT",
-        r"^(COMBO_TCLC)$": "COMBO_TCLC",
+        r"^(BTHP-Cay-200gr|BTHP_Cay|BTHP_Cay_LIVESTREAM)$": "BTHP-CAY",
+        r"^(BTHP-200gr|BTHP_KhongCay|BTHP_KhongCay_LIVESTREAM)$": "BTHP-0CAY",
+        r"^(BTHP_COMBO_MIX|BTHP003_combo_mix|MIX_Cay\+KhongCay|MIX_Cay\+KhongCay_LIVESTREAM)$": "BTHP-COMBO",
+        r"^(BTHP_COMBO_KhongCay|BTHP003_combo_kocay|COMBO_BTHP_KhongCay|COMBO_BTHP_KhongCay_LIVESTREAM)$": "BTHP-COMBO-0CAY",
+        r"^(BTHP_COMBO_Cay|BTHP003_combo_cay|COMBO_BTHP_Cay|COMBO_BTHP_Cay_LIVESTREAM)$": "BTHP-COMBO-CAY",
+        r"^(BTHP-COMBO\+SC_X1|BTHP_COMBO_MIX\+SC_X1|MIX_BTHP\+X1|MIX_BTHP\+X1_LIVESTREAM)$": "MIX_BTHP+X1",
+        r"^(BTHP-COMBO\+SC_X2|BTHP_COMBO_MIX\+SC_X2|MIX_BTHP\+X2|MIX_BTHP\+X2_LIVESTREAM)$": "MIX_BTHP+X2",
+
+        r"^(BTHP-2Cay-2KhongCay|MIX_2Cay\+2KhongCay|MIX_2Cay\+2KhongCay_LIVESTREAM)": "COMBO_4BTHP",
+        r"^(BTHP-4Hu-KhongCay|4HU_BTHP_KhongCay|4Hu_BTHP_KhongCay|4Hu_BTHP_KhongCay_LIVESTREAM)$": "4BTHP_0CAY",
+        r"^(BTHP-4Hu-Cay|4HU_BTHP_Cay|4Hu_BTHP_Cay|4Hu_BTHP_Cay_LIVESTREAM)$": "4BTHP_CAY",
+        r"^(ST-SATETOM-X1|SC-SATE-TOM-X1|ST_STT|STT|STT_LIVESTREAM)$": "SATETOM_X1",
+        r"^(SC-TIEUCHAY-X1|SC_TCLC|TCLC|TCLC_LIVESTREAM)$": "TIEUCHAY_X1",
+        r"^(MIX_STT\+TCLC|MIX_STT\+TCLC_LIVESTREAM)$": "MIX_STT_TCLC",
+        r"^(COMBO_STT|COMBO_STT_LIVESTREAM)$": "COMBO_STT",
+        r"^(COMBO_TCLC|COMBO_TCLC_LIVESTREAM)$": "COMBO_TCLC",
         # Newadd
-        r"^(MIX_X1\+STT)$": "MIX_X1_STT",
-        r"^(MIX_X2\+STT)$": "MIX_X2_STT",
-        r"^(MIX_X1\+TCLC)$": "MIX_X1_TCLC",
-        r"^(MIX_X2\+TCLC)$": "MIX_X2_TCLC",
+        r"^(MIX_X1\+STT|MIX_X1\+STT_LIVESTREAM)$": "MIX_X1_STT",
+        r"^(MIX_X2\+STT|MIX_X2\+STT_LIVESTREAM)$": "MIX_X2_STT",
+        r"^(MIX_X1\+TCLC|MIX_X1\+TCLC_LIVESTREAM)$": "MIX_X1_TCLC",
+        r"^(MIX_X2\+TCLC|MIX_X2\+TCLC_LIVESTREAM)$": "MIX_X2_TCLC",
 
         # Ao caytedai
         r"^(ClothSet_X1_M)$": "ClothSet_X1_M",
@@ -1280,6 +1702,17 @@ def process_shopee_data(df_shopee, ngay_bat_dau, ngay_ket_thuc):
         r"^(TShirt_Black_M)$": "TShirt_Black_M",
         r"^(TShirt_Black_L)$": "TShirt_Black_L",
         r"^(TShirt_Black_XL)$": "TShirt_Black_XL",
+
+        # San pham moi & combo mới
+        r"^(COMBO_X1_200g|COMBO_X1_200g_LIVESTREAM)$": "COMBO_X1_200",
+        r"^(COMBO_X2_200g|COMBO_X2_200g_LIVESTREAM)$": "COMBO_X2_200",
+        r"^(COMBO_TCLC_200g|COMBO_TCLC_200g_LIVESTREAM)$": "COMBO_TCLC_200",
+        r"^(MIX_200g_X1\+X2\+TCLC|MIX_200g_X1\+X2\+TCLC_LIVESTREAM)$": "MIX_X1_X2_TCLC_200",
+        r"^(MIX_200g_X1\+X2\+TCLC\+STT|MIX_200g_X1\+X2\+TCLC\+STT_LIVESTREAM)$": "MIX_ALL_200",
+        r"^(MIX_200g_X1\+X2|MIX_200g_X1\+X2_LIVESTREAM)$": "MIX_X1_X2_200",
+        r"^(MIX_200g_X1\+TCLC|MIX_200g_X1\+TCLC_LIVESTREAM)$": "MIX_X1_TCLC_200",
+        r"^(MIX_200g_X2\+TCLC|MIX_200g_X2\+TCLC_LIVESTREAM)$": "MIX_X2_TCLC_200",
+
     }
 
     for pattern, replacement in replacements.items():
@@ -2270,6 +2703,303 @@ def process_shopee_data(df_shopee, ngay_bat_dau, ngay_ket_thuc):
     so_luong_MIX_X2_TCLC_hoan_tra_shopee = MIX_X2_TCLC_hoan_tra_shopee["Số lượng"].sum(
     )
 
+    # ==================================================================================
+    COMBO_X1_200_hoan_thanh_shopee = df_shopee[
+        (df_shopee["SKU Category"] == "COMBO_X1_200")
+        & (df_shopee["Thời gian giao hàng"] >= ngay_bat_dau)
+        & (df_shopee["Thời gian giao hàng"] <= ngay_ket_thuc)
+        & (df_shopee["Acctually type"] == "Hoàn thành")
+    ]
+
+    COMBO_X1_200_da_giao_shopee = df_shopee[
+        (df_shopee["SKU Category"] == "COMBO_X1_200")
+        & (df_shopee["Thời gian giao hàng"] >= ngay_bat_dau)
+        & (df_shopee["Thời gian giao hàng"] <= ngay_ket_thuc)
+        & (
+            df_shopee["Acctually type"].isin(
+                ["Đã giao", "Đơn hàng đã đến User", "Đã nhận được hàng"]
+            )
+        )
+    ]
+
+    COMBO_X1_200_hoan_tra_shopee = df_shopee[
+        (df_shopee["SKU Category"] == "COMBO_X1_200")
+        & (df_shopee["Thời gian giao hàng"] >= ngay_bat_dau)
+        & (df_shopee["Thời gian giao hàng"] <= ngay_ket_thuc)
+        & (df_shopee["Số lượng sản phẩm được hoàn trả"] != 0)
+        & (
+            df_shopee["Acctually type"].isin(
+                ["Hoàn thành", "Đã giao", "Đơn hàng đã đến User", "Đã nhận được hàng"]
+            )
+        )
+    ]
+
+    so_luong_COMBO_X1_200_hoan_thanh_shopee = COMBO_X1_200_hoan_thanh_shopee["Số lượng"].sum(
+    )
+    so_luong_COMBO_X1_200_da_giao_shopee = COMBO_X1_200_da_giao_shopee["Số lượng"].sum(
+    )
+    so_luong_COMBO_X1_200_hoan_tra_shopee = COMBO_X1_200_hoan_tra_shopee["Số lượng sản phẩm được hoàn trả"].sum(
+    )
+
+    COMBO_X2_200_hoan_thanh_shopee = df_shopee[
+        (df_shopee["SKU Category"] == "COMBO_X2_200")
+        & (df_shopee["Thời gian giao hàng"] >= ngay_bat_dau)
+        & (df_shopee["Thời gian giao hàng"] <= ngay_ket_thuc)
+        & (df_shopee["Acctually type"] == "Hoàn thành")
+    ]
+
+    COMBO_X2_200_da_giao_shopee = df_shopee[
+        (df_shopee["SKU Category"] == "COMBO_X2_200")
+        & (df_shopee["Thời gian giao hàng"] >= ngay_bat_dau)
+        & (df_shopee["Thời gian giao hàng"] <= ngay_ket_thuc)
+        & (
+            df_shopee["Acctually type"].isin(
+                ["Đã giao", "Đơn hàng đã đến User", "Đã nhận được hàng"]
+            )
+        )
+    ]
+
+    COMBO_X2_200_hoan_tra_shopee = df_shopee[
+        (df_shopee["SKU Category"] == "COMBO_X2_200")
+        & (df_shopee["Thời gian giao hàng"] >= ngay_bat_dau)
+        & (df_shopee["Thời gian giao hàng"] <= ngay_ket_thuc)
+        & (df_shopee["Số lượng sản phẩm được hoàn trả"] != 0)
+        & (
+            df_shopee["Acctually type"].isin(
+                ["Hoàn thành", "Đã giao", "Đơn hàng đã đến User", "Đã nhận được hàng"]
+            )
+        )
+    ]
+
+    so_luong_COMBO_X2_200_hoan_thanh_shopee = COMBO_X2_200_hoan_thanh_shopee["Số lượng"].sum(
+    )
+    so_luong_COMBO_X2_200_da_giao_shopee = COMBO_X2_200_da_giao_shopee["Số lượng"].sum(
+    )
+    so_luong_COMBO_X2_200_hoan_tra_shopee = COMBO_X2_200_hoan_tra_shopee["Số lượng sản phẩm được hoàn trả"].sum(
+    )
+
+    COMBO_TCLC_200_hoan_thanh_shopee = df_shopee[
+        (df_shopee["SKU Category"] == "COMBO_TCLC_200")
+        & (df_shopee["Thời gian giao hàng"] >= ngay_bat_dau)
+        & (df_shopee["Thời gian giao hàng"] <= ngay_ket_thuc)
+        & (df_shopee["Acctually type"] == "Hoàn thành")
+    ]
+
+    COMBO_TCLC_200_da_giao_shopee = df_shopee[
+        (df_shopee["SKU Category"] == "COMBO_TCLC_200")
+        & (df_shopee["Thời gian giao hàng"] >= ngay_bat_dau)
+        & (df_shopee["Thời gian giao hàng"] <= ngay_ket_thuc)
+        & (
+            df_shopee["Acctually type"].isin(
+                ["Đã giao", "Đơn hàng đã đến User", "Đã nhận được hàng"]
+            )
+        )
+    ]
+
+    COMBO_TCLC_200_hoan_tra_shopee = df_shopee[
+        (df_shopee["SKU Category"] == "COMBO_TCLC_200")
+        & (df_shopee["Thời gian giao hàng"] >= ngay_bat_dau)
+        & (df_shopee["Thời gian giao hàng"] <= ngay_ket_thuc)
+        & (df_shopee["Số lượng sản phẩm được hoàn trả"] != 0)
+        & (
+            df_shopee["Acctually type"].isin(
+                ["Hoàn thành", "Đã giao", "Đơn hàng đã đến User", "Đã nhận được hàng"]
+            )
+        )
+    ]
+
+    so_luong_COMBO_TCLC_200_hoan_thanh_shopee = COMBO_TCLC_200_hoan_thanh_shopee["Số lượng"].sum(
+    )
+    so_luong_COMBO_TCLC_200_da_giao_shopee = COMBO_TCLC_200_da_giao_shopee["Số lượng"].sum(
+    )
+    so_luong_COMBO_TCLC_200_hoan_tra_shopee = COMBO_TCLC_200_hoan_tra_shopee["Số lượng sản phẩm được hoàn trả"].sum(
+    )
+
+    MIX_X1_X2_TCLC_200_hoan_thanh_shopee = df_shopee[
+        (df_shopee["SKU Category"] == "MIX_X1_X2_TCLC_200")
+        & (df_shopee["Thời gian giao hàng"] >= ngay_bat_dau)
+        & (df_shopee["Thời gian giao hàng"] <= ngay_ket_thuc)
+        & (df_shopee["Acctually type"] == "Hoàn thành")
+    ]
+
+    MIX_X1_X2_TCLC_200_da_giao_shopee = df_shopee[
+        (df_shopee["SKU Category"] == "MIX_X1_X2_TCLC_200")
+        & (df_shopee["Thời gian giao hàng"] >= ngay_bat_dau)
+        & (df_shopee["Thời gian giao hàng"] <= ngay_ket_thuc)
+        & (
+            df_shopee["Acctually type"].isin(
+                ["Đã giao", "Đơn hàng đã đến User", "Đã nhận được hàng"]
+            )
+        )
+    ]
+
+    MIX_X1_X2_TCLC_200_hoan_tra_shopee = df_shopee[
+        (df_shopee["SKU Category"] == "MIX_X1_X2_TCLC_200")
+        & (df_shopee["Thời gian giao hàng"] >= ngay_bat_dau)
+        & (df_shopee["Thời gian giao hàng"] <= ngay_ket_thuc)
+        & (df_shopee["Số lượng sản phẩm được hoàn trả"] != 0)
+        & (
+            df_shopee["Acctually type"].isin(
+                ["Hoàn thành", "Đã giao", "Đơn hàng đã đến User", "Đã nhận được hàng"]
+            )
+        )
+    ]
+
+    so_luong_MIX_X1_X2_TCLC_200_hoan_thanh_shopee = MIX_X1_X2_TCLC_200_hoan_thanh_shopee["Số lượng"].sum(
+    )
+    so_luong_MIX_X1_X2_TCLC_200_da_giao_shopee = MIX_X1_X2_TCLC_200_da_giao_shopee["Số lượng"].sum(
+    )
+    so_luong_MIX_X1_X2_TCLC_200_hoan_tra_shopee = MIX_X1_X2_TCLC_200_hoan_tra_shopee["Số lượng sản phẩm được hoàn trả"].sum(
+    )
+
+    MIX_ALL_200_hoan_thanh_shopee = df_shopee[
+        (df_shopee["SKU Category"] == "MIX_ALL_200")
+        & (df_shopee["Thời gian giao hàng"] >= ngay_bat_dau)
+        & (df_shopee["Thời gian giao hàng"] <= ngay_ket_thuc)
+        & (df_shopee["Acctually type"] == "Hoàn thành")
+    ]
+
+    MIX_ALL_200_da_giao_shopee = df_shopee[
+        (df_shopee["SKU Category"] == "MIX_ALL_200")
+        & (df_shopee["Thời gian giao hàng"] >= ngay_bat_dau)
+        & (df_shopee["Thời gian giao hàng"] <= ngay_ket_thuc)
+        & (
+            df_shopee["Acctually type"].isin(
+                ["Đã giao", "Đơn hàng đã đến User", "Đã nhận được hàng"]
+            )
+        )
+    ]
+
+    MIX_ALL_200_hoan_tra_shopee = df_shopee[
+        (df_shopee["SKU Category"] == "MIX_ALL_200")
+        & (df_shopee["Thời gian giao hàng"] >= ngay_bat_dau)
+        & (df_shopee["Thời gian giao hàng"] <= ngay_ket_thuc)
+        & (df_shopee["Số lượng sản phẩm được hoàn trả"] != 0)
+        & (
+            df_shopee["Acctually type"].isin(
+                ["Hoàn thành", "Đã giao", "Đơn hàng đã đến User", "Đã nhận được hàng"]
+            )
+        )
+    ]
+
+    so_luong_MIX_ALL_200_hoan_thanh_shopee = MIX_ALL_200_hoan_thanh_shopee["Số lượng"].sum(
+    )
+    so_luong_MIX_ALL_200_da_giao_shopee = MIX_ALL_200_da_giao_shopee["Số lượng"].sum(
+    )
+    so_luong_MIX_ALL_200_hoan_tra_shopee = MIX_ALL_200_hoan_tra_shopee["Số lượng sản phẩm được hoàn trả"].sum(
+    )
+
+    MIX_X1_X2_200_hoan_thanh_shopee = df_shopee[
+        (df_shopee["SKU Category"] == "MIX_X1_X2_200")
+        & (df_shopee["Thời gian giao hàng"] >= ngay_bat_dau)
+        & (df_shopee["Thời gian giao hàng"] <= ngay_ket_thuc)
+        & (df_shopee["Acctually type"] == "Hoàn thành")
+    ]
+
+    MIX_X1_X2_200_da_giao_shopee = df_shopee[
+        (df_shopee["SKU Category"] == "MIX_X1_X2_200")
+        & (df_shopee["Thời gian giao hàng"] >= ngay_bat_dau)
+        & (df_shopee["Thời gian giao hàng"] <= ngay_ket_thuc)
+        & (
+            df_shopee["Acctually type"].isin(
+                ["Đã giao", "Đơn hàng đã đến User", "Đã nhận được hàng"]
+            )
+        )
+    ]
+
+    MIX_X1_X2_200_hoan_tra_shopee = df_shopee[
+        (df_shopee["SKU Category"] == "MIX_X1_X2_200")
+        & (df_shopee["Thời gian giao hàng"] >= ngay_bat_dau)
+        & (df_shopee["Thời gian giao hàng"] <= ngay_ket_thuc)
+        & (df_shopee["Số lượng sản phẩm được hoàn trả"] != 0)
+        & (
+            df_shopee["Acctually type"].isin(
+                ["Hoàn thành", "Đã giao", "Đơn hàng đã đến User", "Đã nhận được hàng"]
+            )
+        )
+    ]
+
+    so_luong_MIX_X1_X2_200_hoan_thanh_shopee = MIX_X1_X2_200_hoan_thanh_shopee["Số lượng"].sum(
+    )
+    so_luong_MIX_X1_X2_200_da_giao_shopee = MIX_X1_X2_200_da_giao_shopee["Số lượng"].sum(
+    )
+    so_luong_MIX_X1_X2_200_hoan_tra_shopee = MIX_X1_X2_200_hoan_tra_shopee["Số lượng sản phẩm được hoàn trả"].sum(
+    )
+
+    MIX_X1_TCLC_200_hoan_thanh_shopee = df_shopee[
+        (df_shopee["SKU Category"] == "MIX_X1_TCLC_200")
+        & (df_shopee["Thời gian giao hàng"] >= ngay_bat_dau)
+        & (df_shopee["Thời gian giao hàng"] <= ngay_ket_thuc)
+        & (df_shopee["Acctually type"] == "Hoàn thành")
+    ]
+
+    MIX_X1_TCLC_200_da_giao_shopee = df_shopee[
+        (df_shopee["SKU Category"] == "MIX_X1_TCLC_200")
+        & (df_shopee["Thời gian giao hàng"] >= ngay_bat_dau)
+        & (df_shopee["Thời gian giao hàng"] <= ngay_ket_thuc)
+        & (
+            df_shopee["Acctually type"].isin(
+                ["Đã giao", "Đơn hàng đã đến User", "Đã nhận được hàng"]
+            )
+        )
+    ]
+
+    MIX_X1_TCLC_200_hoan_tra_shopee = df_shopee[
+        (df_shopee["SKU Category"] == "MIX_X1_TCLC_200")
+        & (df_shopee["Thời gian giao hàng"] >= ngay_bat_dau)
+        & (df_shopee["Thời gian giao hàng"] <= ngay_ket_thuc)
+        & (df_shopee["Số lượng sản phẩm được hoàn trả"] != 0)
+        & (
+            df_shopee["Acctually type"].isin(
+                ["Hoàn thành", "Đã giao", "Đơn hàng đã đến User", "Đã nhận được hàng"]
+            )
+        )
+    ]
+
+    so_luong_MIX_X1_TCLC_200_hoan_thanh_shopee = MIX_X1_TCLC_200_hoan_thanh_shopee["Số lượng"].sum(
+    )
+    so_luong_MIX_X1_TCLC_200_da_giao_shopee = MIX_X1_TCLC_200_da_giao_shopee["Số lượng"].sum(
+    )
+    so_luong_MIX_X1_TCLC_200_hoan_tra_shopee = MIX_X1_TCLC_200_hoan_tra_shopee["Số lượng sản phẩm được hoàn trả"].sum(
+    )
+
+    MIX_X2_TCLC_200_hoan_thanh_shopee = df_shopee[
+        (df_shopee["SKU Category"] == "MIX_X2_TCLC_200")
+        & (df_shopee["Thời gian giao hàng"] >= ngay_bat_dau)
+        & (df_shopee["Thời gian giao hàng"] <= ngay_ket_thuc)
+        & (df_shopee["Acctually type"] == "Hoàn thành")
+    ]
+
+    MIX_X2_TCLC_200_da_giao_shopee = df_shopee[
+        (df_shopee["SKU Category"] == "MIX_X2_TCLC_200")
+        & (df_shopee["Thời gian giao hàng"] >= ngay_bat_dau)
+        & (df_shopee["Thời gian giao hàng"] <= ngay_ket_thuc)
+        & (
+            df_shopee["Acctually type"].isin(
+                ["Đã giao", "Đơn hàng đã đến User", "Đã nhận được hàng"]
+            )
+        )
+    ]
+
+    MIX_X2_TCLC_200_hoan_tra_shopee = df_shopee[
+        (df_shopee["SKU Category"] == "MIX_X2_TCLC_200")
+        & (df_shopee["Thời gian giao hàng"] >= ngay_bat_dau)
+        & (df_shopee["Thời gian giao hàng"] <= ngay_ket_thuc)
+        & (df_shopee["Số lượng sản phẩm được hoàn trả"] != 0)
+        & (
+            df_shopee["Acctually type"].isin(
+                ["Hoàn thành", "Đã giao", "Đơn hàng đã đến User", "Đã nhận được hàng"]
+            )
+        )
+    ]
+
+    so_luong_MIX_X2_TCLC_200_hoan_thanh_shopee = MIX_X2_TCLC_200_hoan_thanh_shopee["Số lượng"].sum(
+    )
+    so_luong_MIX_X2_TCLC_200_da_giao_shopee = MIX_X2_TCLC_200_da_giao_shopee["Số lượng"].sum(
+    )
+    so_luong_MIX_X2_TCLC_200_hoan_tra_shopee = MIX_X2_TCLC_200_hoan_tra_shopee["Số lượng sản phẩm được hoàn trả"].sum(
+    )
+
     # CLOUD
     SCx1_shopee_cloud = don_cloud_shopee[don_cloud_shopee["SKU Category"] == "SC-450g"]
     SCx2_shopee_cloud = don_cloud_shopee[
@@ -2345,6 +3075,31 @@ def process_shopee_data(df_shopee, ngay_bat_dau, ngay_ket_thuc):
         don_cloud_shopee["SKU Category"] == "MIX_X2_TCLC"
     ]
 
+    COMBO_X1_200_cloud = don_cloud_shopee[
+        don_cloud_shopee["SKU Category"] == "COMBO_X1_200"
+    ]
+    COMBO_X2_200_cloud = don_cloud_shopee[
+        don_cloud_shopee["SKU Category"] == "COMBO_X2_200"
+    ]
+    COMBO_TCLC_200_cloud = don_cloud_shopee[
+        don_cloud_shopee["SKU Category"] == "COMBO_TCLC_200"
+    ]
+    MIX_X1_X2_TCLC_200_cloud = don_cloud_shopee[
+        don_cloud_shopee["SKU Category"] == "MIX_X1_X2_TCLC_200"
+    ]
+    MIX_ALL_200_cloud = don_cloud_shopee[
+        don_cloud_shopee["SKU Category"] == "MIX_ALL_200"
+    ]
+    MIX_X1_X2_200_cloud = don_cloud_shopee[
+        don_cloud_shopee["SKU Category"] == "MIX_X1_X2_200"
+    ]
+    MIX_X1_TCLC_200_cloud = don_cloud_shopee[
+        don_cloud_shopee["SKU Category"] == "MIX_X1_TCLC_200"
+    ]
+    MIX_X2_TCLC_2000_cloud = don_cloud_shopee[
+        don_cloud_shopee["SKU Category"] == "MIX_X2_TCLC_200"
+    ]
+
     so_luong_SCx1_shopee_cloud = SCx1_shopee_cloud["Số lượng"].sum()
     so_luong_SCx2_shopee_cloud = SCx2_shopee_cloud["Số lượng"].sum()
     so_luong_SC_Combo_shopee_cloud = SC_Combo_shopee_cloud["Số lượng"].sum()
@@ -2376,6 +3131,19 @@ def process_shopee_data(df_shopee, ngay_bat_dau, ngay_ket_thuc):
     so_luong_MIX_X2_STT_shopee_cloud = MIX_X2_STT_cloud["Số lượng"].sum()
     so_luong_MIX_X1_TCLC_shopee_cloud = MIX_X1_TCLC_cloud["Số lượng"].sum()
     so_luong_MIX_X2_TCLC_shopee_cloud = MIX_X2_TCLC_cloud["Số lượng"].sum()
+
+    so_luong_COMBO_X1_200_shopee_cloud = COMBO_X1_200_cloud["Số lượng"].sum()
+    so_luong_COMBO_X2_200_shopee_cloud = COMBO_X2_200_cloud["Số lượng"].sum()
+    so_luong_COMBO_TCLC_200_shopee_cloud = COMBO_TCLC_200_cloud["Số lượng"].sum(
+    )
+    so_luong_MIX_X1_X2_TCLC_200_shopee_cloud = MIX_X1_X2_TCLC_200_cloud["Số lượng"].sum(
+    )
+    so_luong_MIX_ALL_200_shopee_cloud = MIX_ALL_200_cloud["Số lượng"].sum()
+    so_luong_MIX_X1_X2_200_shopee_cloud = MIX_X1_X2_200_cloud["Số lượng"].sum()
+    so_luong_MIX_X1_TCLC_200_shopee_cloud = MIX_X1_TCLC_200_cloud["Số lượng"].sum(
+    )
+    so_luong_MIX_X2_TCLC_200_shopee_cloud = MIX_X2_TCLC_2000_cloud["Số lượng"].sum(
+    )
 
     tong_san_pham_SC_shopee_hoanh_thanh = (
         so_luong_SCx1_shopee_hoanh_thanh
@@ -2490,6 +3258,10 @@ def process_shopee_data(df_shopee, ngay_bat_dau, ngay_ket_thuc):
         + so_luong_MIX_X1_STT_da_giao_shopee
         + so_luong_MIX_X2_STT_hoan_thanh_shopee
         + so_luong_MIX_X2_STT_da_giao_shopee
+
+        # New combo
+        + so_luong_MIX_ALL_200_hoan_thanh_shopee
+        + so_luong_MIX_ALL_200_da_giao_shopee
     )
 
     so_luong_TIEUCHAY_X1_sp = (
@@ -2507,7 +3279,105 @@ def process_shopee_data(df_shopee, ngay_bat_dau, ngay_ket_thuc):
     so_luong_MIX_STT_TCLC_sp = (
         so_luong_MIX_STT_TCLC_hoan_thanh_shopee * 2 + so_luong_MIX_STT_TCLC_da_giao_shopee * 2)
 
+    so_luong_X1_200g_sp = (
+        so_luong_COMBO_X1_200_hoan_thanh_shopee * 2
+        + so_luong_COMBO_X1_200_da_giao_shopee * 2
+
+        + so_luong_MIX_X1_X2_TCLC_200_hoan_thanh_shopee
+        + so_luong_MIX_X1_X2_TCLC_200_da_giao_shopee
+
+        + so_luong_MIX_ALL_200_hoan_thanh_shopee
+        + so_luong_MIX_ALL_200_da_giao_shopee
+
+        + so_luong_MIX_X1_X2_200_hoan_thanh_shopee
+        + so_luong_MIX_X1_X2_200_da_giao_shopee
+
+        + so_luong_MIX_X1_TCLC_200_hoan_thanh_shopee
+        + so_luong_MIX_X1_TCLC_200_da_giao_shopee
+
+    )
+
+    so_luong_X2_200g_sp = (
+        so_luong_COMBO_X2_200_hoan_thanh_shopee * 2
+        + so_luong_COMBO_X2_200_da_giao_shopee * 2
+
+        + so_luong_MIX_X1_X2_TCLC_200_hoan_thanh_shopee
+        + so_luong_MIX_X1_X2_TCLC_200_da_giao_shopee
+
+        + so_luong_MIX_ALL_200_hoan_thanh_shopee
+        + so_luong_MIX_ALL_200_da_giao_shopee
+
+        + so_luong_MIX_X1_X2_200_hoan_thanh_shopee
+        + so_luong_MIX_X1_X2_200_da_giao_shopee
+
+        + so_luong_MIX_X2_TCLC_200_hoan_thanh_shopee
+        + so_luong_MIX_X2_TCLC_200_da_giao_shopee
+    )
+
+    so_luong_TCLC_200g_sp = (
+        so_luong_COMBO_TCLC_200_hoan_thanh_shopee * 2
+        + so_luong_COMBO_TCLC_200_da_giao_shopee * 2
+
+        + so_luong_MIX_X1_X2_TCLC_200_hoan_thanh_shopee
+        + so_luong_MIX_X1_X2_TCLC_200_da_giao_shopee
+
+        + so_luong_MIX_ALL_200_hoan_thanh_shopee
+        + so_luong_MIX_ALL_200_da_giao_shopee
+
+        + so_luong_MIX_X1_TCLC_200_hoan_thanh_shopee
+        + so_luong_MIX_X1_TCLC_200_da_giao_shopee
+
+        + so_luong_MIX_X2_TCLC_200_hoan_thanh_shopee
+        + so_luong_MIX_X2_TCLC_200_da_giao_shopee
+    )
+
     return (
+        so_luong_X1_200g_sp,
+        so_luong_X2_200g_sp,
+        so_luong_TCLC_200g_sp,
+
+        so_luong_COMBO_X1_200_hoan_thanh_shopee,
+        so_luong_COMBO_X1_200_da_giao_shopee,
+        so_luong_COMBO_X1_200_hoan_tra_shopee,
+        so_luong_COMBO_X1_200_shopee_cloud,
+
+        so_luong_COMBO_X2_200_hoan_thanh_shopee,
+        so_luong_COMBO_X2_200_da_giao_shopee,
+        so_luong_COMBO_X2_200_hoan_tra_shopee,
+        so_luong_COMBO_X2_200_shopee_cloud,
+
+        so_luong_COMBO_TCLC_200_hoan_thanh_shopee,
+        so_luong_COMBO_TCLC_200_da_giao_shopee,
+        so_luong_COMBO_TCLC_200_hoan_tra_shopee,
+        so_luong_COMBO_TCLC_200_shopee_cloud,
+
+        so_luong_MIX_X1_X2_TCLC_200_hoan_thanh_shopee,
+        so_luong_MIX_X1_X2_TCLC_200_da_giao_shopee,
+        so_luong_MIX_X1_X2_TCLC_200_hoan_tra_shopee,
+        so_luong_MIX_X1_X2_TCLC_200_shopee_cloud,
+
+        so_luong_MIX_ALL_200_hoan_thanh_shopee,
+        so_luong_MIX_ALL_200_da_giao_shopee,
+        so_luong_MIX_ALL_200_hoan_tra_shopee,
+        so_luong_MIX_ALL_200_shopee_cloud,
+
+        so_luong_MIX_X1_X2_200_hoan_thanh_shopee,
+        so_luong_MIX_X1_X2_200_da_giao_shopee,
+        so_luong_MIX_X1_X2_200_hoan_tra_shopee,
+        so_luong_MIX_X1_X2_200_shopee_cloud,
+
+        so_luong_MIX_X1_TCLC_200_hoan_thanh_shopee,
+        so_luong_MIX_X1_TCLC_200_da_giao_shopee,
+        so_luong_MIX_X1_TCLC_200_hoan_tra_shopee,
+        so_luong_MIX_X1_TCLC_200_shopee_cloud,
+
+        so_luong_MIX_X2_TCLC_200_hoan_thanh_shopee,
+        so_luong_MIX_X2_TCLC_200_da_giao_shopee,
+        so_luong_MIX_X2_TCLC_200_hoan_tra_shopee,
+        so_luong_MIX_X2_TCLC_200_shopee_cloud,
+
+        # ================================================
+
         so_luong_MIX_STT_TCLC_sp,
         so_luong_SA_TETOM_X1_sp,
         so_luong_TIEUCHAY_X1_sp,
@@ -2664,14 +3534,24 @@ with col1:
         "<h3 style='text-align: center;'>📥 Upload file TikTok</h3>",
         unsafe_allow_html=True,
     )
-    file_tiktok = st.file_uploader("", type=["xlsx", "xls"], key="tiktok_file")
+    file_tiktok = st.file_uploader(
+        "Upload file TikTok",
+        type=["xlsx", "xls"],
+        key="tiktok_file",
+        label_visibility="collapsed"
+    )
 
 with col2:
     st.markdown(
         "<h3 style='text-align: center;'>📥 Upload file Shopee</h3>",
         unsafe_allow_html=True,
     )
-    file_shopee = st.file_uploader("", type=["xlsx", "xls"], key="shopee_file")
+    file_shopee = st.file_uploader(
+        "Upload file Shopee",
+        type=["xlsx", "xls"],
+        key="shopee_file",
+        label_visibility="collapsed"
+    )
 
 
 ngay_bat_dau = st.date_input("📅 Ngày bắt đầu", value=datetime.now().date())
@@ -2697,6 +3577,54 @@ if process_btn:
             df_shopee = pd.read_excel(file_shopee)
 
             (
+                so_luong_COMBO_X1_200_tiktok_hoan_thanh,
+                so_luong_COMBO_X1_200_tiktok_da_giao,
+                so_luong_COMBO_X1_200_tiktok_hoan_tra,
+                so_luong_COMBO_X1_200_tiktok_cloud,
+
+                so_luong_COMBO_X2_200_tiktok_hoan_thanh,
+                so_luong_COMBO_X2_200_tiktok_da_giao,
+                so_luong_COMBO_X2_200_tiktok_hoan_tra,
+                so_luong_COMBO_X2_200_tiktok_cloud,
+
+                so_luong_COMBO_TCLC_200_tiktok_hoan_thanh,
+                so_luong_COMBO_TCLC_200_tiktok_da_giao,
+                so_luong_COMBO_TCLC_200_tiktok_hoan_tra,
+                so_luong_COMBO_TCLC_200_tiktok_cloud,
+
+                so_luong_MIX_X1_X2_TCLC_200_tiktok_hoan_thanh,
+                so_luong_MIX_X1_X2_TCLC_200_tiktok_da_giao,
+                so_luong_MIX_X1_X2_TCLC_200_tiktok_hoan_tra,
+                so_luong_MIX_X1_X2_TCLC_200_tiktok_cloud,
+
+                so_luong_MIX_X1_X2_TCLC_200_tiktok_hoan_thanh,
+                so_luong_MIX_X1_X2_TCLC_200_tiktok_da_giao,
+                so_luong_MIX_X1_X2_TCLC_200_tiktok_hoan_tra,
+                so_luong_MIX_X1_X2_TCLC_200_tiktok_cloud,
+
+                so_luong_MIX_ALL_200_tiktok_hoan_thanh,
+                so_luong_MIX_ALL_200_tiktok_da_giao,
+                so_luong_MIX_ALL_200_tiktok_hoan_tra,
+                so_luong_MIX_ALL_200_tiktok_cloud,
+
+                so_luong_MIX_X1_X2_200_tiktok_hoan_thanh,
+                so_luong_MIX_X1_X2_200_tiktok_da_giao,
+                so_luong_MIX_X1_X2_200_tiktok_hoan_tra,
+                so_luong_MIX_X1_X2_200_tiktok_cloud,
+
+                so_luong_MIX_X1_TCLC_200_tiktok_hoan_thanh,
+                so_luong_MIX_X1_TCLC_200_tiktok_da_giao,
+                so_luong_MIX_X1_TCLC_200_tiktok_hoan_tra,
+                so_luong_MIX_X1_TCLC_200_tiktok_cloud,
+
+                so_luong_MIX_X2_TCLC_200_tiktok_hoan_thanh,
+                so_luong_MIX_X2_TCLC_200_tiktok_da_giao,
+                so_luong_MIX_X2_TCLC_200_tiktok_hoan_tra,
+                so_luong_MIX_X2_TCLC_200_tiktok_cloud,
+
+                so_luong_X1_200_tiktok,
+                so_luong_X2_200_tiktok,
+                so_luong_TCLC_200_tiktok,
                 # SP moi
                 so_luong_CB_STT_TCLC_tiktok,
                 so_luong_SATETOM_X1_tiktok,
@@ -2836,6 +3764,50 @@ if process_btn:
             ) = process_tiktok_data(df_tiktok, ngay_bat_dau, ngay_ket_thuc)
 
             (
+                so_luong_X1_200g_sp,
+                so_luong_X2_200g_sp,
+                so_luong_TCLC_200g_sp,
+
+                so_luong_COMBO_X1_200_hoan_thanh_shopee,
+                so_luong_COMBO_X1_200_da_giao_shopee,
+                so_luong_COMBO_X1_200_hoan_tra_shopee,
+                so_luong_COMBO_X1_200_shopee_cloud,
+
+                so_luong_COMBO_X2_200_hoan_thanh_shopee,
+                so_luong_COMBO_X2_200_da_giao_shopee,
+                so_luong_COMBO_X2_200_hoan_tra_shopee,
+                so_luong_COMBO_X2_200_shopee_cloud,
+
+                so_luong_COMBO_TCLC_200_hoan_thanh_shopee,
+                so_luong_COMBO_TCLC_200_da_giao_shopee,
+                so_luong_COMBO_TCLC_200_hoan_tra_shopee,
+                so_luong_COMBO_TCLC_200_shopee_cloud,
+
+                so_luong_MIX_X1_X2_TCLC_200_hoan_thanh_shopee,
+                so_luong_MIX_X1_X2_TCLC_200_da_giao_shopee,
+                so_luong_MIX_X1_X2_TCLC_200_hoan_tra_shopee,
+                so_luong_MIX_X1_X2_TCLC_200_shopee_cloud,
+
+                so_luong_MIX_ALL_200_hoan_thanh_shopee,
+                so_luong_MIX_ALL_200_da_giao_shopee,
+                so_luong_MIX_ALL_200_hoan_tra_shopee,
+                so_luong_MIX_ALL_200_shopee_cloud,
+
+                so_luong_MIX_X1_X2_200_hoan_thanh_shopee,
+                so_luong_MIX_X1_X2_200_da_giao_shopee,
+                so_luong_MIX_X1_X2_200_hoan_tra_shopee,
+                so_luong_MIX_X1_X2_200_shopee_cloud,
+
+                so_luong_MIX_X1_TCLC_200_hoan_thanh_shopee,
+                so_luong_MIX_X1_TCLC_200_da_giao_shopee,
+                so_luong_MIX_X1_TCLC_200_hoan_tra_shopee,
+                so_luong_MIX_X1_TCLC_200_shopee_cloud,
+
+                so_luong_MIX_X2_TCLC_200_hoan_thanh_shopee,
+                so_luong_MIX_X2_TCLC_200_da_giao_shopee,
+                so_luong_MIX_X2_TCLC_200_hoan_tra_shopee,
+                so_luong_MIX_X2_TCLC_200_shopee_cloud,
+                # ================================================
                 so_luong_MIX_STT_TCLC_sp,
                 so_luong_SA_TETOM_X1_sp,
                 so_luong_TIEUCHAY_X1_sp,
@@ -3210,47 +4182,47 @@ if process_btn:
 
             bang_thong_ke_san_pham_tiktok = pd.DataFrame(
                 {
-                    "SL SP HOÀN THÀNH": [
-                        so_luong_SC_Combo_tiktok_hoan_thanh * 2
-                        + so_luong_SCx1_tiktok_hoan_thanh
-                        + so_luong_SCx2_tiktok_hoan_thanh
-                        + so_luong_Combo_Scx1_tiktok_hoan_thanh * 2
-                        + so_luong_Combo_Scx2_tiktok_hoan_thanh * 2
-                        + so_luong_BTHP_SCx1_hoan_thanh
-                        + so_luong_BTHP_SCx2_hoan_thanh
-                        #
-                        + so_luong_TIEUCHAY_X1_tiktok_hoan_thanh
-                        + so_luong_SATETOM_X1_tiktok_hoan_thanh
-                        + so_luong_MIX_STT_TCLC_tiktok_hoan_thanh * 2
-                        + so_luong_CB_STT_tiktok_hoan_thanh * 2
-                        + so_luong_CB_TCLC_tiktok_hoan_thanh * 2
-                        #
-                        + so_luong_MIX_X1_STT_tiktok_hoan_thanh * 2
-                        + so_luong_MIX_X2_STT_tiktok_hoan_thanh * 2
-                        + so_luong_MIX_X1_TCLC_tiktok_hoan_thanh * 2
-                        + so_luong_MIX_X2_TCLC_tiktok_hoan_thanh * 2
-                        #
-                    ],
-                    "SL SP ĐÃ GIAO": [
-                        so_luong_SC_Combo_tiktok_da_giao * 2
-                        + so_luong_SCx1_tiktok_da_giao
-                        + so_luong_Combo_Scx1_tiktok_da_giao * 2
-                        + +so_luong_SCx2_tiktok_da_giao
-                        + so_luong_Combo_Scx2_tiktok_da_giao * 2
-                        + so_luong_BTHP_SCx1_da_giao
-                        + so_luong_BTHP_SCx2_da_giao
-                        #
-                        + so_luong_TIEUCHAY_X1_tiktok_da_giao
-                        + so_luong_SATETOM_X1_tiktok_da_giao
-                        + so_luong_MIX_STT_TCLC_tiktok_da_giao * 2
-                        + so_luong_CB_STT_tiktok_da_giao * 2
-                        + so_luong_CB_TCLC_tiktok_da_giao * 2
-                        #
-                        + so_luong_MIX_X1_STT_tiktok_da_giao * 2
-                        + so_luong_MIX_X2_STT_tiktok_da_giao * 2
-                        + so_luong_MIX_X1_TCLC_tiktok_da_giao * 2
-                        + so_luong_MIX_X2_TCLC_tiktok_da_giao * 2
-                    ],
+                    # "SL SP HOÀN THÀNH": [
+                    #     so_luong_SC_Combo_tiktok_hoan_thanh * 2
+                    #     + so_luong_SCx1_tiktok_hoan_thanh
+                    #     + so_luong_SCx2_tiktok_hoan_thanh
+                    #     + so_luong_Combo_Scx1_tiktok_hoan_thanh * 2
+                    #     + so_luong_Combo_Scx2_tiktok_hoan_thanh * 2
+                    #     + so_luong_BTHP_SCx1_hoan_thanh
+                    #     + so_luong_BTHP_SCx2_hoan_thanh
+                    #     #
+                    #     + so_luong_TIEUCHAY_X1_tiktok_hoan_thanh
+                    #     + so_luong_SATETOM_X1_tiktok_hoan_thanh
+                    #     + so_luong_MIX_STT_TCLC_tiktok_hoan_thanh * 2
+                    #     + so_luong_CB_STT_tiktok_hoan_thanh * 2
+                    #     + so_luong_CB_TCLC_tiktok_hoan_thanh * 2
+                    #     #
+                    #     + so_luong_MIX_X1_STT_tiktok_hoan_thanh * 2
+                    #     + so_luong_MIX_X2_STT_tiktok_hoan_thanh * 2
+                    #     + so_luong_MIX_X1_TCLC_tiktok_hoan_thanh * 2
+                    #     + so_luong_MIX_X2_TCLC_tiktok_hoan_thanh * 2
+                    #     #
+                    # ],
+                    # "SL SP ĐÃ GIAO": [
+                    #     so_luong_SC_Combo_tiktok_da_giao * 2
+                    #     + so_luong_SCx1_tiktok_da_giao
+                    #     + so_luong_Combo_Scx1_tiktok_da_giao * 2
+                    #     + +so_luong_SCx2_tiktok_da_giao
+                    #     + so_luong_Combo_Scx2_tiktok_da_giao * 2
+                    #     + so_luong_BTHP_SCx1_da_giao
+                    #     + so_luong_BTHP_SCx2_da_giao
+                    #     #
+                    #     + so_luong_TIEUCHAY_X1_tiktok_da_giao
+                    #     + so_luong_SATETOM_X1_tiktok_da_giao
+                    #     + so_luong_MIX_STT_TCLC_tiktok_da_giao * 2
+                    #     + so_luong_CB_STT_tiktok_da_giao * 2
+                    #     + so_luong_CB_TCLC_tiktok_da_giao * 2
+                    #     #
+                    #     + so_luong_MIX_X1_STT_tiktok_da_giao * 2
+                    #     + so_luong_MIX_X2_STT_tiktok_da_giao * 2
+                    #     + so_luong_MIX_X1_TCLC_tiktok_da_giao * 2
+                    #     + so_luong_MIX_X2_TCLC_tiktok_da_giao * 2
+                    # ],
                     "TỔNG SỐ LƯỢNG Sốt Chấm": [
                         Tong_soluong_SCx1_tiktok
                         + Tong_soluong_SCx2_tiktok
@@ -3267,50 +4239,55 @@ if process_btn:
                         + so_luong_TIEUCHAY_X1_tiktok
                         + so_luong_CB_STT_TCLC_tiktok / 2
                     ],
+                    "TỔNG SỐ LƯỢNG BTHP": [
+                        Tong_soluong_BTHP_0CAY_tiktok
+                        + Tong_soluong_BTHP_CAY_tiktok
+                        + Tong_soluong_BTHP_COMBO_tiktok
+                    ],
                 },
                 index=["Tiktok"],
             )
 
             bang_thong_ke_san_pham_shopee = pd.DataFrame(
                 {
-                    "SL SP HOÀN THÀNH": [
-                        so_luong_SC_Combo_shopee_hoanh_thanh * 2
-                        + so_luong_SCx1_shopee_hoanh_thanh
-                        + so_luong_COMBO_SCx1_shopee_hoan_thanh * 2
-                        + so_luong_SCx2_shopee_hoanh_thanh
-                        + so_luong_COMBO_SCx2_shopee_hoan_thanh * 2
-                        + so_luong_BTHP_SCx1_shopee_hoan_thanh
-                        + so_luong_BTHP_SCx2_shopee_hoan_thanh
-                        + so_luong_SATETOM_X1_hoan_thanh_sp
-                        + so_luong_TIEUCHAY_X1_hoan_thanh_sp
-                        + so_luong_MIX_STT_TCLC_hoan_thanh_shopee * 2
-                        + so_luong_CB_STT_hoan_thanh_shopee * 2
-                        + so_luong_CB_TCLC_hoan_thanh_shopee * 2
-                        # new
-                        + so_luong_MIX_X1_STT_hoan_thanh_shopee * 2
-                        + so_luong_MIX_X2_STT_hoan_thanh_shopee * 2
-                        + so_luong_MIX_X1_TCLC_hoan_thanh_shopee * 2
-                        + so_luong_MIX_X2_TCLC_hoan_thanh_shopee * 2
-                    ],
-                    "SL SP ĐÃ GIAO": [
-                        so_luong_SC_Combo_shopee_da_giao * 2
-                        + so_luong_SCx1_shopee_da_giao
-                        + so_luong_COMBO_SCx1_shopee_da_giao * 2
-                        + so_luong_SCx2_shopee_da_giao
-                        + so_luong_COMBO_SCx2_shopee_da_giao * 2
-                        + so_luong_BTHP_SCx1_shopee_da_giao
-                        + so_luong_BTHP_SCx2_shopee_da_giao
-                        + so_luong_SATETOM_X1_da_giao_sp
-                        + so_luong_TIEUCHAY_X1_da_giao_sp
-                        + so_luong_MIX_STT_TCLC_da_giao_shopee * 2
-                        + so_luong_CB_STT_da_giao_shopee * 2
-                        + so_luong_CB_TCLC_da_giao_shopee * 2
-                        # new
-                        + so_luong_MIX_X1_STT_da_giao_shopee * 2
-                        + so_luong_MIX_X2_STT_da_giao_shopee * 2
-                        + so_luong_MIX_X1_TCLC_da_giao_shopee * 2
-                        + so_luong_MIX_X2_TCLC_da_giao_shopee * 2
-                    ],
+                    # "SL SP HOÀN THÀNH": [
+                    #     so_luong_SC_Combo_shopee_hoanh_thanh * 2
+                    #     + so_luong_SCx1_shopee_hoanh_thanh
+                    #     + so_luong_COMBO_SCx1_shopee_hoan_thanh * 2
+                    #     + so_luong_SCx2_shopee_hoanh_thanh
+                    #     + so_luong_COMBO_SCx2_shopee_hoan_thanh * 2
+                    #     + so_luong_BTHP_SCx1_shopee_hoan_thanh
+                    #     + so_luong_BTHP_SCx2_shopee_hoan_thanh
+                    #     + so_luong_SATETOM_X1_hoan_thanh_sp
+                    #     + so_luong_TIEUCHAY_X1_hoan_thanh_sp
+                    #     + so_luong_MIX_STT_TCLC_hoan_thanh_shopee * 2
+                    #     + so_luong_CB_STT_hoan_thanh_shopee * 2
+                    #     + so_luong_CB_TCLC_hoan_thanh_shopee * 2
+                    #     # new
+                    #     + so_luong_MIX_X1_STT_hoan_thanh_shopee * 2
+                    #     + so_luong_MIX_X2_STT_hoan_thanh_shopee * 2
+                    #     + so_luong_MIX_X1_TCLC_hoan_thanh_shopee * 2
+                    #     + so_luong_MIX_X2_TCLC_hoan_thanh_shopee * 2
+                    # ],
+                    # "SL SP ĐÃ GIAO": [
+                    #     so_luong_SC_Combo_shopee_da_giao * 2
+                    #     + so_luong_SCx1_shopee_da_giao
+                    #     + so_luong_COMBO_SCx1_shopee_da_giao * 2
+                    #     + so_luong_SCx2_shopee_da_giao
+                    #     + so_luong_COMBO_SCx2_shopee_da_giao * 2
+                    #     + so_luong_BTHP_SCx1_shopee_da_giao
+                    #     + so_luong_BTHP_SCx2_shopee_da_giao
+                    #     + so_luong_SATETOM_X1_da_giao_sp
+                    #     + so_luong_TIEUCHAY_X1_da_giao_sp
+                    #     + so_luong_MIX_STT_TCLC_da_giao_shopee * 2
+                    #     + so_luong_CB_STT_da_giao_shopee * 2
+                    #     + so_luong_CB_TCLC_da_giao_shopee * 2
+                    #     # new
+                    #     + so_luong_MIX_X1_STT_da_giao_shopee * 2
+                    #     + so_luong_MIX_X2_STT_da_giao_shopee * 2
+                    #     + so_luong_MIX_X1_TCLC_da_giao_shopee * 2
+                    #     + so_luong_MIX_X2_TCLC_da_giao_shopee * 2
+                    # ],
                     "TỔNG SỐ LƯỢNG Sốt Chấm": [
                         Tong_soluong_SCx1_sp
                         + Tong_soluong_SCx2_sp
@@ -3325,38 +4302,42 @@ if process_btn:
                         + so_luong_TIEUCHAY_X1_sp
                         + so_luong_MIX_STT_TCLC_sp / 2
                     ],
+                    "TỔNG SỐ LƯỢNG BTHP": [Tong_soluong_BTHP_0CAY_sp
+                                           + Tong_soluong_BTHP_CAY_sp
+                                           + Tong_soluong_BTHP_COMBO_sp
+                                           ],
                 },
                 index=["Shopee"],
             )
 
             bang_thong_ke_san_pham_BTHP = pd.DataFrame(
                 {
-                    "SL SP HOÀN THÀNH": [
-                        tong_so_luong_BTHP_hoan_thanh,
-                        so_luong_BTHP_0CAY_hoan_thanh_sp
-                        + so_luong_BTHP_CAY_hoan_thanh_sp
-                        + so_luong_BTHP_COMBO_hoan_thanh_sp * 2
-                        + so_luong_BTHP_COMBO_0CAY_hoan_thanh_sp * 2
-                        + so_luong_BTHP_COMBO_CAY_hoan_thanh_sp * 2
-                        + so_luong_BTHP_SCx1_shopee_hoan_thanh * 2
-                        + so_luong_BTHP_SCx2_shopee_hoan_thanh * 2
-                        + so_luong_BTHP_COMBO4_hoan_thanh_sp * 4
-                        + soluong_BTHP_COMBO4_0CAY_hoan_thanh_sp * 4
-                        + soluong_BTHP_COMBO4_CAY_hoan_thanh_sp * 4,
-                    ],
-                    "SL SP ĐÃ GIAO": [
-                        tong_so_luong_BTHP_da_giao,
-                        so_luong_BTHP_CAY_da_giao_sp
-                        + so_luong_BTHP_0CAY_da_giao_sp
-                        + so_luong_BTHP_COMBO_da_giao_sp * 2
-                        + so_luong_BTHP_COMBO_0CAY_da_giao_sp * 2
-                        + so_luong_BTHP_COMBO_CAY_da_giao_sp * 2
-                        + so_luong_BTHP_SCx1_shopee_da_giao * 2
-                        + so_luong_BTHP_SCx2_shopee_da_giao * 2
-                        + so_luong_BTHP_COMBO4_da_giao_sp * 4
-                        + soluong_BTHP_COMBO4_0CAY_da_giao_sp * 4
-                        + soluong_BTHP_COMBO4_CAY_da_giao_sp * 4,
-                    ],
+                    # "SL SP HOÀN THÀNH": [
+                    #     tong_so_luong_BTHP_hoan_thanh,
+                    #     so_luong_BTHP_0CAY_hoan_thanh_sp
+                    #     + so_luong_BTHP_CAY_hoan_thanh_sp
+                    #     + so_luong_BTHP_COMBO_hoan_thanh_sp * 2
+                    #     + so_luong_BTHP_COMBO_0CAY_hoan_thanh_sp * 2
+                    #     + so_luong_BTHP_COMBO_CAY_hoan_thanh_sp * 2
+                    #     + so_luong_BTHP_SCx1_shopee_hoan_thanh * 2
+                    #     + so_luong_BTHP_SCx2_shopee_hoan_thanh * 2
+                    #     + so_luong_BTHP_COMBO4_hoan_thanh_sp * 4
+                    #     + soluong_BTHP_COMBO4_0CAY_hoan_thanh_sp * 4
+                    #     + soluong_BTHP_COMBO4_CAY_hoan_thanh_sp * 4,
+                    # ],
+                    # "SL SP ĐÃ GIAO": [
+                    #     tong_so_luong_BTHP_da_giao,
+                    #     so_luong_BTHP_CAY_da_giao_sp
+                    #     + so_luong_BTHP_0CAY_da_giao_sp
+                    #     + so_luong_BTHP_COMBO_da_giao_sp * 2
+                    #     + so_luong_BTHP_COMBO_0CAY_da_giao_sp * 2
+                    #     + so_luong_BTHP_COMBO_CAY_da_giao_sp * 2
+                    #     + so_luong_BTHP_SCx1_shopee_da_giao * 2
+                    #     + so_luong_BTHP_SCx2_shopee_da_giao * 2
+                    #     + so_luong_BTHP_COMBO4_da_giao_sp * 4
+                    #     + soluong_BTHP_COMBO4_0CAY_da_giao_sp * 4
+                    #     + soluong_BTHP_COMBO4_CAY_da_giao_sp * 4,
+                    # ],
                     "TỔNG SỐ LƯỢNG SP": [
                         Tong_soluong_BTHP_0CAY_tiktok
                         + Tong_soluong_BTHP_CAY_tiktok
@@ -3366,7 +4347,110 @@ if process_btn:
                         + Tong_soluong_BTHP_COMBO_sp,
                     ],
                 },
-                index=["Tiktok", "SHOPEE"],
+                index=["Tiktok", "Shopee"],
+            )
+
+            bang_chi_tiet_so_luong_SPM200G_tiktok = pd.DataFrame(
+                {
+                    "COMBO_X1_200": [
+                        so_luong_COMBO_X1_200_tiktok_hoan_thanh + so_luong_COMBO_X1_200_tiktok_da_giao
+                    ],
+                    "COMBO_X2_200": [
+                        so_luong_COMBO_X2_200_tiktok_hoan_thanh + so_luong_COMBO_X2_200_tiktok_da_giao
+                    ],
+                    "COMBO_TCLC_200": [
+                        so_luong_COMBO_TCLC_200_tiktok_hoan_thanh +
+                        so_luong_COMBO_TCLC_200_tiktok_da_giao
+                    ],
+                    "MIX_X1_X2_TCLC_200": [
+                        so_luong_MIX_X1_X2_TCLC_200_tiktok_hoan_thanh +
+                        so_luong_MIX_X1_X2_TCLC_200_tiktok_da_giao
+                    ],
+                    "MIX_ALL_200": [
+                        so_luong_MIX_ALL_200_tiktok_hoan_thanh + so_luong_MIX_ALL_200_tiktok_da_giao
+                    ],
+                    "MIX_X1_X2_200": [
+                        so_luong_MIX_X1_X2_200_tiktok_hoan_thanh + so_luong_MIX_X1_X2_200_tiktok_da_giao
+                    ],
+                    "MIX_X1_TCLC_200": [
+                        so_luong_MIX_X1_TCLC_200_tiktok_hoan_thanh +
+                        so_luong_MIX_X1_TCLC_200_tiktok_da_giao
+                    ],
+                    "MIX_X2_TCLC_200": [
+                        so_luong_MIX_X2_TCLC_200_tiktok_hoan_thanh +
+                        so_luong_MIX_X2_TCLC_200_tiktok_da_giao
+                    ],
+                },
+                index=["Tiktok"],
+
+            )
+            bang_chi_tiet_so_luong_SPM200G_shopee = pd.DataFrame(
+                {
+                    "COMBO_X1_200": [
+                        so_luong_COMBO_X1_200_hoan_thanh_shopee + so_luong_COMBO_X1_200_da_giao_shopee
+                    ],
+                    "COMBO_X2_200": [
+                        so_luong_COMBO_X2_200_hoan_thanh_shopee + so_luong_COMBO_X2_200_da_giao_shopee
+                    ],
+                    "COMBO_TCLC_200": [
+                        so_luong_COMBO_TCLC_200_hoan_thanh_shopee +
+                        so_luong_COMBO_TCLC_200_da_giao_shopee
+                    ],
+                    "MIX_X1_X2_TCLC_200": [
+                        so_luong_MIX_X1_X2_TCLC_200_hoan_thanh_shopee +
+                        so_luong_MIX_X1_X2_TCLC_200_da_giao_shopee
+                    ],
+                    "MIX_ALL_200": [
+                        so_luong_MIX_ALL_200_hoan_thanh_shopee + so_luong_MIX_ALL_200_da_giao_shopee
+                    ],
+                    "MIX_X1_X2_200": [
+                        so_luong_MIX_X1_X2_200_hoan_thanh_shopee + so_luong_MIX_X1_X2_200_da_giao_shopee
+                    ],
+                    "MIX_X1_TCLC_200": [
+                        so_luong_MIX_X1_TCLC_200_hoan_thanh_shopee +
+                        so_luong_MIX_X1_TCLC_200_da_giao_shopee
+                    ],
+                    "MIX_X2_TCLC_200": [
+                        so_luong_MIX_X2_TCLC_200_hoan_thanh_shopee +
+                        so_luong_MIX_X2_TCLC_200_da_giao_shopee
+                    ],
+                },
+                index=["Shopee"],
+
+            )
+
+            bang_thong_ke_so_luong_SPMM_200G_tiktok = pd.DataFrame(
+                {
+                    "X1_200g": [
+                        so_luong_X1_200_tiktok
+                    ],
+                    "X2_200g": [
+                        so_luong_X2_200_tiktok
+                    ],
+                    "TCLC_200g": [
+                        so_luong_TCLC_200_tiktok
+                    ],
+
+                },
+                index=["Tiktok"],
+
+            )
+
+            bang_thong_ke_so_luong_SPMM_200G_shopee = pd.DataFrame(
+                {
+                    "X1_200g": [
+                        so_luong_X1_200g_sp
+                    ],
+                    "X2_200g": [
+                        so_luong_X2_200g_sp
+                    ],
+                    "TCLC_200g": [
+                        so_luong_TCLC_200g_sp
+                    ],
+
+                },
+                index=["Shopee"],
+
             )
 
             bang_tong_so_luong_san_pham = pd.DataFrame(
@@ -3446,10 +4530,10 @@ if process_btn:
                     "CB_STT": [so_luong_CB_STT_tiktok_hoan_tra, so_luong_CB_STT_hoan_tra_shopee],
                     "CB_TCLC": [so_luong_CB_TCLC_tiktok_hoan_tra, so_luong_CB_TCLC_hoan_tra_shopee],
                     #
-                    "MIX_X1_STT": [so_luong_MIX_X1_STT_tiktok_hoan_tra + so_luong_MIX_X1_STT_hoan_tra_shopee],
-                    "MIX_X2_STT": [so_luong_MIX_X2_STT_tiktok_hoan_tra + so_luong_MIX_X2_STT_hoan_tra_shopee],
-                    "MIX_X1_TCLC": [so_luong_MIX_X1_TCLC_tiktok_hoan_tra + so_luong_MIX_X1_TCLC_hoan_tra_shopee],
-                    "MIX_X2_TCLC": [so_luong_MIX_X2_TCLC_tiktok_hoan_tra + so_luong_MIX_X2_TCLC_hoan_tra_shopee],
+                    "MIX_X1_STT": [so_luong_MIX_X1_STT_tiktok_hoan_tra, so_luong_MIX_X1_STT_hoan_tra_shopee],
+                    "MIX_X2_STT": [so_luong_MIX_X2_STT_tiktok_hoan_tra, so_luong_MIX_X2_STT_hoan_tra_shopee],
+                    "MIX_X1_TCLC": [so_luong_MIX_X1_TCLC_tiktok_hoan_tra, so_luong_MIX_X1_TCLC_hoan_tra_shopee],
+                    "MIX_X2_TCLC": [so_luong_MIX_X2_TCLC_tiktok_hoan_tra, so_luong_MIX_X2_TCLC_hoan_tra_shopee],
 
                     "BTHP_0Cay": [
                         so_luong_BTHP_0CAY_tiktok_hoan_tra,
@@ -3580,12 +4664,98 @@ if process_btn:
                 index=["Tiktok", "Shopee"],
             )
 
+            bang_so_luong_san_pham_hoan_tra_200g = pd.DataFrame(
+                {
+                    "COMBO_X1_200": [
+                        so_luong_COMBO_X1_200_tiktok_hoan_tra,
+                        so_luong_COMBO_X1_200_hoan_tra_shopee,
+                    ],
+                    "COMBO_X2_200": [
+                        so_luong_COMBO_X2_200_tiktok_hoan_tra,
+                        so_luong_COMBO_X2_200_hoan_tra_shopee,
+                    ],
+                    "COMBO_TCLC_200": [
+                        so_luong_COMBO_TCLC_200_tiktok_hoan_tra,
+                        so_luong_COMBO_TCLC_200_hoan_tra_shopee,
+                    ],
+                    "MIX_X1_X2_TCLC_200": [
+                        so_luong_MIX_X1_X2_TCLC_200_tiktok_hoan_tra,
+                        so_luong_MIX_X1_X2_TCLC_200_hoan_tra_shopee,
+                    ],
+                    "MIX_ALL_200": [
+                        so_luong_MIX_ALL_200_tiktok_hoan_tra,
+                        so_luong_MIX_ALL_200_hoan_tra_shopee,
+                    ],
+                    "MIX_X1_X2_200": [
+                        so_luong_MIX_X1_X2_200_tiktok_hoan_tra,
+                        so_luong_MIX_X1_X2_200_hoan_tra_shopee,
+                    ],
+                    "MIX_X1_TCLC_200": [
+                        so_luong_MIX_X1_TCLC_200_tiktok_hoan_tra,
+                        so_luong_MIX_X1_TCLC_200_hoan_tra_shopee,
+                    ],
+                    "MIX_X2_TCLC_200": [
+                        so_luong_MIX_X2_TCLC_200_tiktok_hoan_tra,
+                        so_luong_MIX_X2_TCLC_200_hoan_tra_shopee,
+                    ],
+                },
+                index=["Tiktok", "Shopee"],
+            )
+
+            bang_so_luong_san_pham_cloud_200g = pd.DataFrame(
+                {
+                    "TỔNG ĐƠN": [so_don_cloud_tiktok, so_don_cloud_shopee],
+                    "COMBO_X1_200": [
+                        so_luong_COMBO_X1_200_tiktok_cloud,
+                        so_luong_COMBO_X1_200_shopee_cloud,
+                    ],
+                    "COMBO_X2_200": [
+                        so_luong_COMBO_X2_200_tiktok_cloud,
+                        so_luong_COMBO_X2_200_shopee_cloud,
+                    ],
+                    "COMBO_TCLC_200": [
+                        so_luong_COMBO_TCLC_200_tiktok_cloud,
+                        so_luong_COMBO_TCLC_200_hoan_tra_shopee,
+                    ],
+                    "MIX_X1_X2_TCLC_200": [
+                        so_luong_MIX_X1_X2_TCLC_200_tiktok_cloud,
+                        so_luong_MIX_X1_X2_TCLC_200_shopee_cloud,
+                    ],
+                    "MIX_ALL_200": [
+                        so_luong_MIX_ALL_200_tiktok_cloud,
+                        so_luong_MIX_ALL_200_shopee_cloud,
+                    ],
+                    "MIX_X1_X2_200": [
+                        so_luong_MIX_X1_X2_200_tiktok_cloud,
+                        so_luong_MIX_X1_X2_200_shopee_cloud,
+                    ],
+                    "MIX_X1_TCLC_200": [
+                        so_luong_MIX_X1_TCLC_200_tiktok_cloud,
+                        so_luong_MIX_X1_TCLC_200_shopee_cloud,
+                    ],
+                    "MIX_X2_TCLC_200": [
+                        so_luong_MIX_X2_TCLC_200_tiktok_cloud,
+                        so_luong_MIX_X2_TCLC_200_shopee_cloud,
+                    ],
+                },
+                index=["Tiktok", "Shopee"],
+            )
+
             bang_thong_ke_so_luong = pd.concat(
                 [bang_thong_ke_so_luong_tiktok, bang_thong_ke_so_luong_shopee]
             )
 
             bang_thong_ke_san_pham = pd.concat(
                 [bang_thong_ke_san_pham_tiktok, bang_thong_ke_san_pham_shopee]
+            )
+
+            bang_thong_ke_so_luong_san_pham_200g = pd.concat(
+                [bang_thong_ke_so_luong_SPMM_200G_tiktok,
+                    bang_thong_ke_so_luong_SPMM_200G_shopee]
+            )
+            bang_chi_tiet_so_luong_SPM200G = pd.concat(
+                [bang_chi_tiet_so_luong_SPM200G_tiktok,
+                    bang_chi_tiet_so_luong_SPM200G_shopee]
             )
 
             # Hiển thị bảng thống kê đơn hàng
@@ -3596,35 +4766,36 @@ if process_btn:
 
             st.markdown("### 📊 Tổng SỐ LƯỢNG Sản Phẩm Tiktok & Shopee")
             with st.container():
-                st.markdown("#### 📋 Bảng Thống Kê")
                 st.dataframe(bang_tong_so_luong_san_pham)
 
-            st.markdown("### 📊 Chi Tiết Số Lượng Sản Phẩm Tiktok & Shopee")
             with st.container():
-                st.markdown("#### 📋 Bảng Thống Kê")
-                st.markdown("#### 📦 Chi Tiết Số Lượng Sản Phẩm")
                 st.dataframe(bang_thong_ke_so_luong)
 
             st.markdown("### 📊 Sản Phẩm Sốt Chấm & BTHP Tiktok & Shopee")
-            col6, col7 = st.columns(2)
+            st.dataframe(bang_thong_ke_san_pham)
 
-            with col6:
-                st.markdown("#### 📋 Bảng Thống Kê Sốt Chấm")
-                st.dataframe(bang_thong_ke_san_pham)
+            st.markdown(
+                "### 📊 Chi Tiết Số Lượng Sản Phẩm 200g Tiktok & Shopee")
+            st.dataframe(bang_chi_tiet_so_luong_SPM200G)
 
-            with col7:
-                st.markdown("#### 📈 Bảng Thống Kê BTHP")
-                st.dataframe(bang_thong_ke_san_pham_BTHP)
+            with st.container():
+                st.markdown("#### 📦 Chi Tiết Số Lượng Sản Phẩm")
+                st.dataframe(bang_thong_ke_so_luong_san_pham_200g)
 
             st.markdown("### 📊 Số lượng hàng hoàn ")
             with st.container():
                 st.markdown("#### 📋 Bảng Thống Kê")
                 st.dataframe(bang_so_luong_san_pham_hoan_tra)
 
+            with st.container():
+                st.markdown("#### 📋 Bảng Thống Kê 200G")
+                st.dataframe(bang_so_luong_san_pham_hoan_tra_200g)
+
             st.markdown("### 📊 Số lượng chi tiết đơn Cloud ")
             with st.container():
                 st.markdown("#### 📋 Bảng Thống Kê")
                 st.dataframe(bang_so_luong_san_pham_cua_don_cloud_sot_cham)
                 st.dataframe(bang_so_luong_san_pham_cua_don_cloud_banh_trang)
+                st.dataframe(bang_so_luong_san_pham_cloud_200g)
 
         st.success("✅ Xử lý dữ liệu thành công!")
